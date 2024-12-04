@@ -38,7 +38,6 @@ const LayoutAdmin = () => {
 
     useEffect(() => {
         const ACL_ENABLE = import.meta.env.VITE_ACL_ENABLE;
-        console.log(">>> check permission:", permissions)
         if (permissions?.length || ACL_ENABLE === 'false') {
 
             const viewCompany = permissions?.find(item =>

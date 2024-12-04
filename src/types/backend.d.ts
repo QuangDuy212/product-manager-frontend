@@ -7,7 +7,7 @@ export interface IBackendRes<T> {
 
 export interface IModelPaginate<T> {
     meta: {
-        page: number;
+        current: number;
         pageSize: number;
         pages: number;
         total: number;
@@ -63,20 +63,13 @@ export interface ISkill {
 
 
 export interface IUser {
-    id?: string;
+    _id?: string;
     name: string;
-    email: string;
+    username: string;
     password?: string;
-    age: number;
-    gender: string;
     address: string;
     role?: {
-        id: string;
-        name: string;
-    }
-
-    company?: {
-        id: string;
+        _id: string;
         name: string;
     }
     createdBy?: string;
@@ -154,7 +147,7 @@ export interface IPermission {
 }
 
 export interface IRole {
-    id?: string;
+    _id?: string;
     name: string;
     description: string;
     active: boolean;

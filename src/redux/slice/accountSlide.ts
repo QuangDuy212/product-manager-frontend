@@ -105,7 +105,6 @@ export const accountSlide = createSlice({
 
         builder.addCase(fetchAccount.fulfilled, (state, action) => {
             if (action.payload) {
-                console.log(">>> check payload", action.payload)
                 state.isAuthenticated = true;
                 state.isLoading = false;
                 state.user._id = action?.payload?._id;

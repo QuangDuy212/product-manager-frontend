@@ -55,6 +55,7 @@ export function DebounceSelect<
             labelInValue
             filterOption={false}
             onSearch={debounceFetcher}
+            // onChange={debounceFetcher}
             notFoundContent={fetching ? <Spin size="small" /> : null}
             {...props}
             options={options}

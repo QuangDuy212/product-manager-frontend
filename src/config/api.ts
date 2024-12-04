@@ -100,8 +100,8 @@ export const callCreateUser = (user: IUser) => {
     return axios.post<IBackendRes<IUser>>('/api/v1/users', { ...user })
 }
 
-export const callUpdateUser = (user: IUser) => {
-    return axios.put<IBackendRes<IUser>>(`/api/v1/users`, { ...user })
+export const callUpdateUser = (id: string, user: IUser) => {
+    return axios.put<IBackendRes<IUser>>(`/api/v1/users/${id}`, { ...user })
 }
 
 export const callDeleteUser = (id: string) => {

@@ -55,7 +55,7 @@ const UserPage = () => {
             render: (text, record, index) => {
                 return (
                     <>
-                        {(index + 1) + (meta.page - 1) * (meta.pageSize)}
+                        {(index + 1) + (meta.current - 1) * (meta.pageSize)}
                     </>)
             },
             hideInSearch: true,
@@ -66,21 +66,21 @@ const UserPage = () => {
             sorter: true,
         },
         {
-            title: 'Email',
-            dataIndex: 'email',
+            title: 'Username',
+            dataIndex: 'username',
+            sorter: true,
+        },
+
+
+        {
+            title: 'Address',
+            dataIndex: 'address',
             sorter: true,
         },
 
         {
             title: 'Role',
             dataIndex: ["role", "name"],
-            sorter: true,
-            hideInSearch: true
-        },
-
-        {
-            title: 'Company',
-            dataIndex: ["company", "name"],
             sorter: true,
             hideInSearch: true
         },
@@ -141,7 +141,7 @@ const UserPage = () => {
                             placement="leftTop"
                             title={"Xác nhận xóa user"}
                             description={"Bạn có chắc chắn muốn xóa user này ?"}
-                            onConfirm={() => handleDeleteUser(entity.id)}
+                            onConfirm={() => handleDeleteUser(entity._id)}
                             okText="Xác nhận"
                             cancelText="Hủy"
                         >
@@ -170,10 +170,11 @@ const UserPage = () => {
 
         const clone = { ...params };
         if (clone.name) q.filter = `${sfLike("name", clone.name)}`;
-        if (clone.email) {
+        if (clone.address) q.filter = `${sfLike("address", clone.address)}`;
+        if (clone.username) {
             q.filter = clone.name ?
-                q.filter + " and " + `${sfLike("email", clone.email)}`
-                : `${sfLike("email", clone.email)}`;
+                q.filter + " and " + `${sfLike("username", clone.username)}`
+                : `${sfLike("username", clone.username)}`;
         }
 
         if (!q.filter) delete q.filter;
@@ -222,7 +223,7 @@ const UserPage = () => {
                     scroll={{ x: true }}
                     pagination={
                         {
-                            current: meta.page,
+                            current: meta.current,
                             pageSize: meta.pageSize,
                             showSizeChanger: true,
                             total: meta.total,

@@ -32,7 +32,7 @@ export const ALL_PERMISSIONS = {
     USERS: {
         GET_PAGINATE: { method: "GET", apiPath: '/api/v1/users', module: "USERS" },
         CREATE: { method: "POST", apiPath: '/api/v1/users', module: "USERS" },
-        UPDATE: { method: "PUT", apiPath: '/api/v1/users', module: "USERS" },
+        UPDATE: { method: "PUT", apiPath: '/api/v1/users/{id}', module: "USERS" },
         DELETE: { method: "DELETE", apiPath: '/api/v1/users/{id}', module: "USERS" },
     },
 }

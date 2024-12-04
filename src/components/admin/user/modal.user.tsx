@@ -1,5 +1,5 @@
 import { ModalForm, ProForm, ProFormDigit, ProFormSelect, ProFormText } from "@ant-design/pro-components";
-import { Col, Form, Row, message, notification } from "antd";
+import { Col, Form, Row, Select, message, notification } from "antd";
 import { isMobile } from 'react-device-detect';
 import { useState, useEffect } from "react";
 import { callCreateUser, callFetchCompany, callFetchRole, callUpdateUser } from "@/config/api";
@@ -22,52 +22,43 @@ export interface ICompanySelect {
 
 const ModalUser = (props: IProps) => {
     const { openModal, setOpenModal, reloadTable, dataInit, setDataInit } = props;
-    const [companies, setCompanies] = useState<ICompanySelect[]>([]);
     const [roles, setRoles] = useState<ICompanySelect[]>([]);
+    const [rolesOptions, setRolesOptions] = useState<ICompanySelect[]>([]);
 
     const [form] = Form.useForm();
 
     useEffect(() => {
-        if (dataInit?.id) {
-            if (dataInit.company) {
-                setCompanies([{
-                    label: dataInit.company.name,
-                    value: dataInit.company.id,
-                    key: dataInit.company.id,
-                }])
-            }
+        if (dataInit?._id) {
             if (dataInit.role) {
                 setRoles([
                     {
                         label: dataInit.role?.name,
-                        value: dataInit.role?.id,
-                        key: dataInit.role?.id,
+                        value: dataInit.role?._id,
+                        key: dataInit.role?._id,
                     }
                 ])
             }
         }
     }, [dataInit]);
 
+    useEffect(() => {
+        fetchRoleList("")
+    }, [])
+
     const submitUser = async (valuesForm: any) => {
-        const { name, email, password, address, age, gender, role, company } = valuesForm;
-        if (dataInit?.id) {
+        const { name, username, password, address, role } = valuesForm;
+        if (dataInit?._id) {
             //update
             const user = {
-                id: dataInit.id,
+                _id: dataInit._id,
                 name,
-                email,
+                username,
                 password,
-                age,
-                gender,
                 address,
-                role: { id: role.value, name: "" },
-                company: {
-                    id: company.value,
-                    name: company.label
-                }
+                role: role._id,
             }
 
-            const res = await callUpdateUser(user);
+            const res = await callUpdateUser(user._id, user);
             if (res.data) {
                 message.success("Cập nhật user thành công");
                 handleReset();
@@ -82,16 +73,10 @@ const ModalUser = (props: IProps) => {
             //create
             const user = {
                 name,
-                email,
+                username,
                 password,
-                age,
-                gender,
                 address,
-                role: { id: role.value, name: "" },
-                company: {
-                    id: company.value,
-                    name: company.label
-                }
+                role: role
             }
             const res = await callCreateUser(user);
             if (res.data) {
@@ -110,44 +95,29 @@ const ModalUser = (props: IProps) => {
     const handleReset = async () => {
         form.resetFields();
         setDataInit(null);
-        setCompanies([]);
         setRoles([]);
         setOpenModal(false);
     }
 
-    // Usage of DebounceSelect
-    async function fetchCompanyList(name: string): Promise<ICompanySelect[]> {
-        const res = await callFetchCompany(`page=1&size=100&name=/${name}/i`);
-        if (res && res.data) {
-            const list = res.data.result;
-            const temp = list.map(item => {
-                return {
-                    label: item.name as string,
-                    value: item.id as string
-                }
-            })
-            return temp;
-        } else return [];
-    }
-
-    async function fetchRoleList(name: string): Promise<ICompanySelect[]> {
+    async function fetchRoleList(name: string) {
         const res = await callFetchRole(`page=1&size=100&name=/${name}/i`);
         if (res && res.data) {
             const list = res.data.result;
             const temp = list.map(item => {
                 return {
                     label: item.name as string,
-                    value: item.id as string
+                    value: item._id as string
                 }
             })
-            return temp;
-        } else return [];
+            // return temp;
+            setRolesOptions(temp);
+        }
     }
 
     return (
         <>
             <ModalForm
-                title={<>{dataInit?.id ? "Cập nhật User" : "Tạo mới User"}</>}
+                title={<>{dataInit?._id ? "Cập nhật User" : "Tạo mới User"}</>}
                 open={openModal}
                 modalProps={{
                     onCancel: () => { handleReset() },
@@ -156,33 +126,32 @@ const ModalUser = (props: IProps) => {
                     width: isMobile ? "100%" : 900,
                     keyboard: false,
                     maskClosable: false,
-                    okText: <>{dataInit?.id ? "Cập nhật" : "Tạo mới"}</>,
+                    okText: <>{dataInit?._id ? "Cập nhật" : "Tạo mới"}</>,
                     cancelText: "Hủy"
                 }}
                 scrollToFirstError={true}
                 preserve={false}
                 form={form}
                 onFinish={submitUser}
-                initialValues={dataInit?.id ? dataInit : {}}
+                initialValues={dataInit?._id ? dataInit : {}}
             >
                 <Row gutter={16}>
                     <Col lg={12} md={12} sm={24} xs={24}>
                         <ProFormText
-                            label="Email"
-                            name="email"
+                            label="Username"
+                            name="username"
                             rules={[
                                 { required: true, message: 'Vui lòng không bỏ trống' },
-                                { type: 'email', message: 'Vui lòng nhập email hợp lệ' }
                             ]}
-                            placeholder="Nhập email"
+                            placeholder="Nhập username"
                         />
                     </Col>
                     <Col lg={12} md={12} sm={24} xs={24}>
                         <ProFormText.Password
-                            disabled={dataInit?.id ? true : false}
+                            disabled={dataInit?._id ? true : false}
                             label="Password"
                             name="password"
-                            rules={[{ required: dataInit?.id ? false : true, message: 'Vui lòng không bỏ trống' }]}
+                            rules={[{ required: dataInit?._id ? false : true, message: 'Vui lòng không bỏ trống' }]}
                             placeholder="Nhập password"
                         />
                     </Col>
@@ -194,27 +163,7 @@ const ModalUser = (props: IProps) => {
                             placeholder="Nhập tên hiển thị"
                         />
                     </Col>
-                    <Col lg={6} md={6} sm={24} xs={24}>
-                        <ProFormDigit
-                            label="Tuổi"
-                            name="age"
-                            rules={[{ required: true, message: 'Vui lòng không bỏ trống' }]}
-                            placeholder="Nhập nhập tuổi"
-                        />
-                    </Col>
-                    <Col lg={6} md={6} sm={24} xs={24}>
-                        <ProFormSelect
-                            name="gender"
-                            label="Giới Tính"
-                            valueEnum={{
-                                MALE: 'Nam',
-                                FEMALE: 'Nữ',
-                                OTHER: 'Khác',
-                            }}
-                            placeholder="Chọn giới tính"
-                            rules={[{ required: true, message: 'Vui lòng chọn giới tính!' }]}
-                        />
-                    </Col>
+
                     <Col lg={6} md={6} sm={24} xs={24}>
                         <ProForm.Item
                             name="role"
@@ -222,44 +171,24 @@ const ModalUser = (props: IProps) => {
                             rules={[{ required: true, message: 'Vui lòng chọn vai trò!' }]}
 
                         >
-                            <DebounceSelect
+                            <Select
                                 allowClear
                                 showSearch
                                 defaultValue={roles}
                                 value={roles}
                                 placeholder="Chọn công vai trò"
-                                fetchOptions={fetchRoleList}
+                                onSearch={(name: any) => fetchRoleList(name)}
+                                options={rolesOptions}
                                 onChange={(newValue: any) => {
-                                    if (newValue?.length === 0 || newValue?.length === 1) {
-                                        setRoles(newValue as ICompanySelect[]);
-                                    }
+                                    // if (newValue?.length === 0 || newValue?.length === 1) {
+
+                                    // }
+                                    setRoles(newValue as ICompanySelect[]);
                                 }}
                                 style={{ width: '100%' }}
                             />
                         </ProForm.Item>
 
-                    </Col>
-                    <Col lg={12} md={12} sm={24} xs={24}>
-                        <ProForm.Item
-                            name="company"
-                            label="Thuộc Công Ty"
-                            rules={[{ required: true, message: 'Vui lòng chọn company!' }]}
-                        >
-                            <DebounceSelect
-                                allowClear
-                                showSearch
-                                defaultValue={companies}
-                                value={companies}
-                                placeholder="Chọn công ty"
-                                fetchOptions={fetchCompanyList}
-                                onChange={(newValue: any) => {
-                                    if (newValue?.length === 0 || newValue?.length === 1) {
-                                        setCompanies(newValue as ICompanySelect[]);
-                                    }
-                                }}
-                                style={{ width: '100%' }}
-                            />
-                        </ProForm.Item>
                     </Col>
                     <Col lg={12} md={12} sm={24} xs={24}>
                         <ProFormText
@@ -276,3 +205,8 @@ const ModalUser = (props: IProps) => {
 }
 
 export default ModalUser;
+
+
+
+
+

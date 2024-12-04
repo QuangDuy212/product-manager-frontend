@@ -73,7 +73,7 @@ const RolePage = () => {
             render: (text, record, index, action) => {
                 return (
                     <span>
-                        {record.id}
+                        {record._id}
                     </span>
                 )
             },
@@ -151,7 +151,7 @@ const RolePage = () => {
                             placement="leftTop"
                             title={"Xác nhận xóa role"}
                             description={"Bạn có chắc chắn muốn xóa role này ?"}
-                            onConfirm={() => handleDeleteRole(entity.id)}
+                            onConfirm={() => handleDeleteRole(entity._id)}
                             okText="Xác nhận"
                             cancelText="Hủy"
                         >
