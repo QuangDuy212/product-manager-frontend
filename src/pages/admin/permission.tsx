@@ -20,6 +20,7 @@ const PermissionPage = () => {
     const [dataInit, setDataInit] = useState<IPermission | null>(null);
     const [openViewDetail, setOpenViewDetail] = useState<boolean>(false);
 
+
     const tableRef = useRef<ActionType>();
 
     const isFetching = useAppSelector(state => state.permission.isFetching);
@@ -57,7 +58,7 @@ const PermissionPage = () => {
                         setOpenViewDetail(true);
                         setDataInit(record);
                     }}>
-                        {record.id}
+                        {record._id}
                     </a>
                 )
             },
@@ -143,7 +144,7 @@ const PermissionPage = () => {
                             placement="leftTop"
                             title={"Xác nhận xóa permission"}
                             description={"Bạn có chắc chắn muốn xóa permission này ?"}
-                            onConfirm={() => handleDeletePermission(entity.id)}
+                            onConfirm={() => handleDeletePermission(entity._id)}
                             okText="Xác nhận"
                             cancelText="Hủy"
                         >
@@ -264,6 +265,8 @@ const PermissionPage = () => {
                 setDataInit={setDataInit}
             />
         </div>
+
+
     )
 }
 

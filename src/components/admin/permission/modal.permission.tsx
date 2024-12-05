@@ -22,14 +22,14 @@ const ModalPermission = (props: IProps) => {
 
     const submitPermission = async (valuesForm: any) => {
         const { name, apiPath, method, module } = valuesForm;
-        if (dataInit?.id) {
+        if (dataInit?._id) {
             //update
             const permission = {
                 name,
                 apiPath, method, module
             }
 
-            const res = await callUpdatePermission(permission, dataInit.id);
+            const res = await callUpdatePermission(permission, dataInit._id);
             if (res.data) {
                 message.success("Cập nhật permission thành công");
                 handleReset();
@@ -69,7 +69,7 @@ const ModalPermission = (props: IProps) => {
     return (
         <>
             <ModalForm
-                title={<>{dataInit?.id ? "Cập nhật Permission" : "Tạo mới Permission"}</>}
+                title={<>{dataInit?._id ? "Cập nhật Permission" : "Tạo mới Permission"}</>}
                 open={openModal}
                 modalProps={{
                     onCancel: () => { handleReset() },
@@ -78,14 +78,14 @@ const ModalPermission = (props: IProps) => {
                     width: isMobile ? "100%" : 900,
                     keyboard: false,
                     maskClosable: false,
-                    okText: <>{dataInit?.id ? "Cập nhật" : "Tạo mới"}</>,
+                    okText: <>{dataInit?._id ? "Cập nhật" : "Tạo mới"}</>,
                     cancelText: "Hủy"
                 }}
                 scrollToFirstError={true}
                 preserve={false}
                 form={form}
                 onFinish={submitPermission}
-                initialValues={dataInit?.id ? dataInit : {}}
+                initialValues={dataInit?._id ? dataInit : {}}
             >
                 <Row gutter={16}>
                     <Col lg={12} md={12} sm={24} xs={24}>

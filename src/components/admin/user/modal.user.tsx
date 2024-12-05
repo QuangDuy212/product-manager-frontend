@@ -1,4 +1,4 @@
-import { ModalForm, ProForm, ProFormDigit, ProFormSelect, ProFormText } from "@ant-design/pro-components";
+import { ModalForm, ProForm, ProFormDigit, ProFormSelect, ProFormSwitch, ProFormText } from "@ant-design/pro-components";
 import { Col, Form, Row, Select, message, notification } from "antd";
 import { isMobile } from 'react-device-detect';
 import { useState, useEffect } from "react";
@@ -46,7 +46,7 @@ const ModalUser = (props: IProps) => {
     }, [])
 
     const submitUser = async (valuesForm: any) => {
-        const { name, username, password, address, role } = valuesForm;
+        const { name, username, password, address, role, active } = valuesForm;
         if (dataInit?._id) {
             //update
             const user = {
@@ -56,6 +56,7 @@ const ModalUser = (props: IProps) => {
                 password,
                 address,
                 role: role._id,
+                active
             }
 
             const res = await callUpdateUser(user._id, user);
@@ -76,7 +77,8 @@ const ModalUser = (props: IProps) => {
                 username,
                 password,
                 address,
-                role: role
+                role: role,
+                active
             }
             const res = await callCreateUser(user);
             if (res.data) {
@@ -155,7 +157,7 @@ const ModalUser = (props: IProps) => {
                             placeholder="Nhập password"
                         />
                     </Col>
-                    <Col lg={6} md={6} sm={24} xs={24}>
+                    <Col lg={12} md={12} sm={24} xs={24}>
                         <ProFormText
                             label="Tên hiển thị"
                             name="name"
@@ -164,7 +166,7 @@ const ModalUser = (props: IProps) => {
                         />
                     </Col>
 
-                    <Col lg={6} md={6} sm={24} xs={24}>
+                    <Col lg={12} md={12} sm={24} xs={24}>
                         <ProForm.Item
                             name="role"
                             label="Vai trò"
@@ -189,6 +191,18 @@ const ModalUser = (props: IProps) => {
                             />
                         </ProForm.Item>
 
+                    </Col>
+                    <Col lg={12} md={12} sm={24} xs={24}>
+                        <ProFormSwitch
+                            label="Trạng thái"
+                            name="active"
+                            checkedChildren="ACTIVE"
+                            unCheckedChildren="INACTIVE"
+                            initialValue={true}
+                            fieldProps={{
+                                defaultChecked: true,
+                            }}
+                        />
                     </Col>
                     <Col lg={12} md={12} sm={24} xs={24}>
                         <ProFormText

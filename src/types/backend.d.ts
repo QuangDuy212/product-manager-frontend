@@ -66,6 +66,7 @@ export interface IUser {
     _id?: string;
     name: string;
     username: string;
+    active: boolean;
     password?: string;
     address: string;
     role?: {
@@ -132,7 +133,7 @@ export interface IResume {
 }
 
 export interface IPermission {
-    id?: string;
+    _id?: string;
     name?: string;
     apiPath?: string;
     method?: string;

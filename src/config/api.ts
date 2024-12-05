@@ -112,6 +112,8 @@ export const callFetchUser = (query: string) => {
     return axios.get<IBackendRes<IModelPaginate<IUser>>>(`/api/v1/users?${query}`);
 }
 
+
+
 /**
  * 
 Module Job

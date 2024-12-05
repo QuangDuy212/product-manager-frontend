@@ -39,12 +39,12 @@ const ModalRole = (props: IProps) => {
             }
         }
 
-        if (singleRole?.id) {
+        if (singleRole?._id) {
             //update
             const role = {
                 name, description, active, permissions: checkedPermissions
             }
-            const res = await callUpdateRole(role, singleRole.id);
+            const res = await callUpdateRole(role, singleRole._id);
             if (res.data) {
                 message.success("Cập nhật role thành công");
                 handleReset();
@@ -83,7 +83,7 @@ const ModalRole = (props: IProps) => {
     return (
         <>
             <ModalForm
-                title={<>{singleRole?.id ? "Cập nhật Role" : "Tạo mới Role"}</>}
+                title={<>{singleRole?._id ? "Cập nhật Role" : "Tạo mới Role"}</>}
                 open={openModal}
                 modalProps={{
                     onCancel: () => { handleReset() },
@@ -105,7 +105,7 @@ const ModalRole = (props: IProps) => {
                     },
                     searchConfig: {
                         resetText: "Hủy",
-                        submitText: <>{singleRole?.id ? "Cập nhật" : "Tạo mới"}</>,
+                        submitText: <>{singleRole?._id ? "Cập nhật" : "Tạo mới"}</>,
                     }
                 }}
             >

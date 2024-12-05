@@ -4,7 +4,7 @@ import { fetchUser } from "@/redux/slice/userSlide";
 import { IUser } from "@/types/backend";
 import { DeleteOutlined, EditOutlined, PlusOutlined, EyeOutlined } from "@ant-design/icons";
 import { ActionType, ProColumns } from '@ant-design/pro-components';
-import { Button, Popconfirm, Space, message, notification } from "antd";
+import { Button, Popconfirm, Space, Tag, message, notification } from "antd";
 import { useState, useRef } from 'react';
 import dayjs from 'dayjs';
 import { callDeleteUser } from "@/config/api";
@@ -83,6 +83,18 @@ const UserPage = () => {
             dataIndex: ["role", "name"],
             sorter: true,
             hideInSearch: true
+        },
+        {
+            title: 'Trạng thái',
+            dataIndex: 'active',
+            render(dom, entity, index, action, schema) {
+                return <>
+                    <Tag color={entity.active ? "lime" : "red"} >
+                        {entity.active ? "ACTIVE" : "INACTIVE"}
+                    </Tag>
+                </>
+            },
+            hideInSearch: true,
         },
 
         {
