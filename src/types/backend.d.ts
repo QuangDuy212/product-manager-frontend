@@ -60,6 +60,10 @@ export interface ISkill {
     updatedAt?: string;
 }
 
+export interface IString {
+    message: String;
+}
+
 
 
 export interface IUser {

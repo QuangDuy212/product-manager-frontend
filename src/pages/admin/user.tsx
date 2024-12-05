@@ -2,24 +2,26 @@ import DataTable from "@/components/client/data-table";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { fetchUser } from "@/redux/slice/userSlide";
 import { IUser } from "@/types/backend";
-import { DeleteOutlined, EditOutlined, PlusOutlined, EyeOutlined } from "@ant-design/icons";
+import { DeleteOutlined, EditOutlined, PlusOutlined, EyeOutlined, ExportOutlined, ImportOutlined } from "@ant-design/icons";
 import { ActionType, ProColumns } from '@ant-design/pro-components';
 import { Button, Popconfirm, Space, Tag, message, notification } from "antd";
 import { useState, useRef } from 'react';
 import dayjs from 'dayjs';
-import { callDeleteUser } from "@/config/api";
+import { callDeleteUser, callExportUser } from "@/config/api";
 import queryString from 'query-string';
 import ModalUser from "@/components/admin/user/modal.user";
 import ViewDetailUser from "@/components/admin/user/view.user";
 import Access from "@/components/share/access";
 import { ALL_PERMISSIONS } from "@/config/permissions";
 import { sfLike } from "spring-filter-query-builder";
+import { saveAs } from 'file-saver';
+import ModalImportUser from "@/components/admin/user/modal.user.import";
 
 const UserPage = () => {
     const [openModal, setOpenModal] = useState<boolean>(false);
     const [dataInit, setDataInit] = useState<IUser | null>(null);
     const [openViewDetail, setOpenViewDetail] = useState<boolean>(false);
-
+    const [openModalImport, setOpenModalImport] = useState<boolean>(false);
     const tableRef = useRef<ActionType>();
 
     const isFetching = useAppSelector(state => state.user.isFetching);
@@ -39,6 +41,18 @@ const UserPage = () => {
                     description: res.message
                 });
             }
+        }
+    }
+
+    const handleExportUser = async () => {
+        try {
+            const response = await callExportUser();
+            const filename = 'users_' + Date.now() + '.xlsx';
+            saveAs(response, filename);
+            message.success('Export thành công');
+        } catch (error) {
+            message.error('Export thất bại');
+            console.error('Error during export:', error);
         }
     }
 
@@ -196,8 +210,8 @@ const UserPage = () => {
         if (sort && sort.name) {
             sortBy = sort.name === 'ascend' ? "sort=name,asc" : "sort=name,desc";
         }
-        if (sort && sort.email) {
-            sortBy = sort.email === 'ascend' ? "sort=email,asc" : "sort=email,desc";
+        if (sort && sort.username) {
+            sortBy = sort.username === 'ascend' ? "sort=username,asc" : "sort=username,desc";
         }
         if (sort && sort.createdAt) {
             sortBy = sort.createdAt === 'ascend' ? "sort=createdAt,asc" : "sort=createdAt,desc";
@@ -245,13 +259,37 @@ const UserPage = () => {
                     rowSelection={false}
                     toolBarRender={(_action, _rows): any => {
                         return (
-                            <Button
-                                icon={<PlusOutlined />}
-                                type="primary"
-                                onClick={() => setOpenModal(true)}
-                            >
-                                Thêm mới
-                            </Button>
+                            <>
+                                <Access
+                                    permission={ALL_PERMISSIONS.USERS.EXPORT}
+                                >
+                                    <Button
+                                        icon={<ExportOutlined />}
+                                        type="primary"
+                                        onClick={() => handleExportUser()}
+                                    >
+                                        Export
+                                    </Button>
+                                </Access>
+                                <Access
+                                    permission={ALL_PERMISSIONS.USERS.IMPORT}
+                                >
+                                    <Button
+                                        icon={<ImportOutlined />}
+                                        type="primary"
+                                        onClick={() => setOpenModalImport(true)}
+                                    >
+                                        Import
+                                    </Button>
+                                </Access>
+                                <Button
+                                    icon={<PlusOutlined />}
+                                    type="primary"
+                                    onClick={() => setOpenModal(true)}
+                                >
+                                    Thêm mới
+                                </Button>
+                            </>
                         );
                     }}
                 />
@@ -268,6 +306,11 @@ const UserPage = () => {
                 open={openViewDetail}
                 dataInit={dataInit}
                 setDataInit={setDataInit}
+            />
+            <ModalImportUser
+                openModal={openModalImport}
+                setOpenModal={setOpenModalImport}
+                reloadTable={reloadTable}
             />
         </div >
     )

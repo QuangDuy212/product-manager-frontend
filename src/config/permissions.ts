@@ -34,6 +34,8 @@ export const ALL_PERMISSIONS = {
         CREATE: { method: "POST", apiPath: '/api/v1/users', module: "USERS" },
         UPDATE: { method: "PUT", apiPath: '/api/v1/users/{id}', module: "USERS" },
         DELETE: { method: "DELETE", apiPath: '/api/v1/users/{id}', module: "USERS" },
+        EXPORT: { method: "GET", apiPath: '/api/v1/users/excel/export', module: "USERS" },
+        IMPORT: { method: "POST", apiPath: '/api/v1/users/excel/import', module: "USERS" },
     },
 }
 

@@ -1,4 +1,4 @@
-import { IBackendRes, ICompany, IAccount, IUser, IModelPaginate, IGetAccount, IJob, IResume, IPermission, IRole, ISkill, ISubscribers } from '@/types/backend';
+import { IBackendRes, ICompany, IAccount, IUser, IModelPaginate, IGetAccount, IJob, IResume, IPermission, IRole, ISkill, ISubscribers, IString } from '@/types/backend';
 import axios from 'config/axios-customize';
 
 /**
@@ -110,6 +110,23 @@ export const callDeleteUser = (id: string) => {
 
 export const callFetchUser = (query: string) => {
     return axios.get<IBackendRes<IModelPaginate<IUser>>>(`/api/v1/users?${query}`);
+}
+
+export const callImportUser = (file: any) => {
+    const formData = new FormData();
+    formData.append("file", file);
+    const config = {
+        headers: {
+            'content-type': 'multipart/form-data'
+        }
+    }
+    return axios.post(`/api/v1/users/excel/import`, formData, config);
+}
+
+export const callExportUser = () => {
+    return axios.get('/api/v1/users/excel/export', {
+        responseType: 'blob', // Nhận dữ liệu dưới dạng file
+    });
 }
 
 
