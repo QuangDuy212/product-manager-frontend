@@ -30,19 +30,20 @@ const ModalRole = (props: IProps) => {
     const submitRole = async (valuesForm: any) => {
         const { description, active, name, permissions } = valuesForm;
         const checkedPermissions = [];
-
         if (permissions) {
             for (const key in permissions) {
-                if (key.match(/^[1-9][0-9]*$/) && permissions[key] === true) {
-                    checkedPermissions.push({ id: key });
+                if (permissions[key] == true) {
+                    checkedPermissions.push({ _id: key });
                 }
             }
         }
 
+        const checked = checkedPermissions.map(i => i._id);
+
         if (singleRole?._id) {
             //update
             const role = {
-                name, description, active, permissions: checkedPermissions
+                name, description, active, perIds: checked
             }
             const res = await callUpdateRole(role, singleRole._id);
             if (res.data) {
@@ -58,7 +59,7 @@ const ModalRole = (props: IProps) => {
         } else {
             //create
             const role = {
-                name, description, active, permissions: checkedPermissions
+                name, description, active, perIds: checked
             }
             const res = await callCreateRole(role);
             if (res.data) {

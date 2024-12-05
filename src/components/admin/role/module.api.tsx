@@ -27,7 +27,7 @@ const ModuleApi = (props: IProps) => {
   const { form, listPermissions, singleRole, openModal } = props;
 
   useEffect(() => {
-    if (listPermissions?.length && singleRole?.id && openModal === true) {
+    if (listPermissions?.length && singleRole?._id && openModal === true) {
 
       //current permissions of role
       const userPermissions = groupByPermission(singleRole.permissions);
@@ -39,13 +39,16 @@ const ModuleApi = (props: IProps) => {
         x.permissions?.forEach(y => {
           const temp = userPermissions.find(z => z.module === x.module);
 
-          p[y.id!] = false;
+          p[y._id!] = false;
 
           if (temp) {
-            const isExist = temp.permissions.find(k => k.id === y.id);
+            const isExist = temp.permissions.find(k => {
+              return k.id === y._id
+            });
+
             if (isExist) {
-              // form.setFieldValue(["permissions", y.id as string], true);
-              p[y.id!] = true;
+              // form.setFieldValue(["permissions", y._id as string], true);
+              p[y._id!] = true;
             } else allCheck = false;
           } else {
             allCheck = false;
@@ -65,6 +68,7 @@ const ModuleApi = (props: IProps) => {
         permissions: p
       })
 
+
     }
   }, [openModal])
 
@@ -72,8 +76,8 @@ const ModuleApi = (props: IProps) => {
     const child = listPermissions?.find(item => item.module === name);
     if (child) {
       child?.permissions?.forEach(item => {
-        if (item.id)
-          form.setFieldValue(["permissions", item.id], value)
+        if (item._id)
+          form.setFieldValue(["permissions", item._id], value)
       })
     }
   }
@@ -84,9 +88,9 @@ const ModuleApi = (props: IProps) => {
     //check all
     const temp = listPermissions?.find(item => item.module === parent);
     if (temp?.module) {
-      const restPermission = temp?.permissions?.filter(item => item.id !== child);
+      const restPermission = temp?.permissions?.filter(item => item._id !== child);
       if (restPermission && restPermission.length) {
-        const allTrue = restPermission.every(item => form.getFieldValue(["permissions", item.id as string]));
+        const allTrue = restPermission.every(item => form.getFieldValue(["permissions", item._id as string]));
         form.setFieldValue(["permissions", parent], allTrue && value)
       }
     }
@@ -119,10 +123,10 @@ const ModuleApi = (props: IProps) => {
               <Card size="small" bodyStyle={{ display: "flex", flex: 1, flexDirection: 'row' }}>
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                   <ProFormSwitch
-                    name={["permissions", value.id as string]}
+                    name={["permissions", value._id as string]}
                     fieldProps={{
                       defaultChecked: false,
-                      onChange: (v) => handleSingleCheck(v, (value.id) as string, item.module)
+                      onChange: (v) => handleSingleCheck(v, (value._id) as string, item.module)
                     }}
                   />
                 </div>

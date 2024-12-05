@@ -130,7 +130,7 @@ export interface IResume {
         updatedBy: { id: string; email: string }
     }[]
     createdBy?: string;
-    isDeleted?: boolean;
+    active?: boolean;
     deletedAt?: boolean | null;
     createdAt?: string;
     updatedAt?: string;
@@ -144,7 +144,7 @@ export interface IPermission {
     module?: string;
 
     createdBy?: string;
-    isDeleted?: boolean;
+    active?: boolean;
     deletedAt?: boolean | null;
     createdAt?: string;
     updatedAt?: string;

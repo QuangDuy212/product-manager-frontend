@@ -220,12 +220,12 @@ export const callFetchPermissionById = (id: string) => {
  * 
 Module Role
  */
-export const callCreateRole = (role: IRole) => {
+export const callCreateRole = (role: { name: string, description: string, active: boolean, perIds: string[] }) => {
     return axios.post<IBackendRes<IRole>>('/api/v1/roles', { ...role })
 }
 
-export const callUpdateRole = (role: IRole, id: string) => {
-    return axios.put<IBackendRes<IRole>>(`/api/v1/roles`, { id, ...role })
+export const callUpdateRole = (role: { name: string, description: string, active: boolean, perIds: string[] }, id: string) => {
+    return axios.put<IBackendRes<IRole>>(`/api/v1/roles/${id}`, { ...role })
 }
 
 export const callDeleteRole = (id: string) => {
