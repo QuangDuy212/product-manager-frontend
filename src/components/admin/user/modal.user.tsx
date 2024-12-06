@@ -2,7 +2,7 @@ import { ModalForm, ProForm, ProFormDigit, ProFormSelect, ProFormSwitch, ProForm
 import { Col, Form, Row, Select, message, notification } from "antd";
 import { isMobile } from 'react-device-detect';
 import { useState, useEffect } from "react";
-import { callCreateUser, callFetchCompany, callFetchRole, callUpdateUser } from "@/config/api";
+import { callCreateUser, callFetchRole, callUpdateUser } from "@/config/api";
 import { IUser } from "@/types/backend";
 import { DebounceSelect } from "./debouce.select";
 
@@ -182,9 +182,6 @@ const ModalUser = (props: IProps) => {
                                 onSearch={(name: any) => fetchRoleList(name)}
                                 options={rolesOptions}
                                 onChange={(newValue: any) => {
-                                    // if (newValue?.length === 0 || newValue?.length === 1) {
-
-                                    // }
                                     setRoles(newValue as ICompanySelect[]);
                                 }}
                                 style={{ width: '100%' }}

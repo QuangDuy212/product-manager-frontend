@@ -50,6 +50,69 @@ export interface ICompany {
     updatedAt?: string;
 }
 
+export interface IProduct {
+    _id?: string;
+    name?: string;
+    shortDes?: string;
+    thumbnail: string;
+    sliders?: string[];
+    price: double;
+    quantity: number;
+    discount: number;
+    active?: boolean;
+    category?: ICategory;
+    tags?: ITag[];
+    createdBy?: string;
+    deletedAt?: boolean | null;
+    createdAt?: string;
+    updatedAt?: string;
+}
+
+export interface ICreatationProduct {
+    name: string;
+    thumbnail: string;
+    sliders: string[];
+    price: number;
+    shortDes: string;
+    quantity: number;
+    discount: number;
+    categoryId: string;
+    tagsId: string[];
+}
+
+export interface IUpdateProduct {
+    name?: string;
+    thumbnail?: string;
+    sliders?: string[];
+    price?: number;
+    color?: string;
+    quantity?: number;
+    discount?: number;
+    categoryId?: string;
+    tagsId?: string[];
+}
+
+export interface ICategory {
+    name?: string;
+    products?: IProduct[];
+    createdBy?: string;
+    isDeleted?: boolean;
+    deletedAt?: boolean | null;
+    createdAt?: string;
+    updatedAt?: string;
+}
+
+export interface ITag {
+    _id?: string;
+    name?: string;
+    description?: string;
+    createdBy?: string;
+    isDeleted?: boolean;
+    deletedAt?: boolean | null;
+    createdAt?: string;
+    updatedAt?: string;
+}
+
 export interface ISkill {
     id?: string;
     name?: string;

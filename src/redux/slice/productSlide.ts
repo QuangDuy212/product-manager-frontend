@@ -1,22 +1,22 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { callFetchCompany } from '@/config/api';
-import { ICompany } from '@/types/backend';
+import { callFetchProduct } from '@/config/api';
+import { IProduct } from '@/types/backend';
 
 interface IState {
     isFetching: boolean;
     meta: {
-        page: number;
+        current: number;
         pageSize: number;
         pages: number;
         total: number;
     },
-    result: ICompany[]
+    result: IProduct[]
 }
 // First, create the thunk
-export const fetchCompany = createAsyncThunk(
-    'company/fetchCompany',
+export const fetchProduct = createAsyncThunk(
+    'product/fetchProduct',
     async ({ query }: { query: string }) => {
-        const response = await callFetchCompany(query);
+        const response = await callFetchProduct(query);
         return response;
     }
 )
@@ -25,7 +25,7 @@ export const fetchCompany = createAsyncThunk(
 const initialState: IState = {
     isFetching: true,
     meta: {
-        page: 1,
+        current: 1,
         pageSize: 10,
         pages: 0,
         total: 0
@@ -34,8 +34,8 @@ const initialState: IState = {
 };
 
 
-export const companySlide = createSlice({
-    name: 'company',
+export const productSlide = createSlice({
+    name: 'product',
     initialState,
     // The `reducers` field lets us define reducers and generate associated actions
     reducers: {
@@ -48,19 +48,19 @@ export const companySlide = createSlice({
     },
     extraReducers: (builder) => {
         // Add reducers for additional action types here, and handle loading state as needed
-        builder.addCase(fetchCompany.pending, (state, action) => {
+        builder.addCase(fetchProduct.pending, (state, action) => {
             state.isFetching = true;
             // Add user to the state array
             // state.courseOrder = action.payload;
         })
 
-        builder.addCase(fetchCompany.rejected, (state, action) => {
+        builder.addCase(fetchProduct.rejected, (state, action) => {
             state.isFetching = false;
             // Add user to the state array
             // state.courseOrder = action.payload;
         })
 
-        builder.addCase(fetchCompany.fulfilled, (state, action) => {
+        builder.addCase(fetchProduct.fulfilled, (state, action) => {
             if (action.payload && action.payload.data) {
                 state.isFetching = false;
                 state.meta = action.payload.data.meta;
@@ -76,6 +76,6 @@ export const companySlide = createSlice({
 
 export const {
     setActiveMenu,
-} = companySlide.actions;
+} = productSlide.actions;
 
-export default companySlide.reducer;
+export default productSlide.reducer;

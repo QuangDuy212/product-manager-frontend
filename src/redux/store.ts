@@ -4,24 +4,24 @@ import {
   ThunkAction,
 } from '@reduxjs/toolkit';
 import accountReducer from './slice/accountSlide';
-import companyReducer from './slice/companySlide';
 import userReducer from './slice/userSlide';
 import jobReducer from './slice/jobSlide';
 import resumeReducer from './slice/resumeSlide';
 import permissionReducer from './slice/permissionSlide';
 import roleReducer from './slice/roleSlide';
 import skillReducer from './slice/skillSlide';
+import productReducer from './slice/productSlide';
 
 export const store = configureStore({
   reducer: {
     account: accountReducer,
-    company: companyReducer,
     user: userReducer,
     job: jobReducer,
     resume: resumeReducer,
     permission: permissionReducer,
     role: roleReducer,
     skill: skillReducer,
+    product: productReducer,
   },
 });
 

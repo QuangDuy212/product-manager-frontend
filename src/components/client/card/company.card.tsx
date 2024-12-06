@@ -1,4 +1,5 @@
-import { callFetchCompany } from '@/config/api';
+
+import { callFetchProduct } from '@/config/api';
 import { convertSlug } from '@/config/utils';
 import { ICompany } from '@/types/backend';
 import { Card, Col, Divider, Empty, Pagination, Row, Spin } from 'antd';
@@ -38,7 +39,7 @@ const CompanyCard = (props: IProps) => {
             query += `&${sortQuery}`;
         }
 
-        const res = await callFetchCompany(query);
+        const res = await callFetchProduct(query);
         if (res && res.data) {
             setDisplayCompany(res.data.result);
             setTotal(res.data.meta.total)

@@ -1,35 +1,36 @@
-import ModalCompany from "@/components/admin/company/modal.company";
+
 import DataTable from "@/components/client/data-table";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { fetchCompany } from "@/redux/slice/companySlide";
-import { ICompany } from "@/types/backend";
+import { IProduct } from "@/types/backend";
 import { DeleteOutlined, EditOutlined, PlusOutlined } from "@ant-design/icons";
 import { ActionType, ProColumns } from '@ant-design/pro-components';
 import { Button, Popconfirm, Space, message, notification } from "antd";
 import { useState, useRef } from 'react';
 import dayjs from 'dayjs';
-import { callDeleteCompany } from "@/config/api";
+import { callDeleteProduct } from "@/config/api";
 import queryString from 'query-string';
 import Access from "@/components/share/access";
 import { ALL_PERMISSIONS } from "@/config/permissions";
 import { sfLike } from "spring-filter-query-builder";
+import { fetchProduct } from "@/redux/slice/productSlide";
+import ModalProduct from "@/components/admin/company/modal.product";
 
-const CompanyPage = () => {
+const ProductPage = () => {
     const [openModal, setOpenModal] = useState<boolean>(false);
-    const [dataInit, setDataInit] = useState<ICompany | null>(null);
+    const [dataInit, setDataInit] = useState<IProduct | null>(null);
 
     const tableRef = useRef<ActionType>();
 
-    const isFetching = useAppSelector(state => state.company.isFetching);
-    const meta = useAppSelector(state => state.company.meta);
-    const companies = useAppSelector(state => state.company.result);
+    const isFetching = useAppSelector(state => state.product.isFetching);
+    const meta = useAppSelector(state => state.product.meta);
+    const products = useAppSelector(state => state.product.result);
     const dispatch = useAppDispatch();
 
     const handleDeleteCompany = async (id: string | undefined) => {
         if (id) {
-            const res = await callDeleteCompany(id);
+            const res = await callDeleteProduct(id);
             if (res && +res.statusCode === 200) {
-                message.success('Xóa Company thành công');
+                message.success('Xóa Product thành công');
                 reloadTable();
             } else {
                 notification.error({
@@ -44,7 +45,7 @@ const CompanyPage = () => {
         tableRef?.current?.reload();
     }
 
-    const columns: ProColumns<ICompany>[] = [
+    const columns: ProColumns<IProduct>[] = [
         {
             title: 'STT',
             key: 'index',
@@ -53,7 +54,7 @@ const CompanyPage = () => {
             render: (text, record, index) => {
                 return (
                     <>
-                        {(index + 1) + (meta.page - 1) * (meta.pageSize)}
+                        {(index + 1) + (meta.current - 1) * (meta.pageSize)}
                     </>)
             },
             hideInSearch: true,
@@ -64,8 +65,8 @@ const CompanyPage = () => {
             sorter: true,
         },
         {
-            title: 'Address',
-            dataIndex: 'address',
+            title: 'ShortDes',
+            dataIndex: 'shortDes',
             sorter: true,
         },
 
@@ -101,7 +102,7 @@ const CompanyPage = () => {
             render: (_value, entity, _index, _action) => (
                 <Space>
                     < Access
-                        permission={ALL_PERMISSIONS.COMPANIES.UPDATE}
+                        permission={ALL_PERMISSIONS.PRODUCTS.UPDATE}
                         hideChildren
                     >
                         <EditOutlined
@@ -117,14 +118,14 @@ const CompanyPage = () => {
                         />
                     </Access >
                     <Access
-                        permission={ALL_PERMISSIONS.COMPANIES.DELETE}
+                        permission={ALL_PERMISSIONS.PRODUCTS.DELETE}
                         hideChildren
                     >
                         <Popconfirm
                             placement="leftTop"
-                            title={"Xác nhận xóa company"}
-                            description={"Bạn có chắc chắn muốn xóa company này ?"}
-                            onConfirm={() => handleDeleteCompany(entity.id)}
+                            title={"Xác nhận xóa product"}
+                            description={"Bạn có chắc chắn muốn xóa product này ?"}
+                            onConfirm={() => handleDeleteCompany(entity._id)}
                             okText="Xác nhận"
                             cancelText="Hủy"
                         >
@@ -169,8 +170,8 @@ const CompanyPage = () => {
         if (sort && sort.name) {
             sortBy = sort.name === 'ascend' ? "sort=name,asc" : "sort=name,desc";
         }
-        if (sort && sort.address) {
-            sortBy = sort.address === 'ascend' ? "sort=address,asc" : "sort=address,desc";
+        if (sort && sort.shortDes) {
+            sortBy = sort.shortDes === 'ascend' ? "sort=shortDes,asc" : "sort=shortDes,desc";
         }
         if (sort && sort.createdAt) {
             sortBy = sort.createdAt === 'ascend' ? "sort=createdAt,asc" : "sort=createdAt,desc";
@@ -192,23 +193,23 @@ const CompanyPage = () => {
     return (
         <div>
             <Access
-                permission={ALL_PERMISSIONS.COMPANIES.GET_PAGINATE}
+                permission={ALL_PERMISSIONS.PRODUCTS.GET_PAGINATE}
             >
-                <DataTable<ICompany>
+                <DataTable<IProduct>
                     actionRef={tableRef}
                     headerTitle="Danh sách Công Ty"
                     rowKey="id"
                     loading={isFetching}
                     columns={columns}
-                    dataSource={companies}
+                    dataSource={products}
                     request={async (params, sort, filter): Promise<any> => {
                         const query = buildQuery(params, sort, filter);
-                        dispatch(fetchCompany({ query }))
+                        dispatch(fetchProduct({ query }))
                     }}
                     scroll={{ x: true }}
                     pagination={
                         {
-                            current: meta.page,
+                            current: meta.current,
                             pageSize: meta.pageSize,
                             showSizeChanger: true,
                             total: meta.total,
@@ -219,7 +220,7 @@ const CompanyPage = () => {
                     toolBarRender={(_action, _rows): any => {
                         return (
                             <Access
-                                permission={ALL_PERMISSIONS.COMPANIES.CREATE}
+                                permission={ALL_PERMISSIONS.PRODUCTS.CREATE}
                                 hideChildren
                             >
                                 <Button
@@ -234,7 +235,7 @@ const CompanyPage = () => {
                     }}
                 />
             </Access>
-            <ModalCompany
+            <ModalProduct
                 openModal={openModal}
                 setOpenModal={setOpenModal}
                 reloadTable={reloadTable}
@@ -245,4 +246,4 @@ const CompanyPage = () => {
     )
 }
 
-export default CompanyPage;
+export default ProductPage;

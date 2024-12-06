@@ -1,4 +1,4 @@
-import { IBackendRes, ICompany, IAccount, IUser, IModelPaginate, IGetAccount, IJob, IResume, IPermission, IRole, ISkill, ISubscribers, IString } from '@/types/backend';
+import { IBackendRes, ICompany, IAccount, IUser, IModelPaginate, IGetAccount, IJob, IResume, IPermission, IRole, ISkill, ISubscribers, IString, IProduct, ICreatationProduct, IUpdateProduct, ICategory, ITag } from '@/types/backend';
 import axios from 'config/axios-customize';
 
 /**
@@ -28,14 +28,14 @@ export const callLogout = () => {
 /**
  * Upload single file
  */
-export const callUploadSingleFile = (file: any, folderType: string) => {
+export const callUploadSingleFile = (file: any, folder: string) => {
     const bodyFormData = new FormData();
     bodyFormData.append('file', file);
-    bodyFormData.append('folder', folderType);
+    bodyFormData.append('folder', folder);
 
     return axios<IBackendRes<{ fileName: string }>>({
         method: 'post',
-        url: '/api/v1/files',
+        url: '/api/v1/file/upload',
         data: bodyFormData,
         headers: {
             "Content-Type": "multipart/form-data",
@@ -46,29 +46,82 @@ export const callUploadSingleFile = (file: any, folderType: string) => {
 
 
 
+
+
 /**
  * 
-Module Company
+Module Product
  */
-export const callCreateCompany = (name: string, address: string, description: string, logo: string) => {
-    return axios.post<IBackendRes<ICompany>>('/api/v1/companies', { name, address, description, logo })
+export const callCreateProduct = (data: ICreatationProduct) => {
+    return axios.post<IBackendRes<IProduct>>('/api/v1/products', data)
 }
 
-export const callUpdateCompany = (id: string, name: string, address: string, description: string, logo: string) => {
-    return axios.put<IBackendRes<ICompany>>(`/api/v1/companies`, { id, name, address, description, logo })
+export const callUpdateProduct = (id: string, data: IUpdateProduct) => {
+    return axios.put<IBackendRes<IProduct>>(`/api/v1/products/${id}`, data)
 }
 
-export const callDeleteCompany = (id: string) => {
-    return axios.delete<IBackendRes<ICompany>>(`/api/v1/companies/${id}`);
+export const callDeleteProduct = (id: string) => {
+    return axios.delete<IBackendRes<IProduct>>(`/api/v1/products/${id}`);
 }
 
-export const callFetchCompany = (query: string) => {
-    return axios.get<IBackendRes<IModelPaginate<ICompany>>>(`/api/v1/companies?${query}`);
+export const callFetchProduct = (query: string) => {
+    return axios.get<IBackendRes<IModelPaginate<IProduct>>>(`/api/v1/products?${query}`);
 }
 
-export const callFetchCompanyById = (id: string) => {
-    return axios.get<IBackendRes<ICompany>>(`/api/v1/companies/${id}`);
+export const callFetchProductById = (id: string) => {
+    return axios.get<IBackendRes<IProduct>>(`/api/v1/products/${id}`);
 }
+
+/**
+ * 
+Module Category
+ */
+export const callFetchCategory = (query: string) => {
+    return axios.get<IBackendRes<IModelPaginate<ICategory>>>(`/api/v1/categories?${query}`);
+}
+
+export const callCreateCategory = (name: string) => {
+    return axios.post<IBackendRes<ICategory>>('/api/v1/categories', { name })
+}
+
+export const callUpdateCategory = (id: string, data: ICategory) => {
+    return axios.put<IBackendRes<ICategory>>(`/api/v1/categories/${id}`, data)
+}
+
+export const callDeleteCategory = (id: string) => {
+    return axios.delete<IBackendRes<ICategory>>(`/api/v1/categories/${id}`);
+}
+
+export const callFetchCategoryById = (id: string) => {
+    return axios.get<IBackendRes<ICategory>>(`/api/v1/categories/${id}`);
+}
+
+/**
+ * 
+Module Tag
+ */
+export const callFetchTag = (query: string) => {
+    return axios.get<IBackendRes<IModelPaginate<ITag>>>(`/api/v1/tags?${query}`);
+}
+
+export const callCreateTag = (data: ITag) => {
+    return axios.post<IBackendRes<ITag>>('/api/v1/tags', data)
+}
+
+export const callUpdateTag = (id: string, data: ITag) => {
+    return axios.put<IBackendRes<ITag>>(`/api/v1/tags/${id}`, data)
+}
+
+export const callDeleteTag = (id: string) => {
+    return axios.delete<IBackendRes<ITag>>(`/api/v1/tags/${id}`);
+}
+
+export const callFetchTagById = (id: string) => {
+    return axios.get<IBackendRes<ITag>>(`/api/v1/tags/${id}`);
+}
+
+
+
 
 /**
  * 

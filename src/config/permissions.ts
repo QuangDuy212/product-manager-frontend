@@ -37,10 +37,18 @@ export const ALL_PERMISSIONS = {
         EXPORT: { method: "GET", apiPath: '/api/v1/users/excel/export', module: "USERS" },
         IMPORT: { method: "POST", apiPath: '/api/v1/users/excel/import', module: "USERS" },
     },
+    PRODUCTS: {
+        GET_PAGINATE: { method: "GET", apiPath: '/api/v1/products', module: "PRODUCTS" },
+        CREATE: { method: "POST", apiPath: '/api/v1/products', module: "PRODUCTS" },
+        UPDATE: { method: "PUT", apiPath: '/api/v1/products/{id}', module: "PRODUCTS" },
+        DELETE: { method: "DELETE", apiPath: '/api/v1/products/{id}', module: "PRODUCTS" },
+        EXPORT: { method: "GET", apiPath: '/api/v1/products/excel/export', module: "PRODUCTS" },
+        IMPORT: { method: "POST", apiPath: '/api/v1/products/excel/import', module: "PRODUCTS" },
+    },
 }
 
 export const ALL_MODULES = {
-    COMPANIES: 'COMPANIES',
+    PRODUCTS: 'PRODUCTS',
     FILES: 'FILES',
     JOBS: 'JOBS',
     PERMISSIONS: 'PERMISSIONS',

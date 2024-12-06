@@ -286,6 +286,7 @@ const UserPage = () => {
                                     icon={<PlusOutlined />}
                                     type="primary"
                                     onClick={() => setOpenModal(true)}
+                                    style={{ backgroundColor: "green" }}
                                 >
                                     Thêm mới
                                 </Button>

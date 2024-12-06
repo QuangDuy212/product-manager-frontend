@@ -10,6 +10,7 @@ import {
     AliwangwangOutlined,
     BugOutlined,
     ScheduleOutlined,
+    ClockCircleFilled
 } from '@ant-design/icons';
 import { Layout, Menu, Dropdown, Space, message, Avatar, Button } from 'antd';
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
@@ -40,7 +41,7 @@ const LayoutAdmin = () => {
         const ACL_ENABLE = import.meta.env.VITE_ACL_ENABLE;
         if (permissions?.length || ACL_ENABLE === 'false') {
 
-            const viewCompany = permissions?.find(item =>
+            const viewCategories = permissions?.find(item =>
                 item.apiPath === ALL_PERMISSIONS.CATEGORIES.GET_PAGINATE.apiPath
                 && item.method === ALL_PERMISSIONS.CATEGORIES.GET_PAGINATE.method
             )
@@ -76,10 +77,10 @@ const LayoutAdmin = () => {
                     key: '/admin',
                     icon: <AppstoreOutlined />
                 },
-                ...(viewCompany || ACL_ENABLE === 'false' ? [{
-                    label: <Link to='/admin/company'>Company</Link>,
-                    key: '/admin/company',
-                    icon: <BankOutlined />,
+                ...(viewCategories || ACL_ENABLE === 'false' ? [{
+                    label: <Link to='/admin/product'>Product</Link>,
+                    key: '/admin/product',
+                    icon: <ClockCircleFilled />,
                 }] : []),
 
                 ...(viewUser || ACL_ENABLE === 'false' ? [{

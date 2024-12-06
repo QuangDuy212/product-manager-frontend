@@ -17,19 +17,18 @@ import Footer from 'components/client/footer.client';
 import HomePage from 'pages/home';
 import styles from 'styles/app.module.scss';
 import DashboardPage from './pages/admin/dashboard';
-import CompanyPage from './pages/admin/company';
 import PermissionPage from './pages/admin/permission';
 import ResumePage from './pages/admin/resume';
 import RolePage from './pages/admin/role';
 import UserPage from './pages/admin/user';
 import { fetchAccount } from './redux/slice/accountSlide';
 import LayoutApp from './components/share/layout.app';
-import ViewUpsertJob from './components/admin/job/upsert.job';
 import ClientJobPage from './pages/job';
 import ClientJobDetailPage from './pages/job/detail';
 import ClientCompanyPage from './pages/company';
 import ClientCompanyDetailPage from './pages/company/detail';
 import JobTabs from './pages/admin/job/job.tabs';
+import ProductPage from './pages/admin/product';
 
 const LayoutClient = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -94,10 +93,10 @@ export default function App() {
             </ProtectedRoute>
         },
         {
-          path: "company",
+          path: "product",
           element:
             <ProtectedRoute>
-              <CompanyPage />
+              <ProductPage />
             </ProtectedRoute>
         },
         {
@@ -117,7 +116,7 @@ export default function App() {
             },
             {
               path: "upsert", element:
-                <ProtectedRoute><ViewUpsertJob /></ProtectedRoute>
+                <ProtectedRoute></ProtectedRoute>
             }
           ]
         },
