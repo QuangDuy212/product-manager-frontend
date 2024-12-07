@@ -72,6 +72,25 @@ export const callFetchProductById = (id: string) => {
     return axios.get<IBackendRes<IProduct>>(`/api/v1/products/${id}`);
 }
 
+export const callImportProduct = (file: any) => {
+    const formData = new FormData();
+    formData.append("file", file);
+    const config = {
+        headers: {
+            'content-type': 'multipart/form-data'
+        }
+    }
+    return axios.post(`/api/v1/products/excel/import`, formData, config);
+}
+
+export const callExportProduct = () => {
+    return axios.get('/api/v1/products/excel/export', {
+        responseType: 'blob', // Nhận dữ liệu dưới dạng file
+    });
+}
+
+
+
 /**
  * 
 Module Category

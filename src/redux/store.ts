@@ -12,6 +12,7 @@ import roleReducer from './slice/roleSlide';
 import skillReducer from './slice/skillSlide';
 import productReducer from './slice/productSlide';
 import categoryReducer from './slice/categorySlide';
+import tagReducer from './slice/tagSlide';
 
 export const store = configureStore({
   reducer: {
@@ -21,6 +22,7 @@ export const store = configureStore({
     role: roleReducer,
     product: productReducer,
     category: categoryReducer,
+    tag: tagReducer,
     job: jobReducer,
     resume: resumeReducer,
     skill: skillReducer,

@@ -7,7 +7,6 @@ import {
 } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import NotFound from 'components/share/not.found';
-import Loading from 'components/share/loading';
 import LoginPage from 'pages/auth/login';
 import RegisterPage from 'pages/auth/register';
 import LayoutAdmin from 'components/admin/layout.admin';
@@ -18,7 +17,6 @@ import HomePage from 'pages/home';
 import styles from 'styles/app.module.scss';
 import DashboardPage from './pages/admin/dashboard';
 import PermissionPage from './pages/admin/permission';
-import ResumePage from './pages/admin/resume';
 import RolePage from './pages/admin/role';
 import UserPage from './pages/admin/user';
 import { fetchAccount } from './redux/slice/accountSlide';
@@ -27,9 +25,9 @@ import ClientJobPage from './pages/job';
 import ClientJobDetailPage from './pages/job/detail';
 import ClientCompanyPage from './pages/company';
 import ClientCompanyDetailPage from './pages/company/detail';
-import JobTabs from './pages/admin/job/job.tabs';
 import ProductPage from './pages/admin/product';
 import CategoryPage from './pages/admin/category';
+import TagPage from './pages/admin/tag';
 
 const LayoutClient = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -94,33 +92,10 @@ export default function App() {
             </ProtectedRoute>
         },
         {
-          path: "product",
-          element:
-            <ProtectedRoute>
-              <ProductPage />
-            </ProtectedRoute>
-        },
-        {
           path: "user",
           element:
             <ProtectedRoute>
               <UserPage />
-            </ProtectedRoute>
-        },
-
-        {
-          path: "category",
-          element:
-            <ProtectedRoute>
-              <CategoryPage />
-            </ProtectedRoute>
-        },
-
-        {
-          path: "resume",
-          element:
-            <ProtectedRoute>
-              <ResumePage />
             </ProtectedRoute>
         },
         {
@@ -136,7 +111,29 @@ export default function App() {
             <ProtectedRoute>
               <RolePage />
             </ProtectedRoute>
-        }
+        },
+        {
+          path: "product",
+          element:
+            <ProtectedRoute>
+              <ProductPage />
+            </ProtectedRoute>
+        },
+        {
+          path: "category",
+          element:
+            <ProtectedRoute>
+              <CategoryPage />
+            </ProtectedRoute>
+        },
+
+        {
+          path: "tag",
+          element:
+            <ProtectedRoute>
+              <TagPage />
+            </ProtectedRoute>
+        },
       ],
     },
 

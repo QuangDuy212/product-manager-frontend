@@ -1,39 +1,37 @@
-
 import DataTable from "@/components/client/data-table";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { IProduct } from "@/types/backend";
-import { DeleteOutlined, EditOutlined, ExportOutlined, ImportOutlined, PlusOutlined } from "@ant-design/icons";
+import { fetchUser } from "@/redux/slice/userSlide";
+import { ICategory } from "@/types/backend";
+import { DeleteOutlined, EditOutlined, PlusOutlined, EyeOutlined, ExportOutlined, ImportOutlined } from "@ant-design/icons";
 import { ActionType, ProColumns } from '@ant-design/pro-components';
-import { Button, Popconfirm, Space, message, notification } from "antd";
+import { Button, Popconfirm, Space, Tag, message, notification } from "antd";
 import { useState, useRef } from 'react';
 import dayjs from 'dayjs';
-import { callDeleteProduct, callExportProduct } from "@/config/api";
+import { callDeleteCategory, callDeleteTag, callDeleteUser, callExportUser } from "@/config/api";
 import queryString from 'query-string';
 import Access from "@/components/share/access";
 import { ALL_PERMISSIONS } from "@/config/permissions";
 import { sfLike } from "spring-filter-query-builder";
-import { fetchProduct } from "@/redux/slice/productSlide";
-import ModalProduct from "@/components/admin/product/modal.product";
-import { saveAs } from 'file-saver';
-import ModalImportProduct from "@/components/admin/product/modal.product.import";
+import { fetchCategory } from "@/redux/slice/categorySlide";
+import { fetchTag } from "@/redux/slice/tagSlide";
+import ModalTag from "@/components/admin/tag/modal.tag";
 
-const ProductPage = () => {
+const TagPage = () => {
     const [openModal, setOpenModal] = useState<boolean>(false);
-    const [dataInit, setDataInit] = useState<IProduct | null>(null);
+    const [dataInit, setDataInit] = useState<ICategory | null>(null);
+    const [openViewDetail, setOpenViewDetail] = useState<boolean>(false);
     const [openModalImport, setOpenModalImport] = useState<boolean>(false);
-
     const tableRef = useRef<ActionType>();
 
-    const isFetching = useAppSelector(state => state.product.isFetching);
-    const meta = useAppSelector(state => state.product.meta);
-    const products = useAppSelector(state => state.product.result);
+    const isFetching = useAppSelector(state => state.tag.isFetching);
+    const meta = useAppSelector(state => state.tag.meta);
+    const categories = useAppSelector(state => state.tag.result);
     const dispatch = useAppDispatch();
-
-    const handleDeleteCompany = async (id: string | undefined) => {
+    const handleDeleteTag = async (id: string | undefined) => {
         if (id) {
-            const res = await callDeleteProduct(id);
-            if (res && +res.statusCode === 200) {
-                message.success('Xóa Product thành công');
+            const res = await callDeleteTag(id);
+            if (+res.statusCode === 200) {
+                message.success('Xóa tag thành công');
                 reloadTable();
             } else {
                 notification.error({
@@ -44,23 +42,11 @@ const ProductPage = () => {
         }
     }
 
-    const handleExportProduct = async () => {
-        try {
-            const response = await callExportProduct();
-            const filename = 'product_' + Date.now() + '.xlsx';
-            saveAs(response, filename);
-            message.success('Export thành công');
-        } catch (error) {
-            message.error('Export thất bại');
-            console.error('Error during export:', error);
-        }
-    }
-
     const reloadTable = () => {
         tableRef?.current?.reload();
     }
 
-    const columns: ProColumns<IProduct>[] = [
+    const columns: ProColumns<ICategory>[] = [
         {
             title: 'STT',
             key: 'index',
@@ -75,16 +61,20 @@ const ProductPage = () => {
             hideInSearch: true,
         },
         {
+            title: 'Id',
+            dataIndex: '_id',
+            sorter: true,
+        },
+        {
             title: 'Name',
             dataIndex: 'name',
             sorter: true,
         },
         {
-            title: 'ShortDes',
-            dataIndex: 'shortDes',
+            title: 'Description',
+            dataIndex: 'description',
             sorter: true,
         },
-
         {
             title: 'CreatedAt',
             dataIndex: 'createdAt',
@@ -117,7 +107,7 @@ const ProductPage = () => {
             render: (_value, entity, _index, _action) => (
                 <Space>
                     < Access
-                        permission={ALL_PERMISSIONS.PRODUCTS.UPDATE}
+                        permission={ALL_PERMISSIONS.TAGS.UPDATE}
                         hideChildren
                     >
                         <EditOutlined
@@ -132,15 +122,16 @@ const ProductPage = () => {
                             }}
                         />
                     </Access >
+
                     <Access
-                        permission={ALL_PERMISSIONS.PRODUCTS.DELETE}
+                        permission={ALL_PERMISSIONS.TAGS.DELETE}
                         hideChildren
                     >
                         <Popconfirm
                             placement="leftTop"
-                            title={"Xác nhận xóa product"}
-                            description={"Bạn có chắc chắn muốn xóa product này ?"}
-                            onConfirm={() => handleDeleteCompany(entity._id)}
+                            title={"Xác nhận xóa tag"}
+                            description={"Bạn có chắc chắn muốn xóa tag này ?"}
+                            onConfirm={() => handleDeleteTag(entity._id)}
                             okText="Xác nhận"
                             cancelText="Hủy"
                         >
@@ -161,32 +152,25 @@ const ProductPage = () => {
     ];
 
     const buildQuery = (params: any, sort: any, filter: any) => {
-        const clone = { ...params };
         const q: any = {
             page: params.current,
             size: params.pageSize,
             filter: ""
         }
 
-
-
+        const clone = { ...params };
         if (clone.name) q.filter = `${sfLike("name", clone.name)}`;
-        if (clone.address) {
-            q.filter = clone.name ?
-                q.filter + " and " + `${sfLike("address", clone.address)}`
-                : `${sfLike("address", clone.address)}`;
-        }
+        if (clone.description) q.filter = `${sfLike("description", clone.description)}`;
 
         if (!q.filter) delete q.filter;
-
         let temp = queryString.stringify(q);
 
         let sortBy = "";
         if (sort && sort.name) {
             sortBy = sort.name === 'ascend' ? "sort=name,asc" : "sort=name,desc";
         }
-        if (sort && sort.shortDes) {
-            sortBy = sort.shortDes === 'ascend' ? "sort=shortDes,asc" : "sort=shortDes,desc";
+        if (sort && sort.description) {
+            sortBy = sort.description === 'ascend' ? "sort=description,asc" : "sort=description,desc";
         }
         if (sort && sort.createdAt) {
             sortBy = sort.createdAt === 'ascend' ? "sort=createdAt,asc" : "sort=createdAt,desc";
@@ -208,18 +192,18 @@ const ProductPage = () => {
     return (
         <div>
             <Access
-                permission={ALL_PERMISSIONS.PRODUCTS.GET_PAGINATE}
+                permission={ALL_PERMISSIONS.TAGS.GET_PAGINATE}
             >
-                <DataTable<IProduct>
+                <DataTable<ICategory>
                     actionRef={tableRef}
-                    headerTitle="Danh sách Công Ty"
+                    headerTitle="Danh sách tags"
                     rowKey="id"
                     loading={isFetching}
                     columns={columns}
-                    dataSource={products}
+                    dataSource={categories}
                     request={async (params, sort, filter): Promise<any> => {
                         const query = buildQuery(params, sort, filter);
-                        dispatch(fetchProduct({ query }))
+                        dispatch(fetchTag({ query }))
                     }}
                     scroll={{ x: true }}
                     pagination={
@@ -235,59 +219,28 @@ const ProductPage = () => {
                     toolBarRender={(_action, _rows): any => {
                         return (
                             <>
-                                <Access
-                                    permission={ALL_PERMISSIONS.USERS.EXPORT}
+                                <Button
+                                    icon={<PlusOutlined />}
+                                    type="primary"
+                                    onClick={() => setOpenModal(true)}
+                                    style={{ backgroundColor: "green" }}
                                 >
-                                    <Button
-                                        icon={<ExportOutlined />}
-                                        type="primary"
-                                        onClick={() => handleExportProduct()}
-                                    >
-                                        Export
-                                    </Button>
-                                </Access>
-                                <Access
-                                    permission={ALL_PERMISSIONS.USERS.IMPORT}
-                                >
-                                    <Button
-                                        icon={<ImportOutlined />}
-                                        type="primary"
-                                        onClick={() => setOpenModalImport(true)}
-                                    >
-                                        Import
-                                    </Button>
-                                </Access>
-                                <Access
-                                    permission={ALL_PERMISSIONS.PRODUCTS.CREATE}
-                                    hideChildren
-                                >
-                                    <Button
-                                        icon={<PlusOutlined />}
-                                        type="primary"
-                                        onClick={() => setOpenModal(true)}
-                                    >
-                                        Thêm mới
-                                    </Button>
-                                </Access>
+                                    Thêm mới
+                                </Button>
                             </>
                         );
                     }}
                 />
             </Access>
-            <ModalProduct
+            <ModalTag
                 openModal={openModal}
                 setOpenModal={setOpenModal}
                 reloadTable={reloadTable}
                 dataInit={dataInit}
                 setDataInit={setDataInit}
             />
-            <ModalImportProduct
-                openModal={openModalImport}
-                setOpenModal={setOpenModalImport}
-                reloadTable={reloadTable}
-            />
         </div >
     )
 }
 
-export default ProductPage;
+export default TagPage;
