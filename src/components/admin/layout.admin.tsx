@@ -4,12 +4,9 @@ import {
     ExceptionOutlined,
     ApiOutlined,
     UserOutlined,
-    BankOutlined,
     MenuFoldOutlined,
     MenuUnfoldOutlined,
-    AliwangwangOutlined,
     BugOutlined,
-    ScheduleOutlined,
     ClockCircleFilled,
     TagOutlined
 } from '@ant-design/icons';
@@ -23,6 +20,7 @@ import type { MenuProps } from 'antd';
 import { setLogoutAction } from '@/redux/slice/accountSlide';
 import { ALL_PERMISSIONS } from '@/config/permissions';
 import { MdCategory } from "react-icons/md";
+import { FaMoneyBillAlt } from "react-icons/fa";
 
 const { Content, Sider } = Layout;
 
@@ -73,6 +71,11 @@ const LayoutAdmin = () => {
                 && item.method === ALL_PERMISSIONS.USERS.GET_PAGINATE.method
             )
 
+            const viewOrder = permissions?.find(item =>
+                item.apiPath === ALL_PERMISSIONS.ORDERS.GET_PAGINATE.apiPath
+                && item.method === ALL_PERMISSIONS.ORDERS.GET_PAGINATE.method
+            )
+
             const full = [
                 {
                     label: <Link to='/admin'>Dashboard</Link>,
@@ -84,6 +87,11 @@ const LayoutAdmin = () => {
                     label: <Link to='/admin/user'>User</Link>,
                     key: '/admin/user',
                     icon: <UserOutlined />
+                }] : []),
+                ...(viewOrder || ACL_ENABLE === 'false' ? [{
+                    label: <Link to='/admin/order'>Order</Link>,
+                    key: '/admin/order',
+                    icon: <FaMoneyBillAlt />
                 }] : []),
                 ...(viewPermission || ACL_ENABLE === 'false' ? [{
                     label: <Link to='/admin/permission'>Permission</Link>,

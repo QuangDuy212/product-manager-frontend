@@ -1,4 +1,5 @@
-import { IBackendRes, ICompany, IAccount, IUser, IModelPaginate, IGetAccount, IJob, IResume, IPermission, IRole, ISkill, ISubscribers, IString, IProduct, ICreatationProduct, IUpdateProduct, ICategory, ITag } from '@/types/backend';
+import { IOrderCreatationRequest } from './../types/backend.d';
+import { IBackendRes, ICompany, IAccount, IUser, IModelPaginate, IGetAccount, IJob, IResume, IPermission, IRole, ISkill, ISubscribers, IString, IProduct, ICreatationProduct, IUpdateProduct, ICategory, ITag, IOrder } from '@/types/backend';
 import axios from 'config/axios-customize';
 
 /**
@@ -201,6 +202,35 @@ export const callExportUser = () => {
     });
 }
 
+/**
+ * 
+Module Job
+ */
+export const callCeateOrder = (data: IOrderCreatationRequest) => {
+    return axios.post<IBackendRes<IOrder>>('/api/v1/orders', { ...data })
+}
+
+export const callUpdateOrder = (id: string, data: IOrder) => {
+    return axios.put<IBackendRes<IOrder>>(`/api/v1/orders/${id}`, { ...data })
+}
+
+export const callDeleteOrder = (id: string) => {
+    return axios.delete<IBackendRes<IOrder>>(`/api/v1/orders/${id}`);
+}
+
+export const callFetchOrder = (query: string) => {
+    return axios.get<IBackendRes<IModelPaginate<IOrder>>>(`/api/v1/orders?${query}`);
+}
+
+export const callFetchOrderById = (id: string) => {
+    return axios.get<IBackendRes<IOrder>>(`/api/v1/orders/${id}`);
+}
+
+export const callExportOrder = () => {
+    return axios.get('/api/v1/orders/excel/export', {
+        responseType: 'blob', // Nhận dữ liệu dưới dạng file
+    });
+}
 
 
 /**

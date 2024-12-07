@@ -23,18 +23,18 @@ const ViewDetailUser = (props: IProps) => {
             >
                 <Descriptions title="" bordered column={2} layout="vertical">
                     <Descriptions.Item label="Tên hiển thị">{dataInit?.name}</Descriptions.Item>
-                    <Descriptions.Item label="Email">{dataInit?.email}</Descriptions.Item>
+                    <Descriptions.Item label="Username">{dataInit?.username}</Descriptions.Item>
 
-                    <Descriptions.Item label="Giới Tính">{dataInit?.gender}</Descriptions.Item>
-                    <Descriptions.Item label="Tuổi">{dataInit?.age}</Descriptions.Item>
+                    <Descriptions.Item label="Address" >{dataInit?.address}</Descriptions.Item>
 
                     <Descriptions.Item label="Vai trò" >
-                        <Badge status="processing" text={<>{dataInit?.role}</>} />
+                        <Badge status="processing" text={<>{dataInit?.role?.name}</>} />
                     </Descriptions.Item>
-                    <Descriptions.Item label="Địa chỉ" >{dataInit?.address}</Descriptions.Item>
 
-                    <Descriptions.Item label="Ngày tạo">{dataInit && dataInit.createdAt ? dayjs(dataInit.createdAt).format('DD-MM-YYYY HH:mm:ss') : ""}</Descriptions.Item>
-                    <Descriptions.Item label="Ngày sửa">{dataInit && dataInit.updatedAt ? dayjs(dataInit.updatedAt).format('DD-MM-YYYY HH:mm:ss') : ""}</Descriptions.Item>
+                    <Descriptions.Item label="Created At">{dataInit && dataInit.createdAt ? dayjs(dataInit.createdAt).format('DD-MM-YYYY HH:mm:ss') : ""}</Descriptions.Item>
+                    <Descriptions.Item label="Updated At">{dataInit && dataInit.updatedAt ? dayjs(dataInit.updatedAt).format('DD-MM-YYYY HH:mm:ss') : ""}</Descriptions.Item>
+                    <Descriptions.Item label="Created By">{dataInit && dataInit.createdBy ? dataInit.createdBy : ""}</Descriptions.Item>
+                    <Descriptions.Item label="Updated By">{dataInit && dataInit.updatedAt ? dataInit.updatedBy : ""}</Descriptions.Item>
 
                 </Descriptions>
             </Drawer>

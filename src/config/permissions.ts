@@ -17,11 +17,12 @@ export const ALL_PERMISSIONS = {
         UPDATE: { method: "PUT", apiPath: '/api/v1/permissions', module: "PERMISSIONS" },
         DELETE: { method: "DELETE", apiPath: '/api/v1/permissions/{id}', module: "PERMISSIONS" },
     },
-    RESUMES: {
-        GET_PAGINATE: { method: "GET", apiPath: '/api/v1/resumes', module: "RESUMES" },
-        CREATE: { method: "POST", apiPath: '/api/v1/resumes', module: "RESUMES" },
-        UPDATE: { method: "PUT", apiPath: '/api/v1/resumes', module: "RESUMES" },
-        DELETE: { method: "DELETE", apiPath: '/api/v1/resumes/{id}', module: "RESUMES" },
+    ORDERS: {
+        GET_PAGINATE: { method: "GET", apiPath: '/api/v1/orders', module: "ORDERS" },
+        CREATE: { method: "POST", apiPath: '/api/v1/orders', module: "ORDERS" },
+        UPDATE: { method: "PUT", apiPath: '/api/v1/orders', module: "ORDERS" },
+        DELETE: { method: "DELETE", apiPath: '/api/v1/orders/{id}', module: "ORDERS" },
+        EXPORT: { method: "GET", apiPath: '/api/v1/orders/excel/export', module: "ORDERS" },
     },
     ROLES: {
         GET_PAGINATE: { method: "GET", apiPath: '/api/v1/roles', module: "ROLES" },

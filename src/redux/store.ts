@@ -13,11 +13,13 @@ import skillReducer from './slice/skillSlide';
 import productReducer from './slice/productSlide';
 import categoryReducer from './slice/categorySlide';
 import tagReducer from './slice/tagSlide';
+import orderReducer from './slice/orderSlide';
 
 export const store = configureStore({
   reducer: {
     account: accountReducer,
     user: userReducer,
+    order: orderReducer,
     permission: permissionReducer,
     role: roleReducer,
     product: productReducer,

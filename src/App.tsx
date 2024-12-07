@@ -28,6 +28,7 @@ import ClientCompanyDetailPage from './pages/company/detail';
 import ProductPage from './pages/admin/product';
 import CategoryPage from './pages/admin/category';
 import TagPage from './pages/admin/tag';
+import OrderPage from './pages/admin/order';
 
 const LayoutClient = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -132,6 +133,14 @@ export default function App() {
           element:
             <ProtectedRoute>
               <TagPage />
+            </ProtectedRoute>
+        },
+
+        {
+          path: "order",
+          element:
+            <ProtectedRoute>
+              <OrderPage />
             </ProtectedRoute>
         },
       ],

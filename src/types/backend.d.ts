@@ -114,6 +114,42 @@ export interface ITag {
     updatedAt?: string;
 }
 
+export interface IOrder {
+    _id?: string;
+    totalPrice?: number;
+    reciverName?: string;
+    reciverAddress?: string;
+    reciverPhone?: string;
+    status?: string;
+    user?: IUser;
+    orderDetails?: IOrderDetail[];
+    createdAt?: string;
+    updatedAt?: string;
+    createdBy?: string;
+    updatedBy?: string;
+}
+
+export interface IOrderCreatationRequest {
+    totalPrice?: number;
+    reciverName?: string;
+    reciverAddress?: string;
+    reciverPhone?: string;
+    status?: string;
+    userId: string;
+    detail: { _id: string, quantity: number }[]
+}
+
+export interface IOrderDetail {
+    _id?: string;
+    quantity?: number;
+    price?: number;
+    product?: IProduct;
+    createdAt?: string;
+    updatedAt?: string;
+    createdBy?: string;
+    updatedBy?: string;
+}
+
 export interface ISkill {
     id?: string;
     name?: string;
@@ -142,6 +178,7 @@ export interface IUser {
         name: string;
     }
     createdBy?: string;
+    updatedBy?: string;
     isDeleted?: boolean;
     deletedAt?: boolean | null;
     createdAt?: string;
