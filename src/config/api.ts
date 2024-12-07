@@ -80,8 +80,8 @@ export const callFetchCategory = (query: string) => {
     return axios.get<IBackendRes<IModelPaginate<ICategory>>>(`/api/v1/categories?${query}`);
 }
 
-export const callCreateCategory = (name: string) => {
-    return axios.post<IBackendRes<ICategory>>('/api/v1/categories', { name })
+export const callCreateCategory = (data: ICategory) => {
+    return axios.post<IBackendRes<ICategory>>('/api/v1/categories', data)
 }
 
 export const callUpdateCategory = (id: string, data: ICategory) => {

@@ -73,11 +73,10 @@ const ModalProduct = (props: IProps) => {
         if (dataInit?._id && dataInit?.category) {
             const data = {
                 label: dataInit.category.name,
-                value: dataInit.category.name,
-                key: dataInit.category.name,
+                value: dataInit.category._id,
+                key: dataInit.category._id,
             }
             setCategory(data);
-            console.log(">>> check category", category);
         }
 
         if (dataInit?._id && dataInit?.tags) {
@@ -268,7 +267,7 @@ const ModalProduct = (props: IProps) => {
             const temp = list.map(item => {
                 return {
                     label: item.name as string,
-                    value: item.name as string
+                    value: item._id as string
                 }
             })
             // return temp;
@@ -350,7 +349,7 @@ const ModalProduct = (props: IProps) => {
                                         onSearch={(name: any) => fetchCategories(name)}
                                         options={categoryOptions}
                                         onChange={(newValue: any) => {
-                                            setCategory(newValue as ISelect);
+                                            setCategory(newValue?.value ? newValue.value : newValue as ISelect);
                                         }}
                                         style={{ width: '100%' }}
                                     />

@@ -5,11 +5,11 @@ export const ALL_PERMISSIONS = {
         UPDATE: { method: "PUT", apiPath: '/api/v1/categories', module: "CATEGORIES" },
         DELETE: { method: "DELETE", apiPath: '/api/v1/categories/{id}', module: "CATEGORIES" },
     },
-    JOBS: {
-        GET_PAGINATE: { method: "GET", apiPath: '/api/v1/jobs', module: "JOBS" },
-        CREATE: { method: "POST", apiPath: '/api/v1/jobs', module: "JOBS" },
-        UPDATE: { method: "PUT", apiPath: '/api/v1/jobs', module: "JOBS" },
-        DELETE: { method: "DELETE", apiPath: '/api/v1/jobs/{id}', module: "JOBS" },
+    TAGS: {
+        GET_PAGINATE: { method: "GET", apiPath: '/api/v1/tags', module: "TAGS" },
+        CREATE: { method: "POST", apiPath: '/api/v1/tags', module: "TAGS" },
+        UPDATE: { method: "PUT", apiPath: '/api/v1/tags', module: "TAGS" },
+        DELETE: { method: "DELETE", apiPath: '/api/v1/tags/{id}', module: "TAGS" },
     },
     PERMISSIONS: {
         GET_PAGINATE: { method: "GET", apiPath: '/api/v1/permissions', module: "PERMISSIONS" },
@@ -50,7 +50,7 @@ export const ALL_PERMISSIONS = {
 export const ALL_MODULES = {
     PRODUCTS: 'PRODUCTS',
     FILES: 'FILES',
-    JOBS: 'JOBS',
+    TAGS: 'TAGS',
     PERMISSIONS: 'PERMISSIONS',
     RESUMES: 'RESUMES',
     ROLES: 'ROLES',

@@ -10,7 +10,8 @@ import {
     AliwangwangOutlined,
     BugOutlined,
     ScheduleOutlined,
-    ClockCircleFilled
+    ClockCircleFilled,
+    TagOutlined
 } from '@ant-design/icons';
 import { Layout, Menu, Dropdown, Space, message, Avatar, Button } from 'antd';
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
@@ -21,6 +22,7 @@ import { isMobile } from 'react-device-detect';
 import type { MenuProps } from 'antd';
 import { setLogoutAction } from '@/redux/slice/accountSlide';
 import { ALL_PERMISSIONS } from '@/config/permissions';
+import { MdCategory } from "react-icons/md";
 
 const { Content, Sider } = Layout;
 
@@ -51,14 +53,14 @@ const LayoutAdmin = () => {
                 && item.method === ALL_PERMISSIONS.USERS.GET_PAGINATE.method
             )
 
-            const viewJob = permissions?.find(item =>
-                item.apiPath === ALL_PERMISSIONS.JOBS.GET_PAGINATE.apiPath
-                && item.method === ALL_PERMISSIONS.JOBS.GET_PAGINATE.method
+            const viewProduct = permissions?.find(item =>
+                item.apiPath === ALL_PERMISSIONS.PRODUCTS.GET_PAGINATE.apiPath
+                && item.method === ALL_PERMISSIONS.PRODUCTS.GET_PAGINATE.method
             )
 
-            const viewResume = permissions?.find(item =>
-                item.apiPath === ALL_PERMISSIONS.RESUMES.GET_PAGINATE.apiPath
-                && item.method === ALL_PERMISSIONS.RESUMES.GET_PAGINATE.method
+            const viewTag = permissions?.find(item =>
+                item.apiPath === ALL_PERMISSIONS.TAGS.GET_PAGINATE.apiPath
+                && item.method === ALL_PERMISSIONS.TAGS.GET_PAGINATE.method
             )
 
             const viewRole = permissions?.find(item =>
@@ -77,27 +79,11 @@ const LayoutAdmin = () => {
                     key: '/admin',
                     icon: <AppstoreOutlined />
                 },
-                ...(viewCategories || ACL_ENABLE === 'false' ? [{
-                    label: <Link to='/admin/product'>Product</Link>,
-                    key: '/admin/product',
-                    icon: <ClockCircleFilled />,
-                }] : []),
 
                 ...(viewUser || ACL_ENABLE === 'false' ? [{
                     label: <Link to='/admin/user'>User</Link>,
                     key: '/admin/user',
                     icon: <UserOutlined />
-                }] : []),
-                ...(viewJob || ACL_ENABLE === 'false' ? [{
-                    label: <Link to='/admin/job'>Job</Link>,
-                    key: '/admin/job',
-                    icon: <ScheduleOutlined />
-                }] : []),
-
-                ...(viewResume || ACL_ENABLE === 'false' ? [{
-                    label: <Link to='/admin/resume'>Resume</Link>,
-                    key: '/admin/resume',
-                    icon: <AliwangwangOutlined />
                 }] : []),
                 ...(viewPermission || ACL_ENABLE === 'false' ? [{
                     label: <Link to='/admin/permission'>Permission</Link>,
@@ -108,6 +94,21 @@ const LayoutAdmin = () => {
                     label: <Link to='/admin/role'>Role</Link>,
                     key: '/admin/role',
                     icon: <ExceptionOutlined />
+                }] : []),
+                ...(viewProduct || ACL_ENABLE === 'false' ? [{
+                    label: <Link to='/admin/product'>Product</Link>,
+                    key: '/admin/product',
+                    icon: <ClockCircleFilled />,
+                }] : []),
+                ...(viewCategories || ACL_ENABLE === 'false' ? [{
+                    label: <Link to='/admin/category'>Category</Link>,
+                    key: '/admin/category',
+                    icon: <MdCategory />
+                }] : []),
+                ...(viewTag || ACL_ENABLE === 'false' ? [{
+                    label: <Link to='/admin/tag'>Tag</Link>,
+                    key: '/admin/tag',
+                    icon: <TagOutlined />,
                 }] : []),
 
 

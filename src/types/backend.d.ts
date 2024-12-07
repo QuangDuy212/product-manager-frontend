@@ -93,6 +93,7 @@ export interface IUpdateProduct {
 }
 
 export interface ICategory {
+    _id?: string;
     name?: string;
     products?: IProduct[];
     createdBy?: string;
