@@ -1,6 +1,6 @@
-import { callFetchJob } from '@/config/api';
+import { callFetchCategory, callFetchJob } from '@/config/api';
 import { convertSlug, getLocationName } from '@/config/utils';
-import { IJob } from '@/types/backend';
+import { ICategory, IJob } from '@/types/backend';
 import { EnvironmentOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { Card, Col, Empty, Pagination, Row, Spin } from 'antd';
 import { useState, useEffect } from 'react';
@@ -18,10 +18,10 @@ interface IProps {
     showPagination?: boolean;
 }
 
-const JobCard = (props: IProps) => {
+const CategoryCard = (props: IProps) => {
     const { showPagination = false } = props;
 
-    const [displayJob, setDisplayJob] = useState<IJob[] | null>(null);
+    const [displayJob, setDisplayJob] = useState<ICategory[] | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const [current, setCurrent] = useState(1);
@@ -65,7 +65,7 @@ const JobCard = (props: IProps) => {
             query += `&filter=${encodeURIComponent(q)}`;
         }
 
-        const res = await callFetchJob(query);
+        const res = await callFetchCategory(query);
         if (res && res.data) {
             setDisplayJob(res.data.result);
             setTotal(res.data.meta.total)
@@ -85,9 +85,9 @@ const JobCard = (props: IProps) => {
         }
     }
 
-    const handleViewDetailJob = (item: IJob) => {
+    const handleViewDetailJob = (item: ICategory) => {
         const slug = convertSlug(item.name);
-        navigate(`/job/${slug}?id=${item.id}`)
+        navigate(`/category/${slug}?id=${item._id}`)
     }
 
     return (
@@ -97,31 +97,25 @@ const JobCard = (props: IProps) => {
                     <Row gutter={[20, 20]}>
                         <Col span={24}>
                             <div className={isMobile ? styles["dflex-mobile"] : styles["dflex-pc"]}>
-                                <span className={styles["title"]}>Công Việc Mới Nhất</span>
+                                <span className={styles["title"]} style={{ fontSize: "27px" }}>Thể loại sản phẩm nổi bật</span>
                                 {!showPagination &&
-                                    <Link to="job">Xem tất cả</Link>
+                                    <Link to="category">Xem tất cả</Link>
                                 }
                             </div>
                         </Col>
 
                         {displayJob?.map(item => {
                             return (
-                                <Col span={24} md={12} key={item.id}>
+                                <Col span={12} md={8} key={item._id}>
                                     <Card size="small" title={null} hoverable
                                         onClick={() => handleViewDetailJob(item)}
                                     >
                                         <div className={styles["card-job-content"]}>
                                             <div className={styles["card-job-left"]}>
-                                                <img
-                                                    alt="example"
-                                                    src={`${import.meta.env.VITE_BACKEND_URL}/storage/company/${item?.company?.logo}`}
-                                                />
                                             </div>
                                             <div className={styles["card-job-right"]}>
                                                 <div className={styles["job-title"]}>{item.name}</div>
-                                                <div className={styles["job-location"]}><EnvironmentOutlined style={{ color: '#58aaab' }} />&nbsp;{getLocationName(item.location)}</div>
-                                                <div><ThunderboltOutlined style={{ color: 'orange' }} />&nbsp;{(item.salary + "")?.replace(/\B(?=(\d{3})+(?!\d))/g, ',')} đ</div>
-                                                <div className={styles["job-updatedAt"]}>{item.updatedAt ? dayjs(item.updatedAt).locale('en').fromNow() : dayjs(item.createdAt).locale('en').fromNow()}</div>
+                                                {/* <div className={styles["job-updatedAt"]}>{item.updatedAt ? dayjs(item.updatedAt).locale('en').fromNow() : dayjs(item.createdAt).locale('en').fromNow()}</div> */}
                                             </div>
                                         </div>
 
@@ -156,4 +150,4 @@ const JobCard = (props: IProps) => {
     )
 }
 
-export default JobCard;
+export default CategoryCard;

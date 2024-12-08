@@ -164,6 +164,27 @@ export interface IString {
     message: String;
 }
 
+export interface ICartDetail {
+    _id?: string;
+    quantity?: number;
+    price?: number;
+    product?: IProduct;
+    createdBy?: string;
+    updatedBy?: string;
+    createdAt?: string;
+    updatedAt?: string;
+}
+
+export interface ICart {
+    _id?: string;
+    sum?: number;
+    cartDetails?: ICartDetail[];
+    createdBy?: string;
+    updatedBy?: string;
+    createdAt?: string;
+    updatedAt?: string;
+}
+
 
 
 export interface IUser {

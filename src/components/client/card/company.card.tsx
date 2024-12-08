@@ -1,7 +1,7 @@
 
-import { callFetchProduct } from '@/config/api';
+import { callFetchProduct, callSearchProduct } from '@/config/api';
 import { convertSlug } from '@/config/utils';
-import { ICompany } from '@/types/backend';
+import { ICompany, IProduct } from '@/types/backend';
 import { Card, Col, Divider, Empty, Pagination, Row, Spin } from 'antd';
 import { useState, useEffect } from 'react';
 import { isMobile } from 'react-device-detect';
@@ -10,39 +10,47 @@ import styles from 'styles/client.module.scss';
 
 interface IProps {
     showPagination?: boolean;
+    query: string;
+    setQuery: (v: string) => void;
 }
 
 const CompanyCard = (props: IProps) => {
-    const { showPagination = false } = props;
+    const { showPagination = false, query, setQuery } = props;
 
-    const [displayCompany, setDisplayCompany] = useState<ICompany[] | null>(null);
+    const [displayProduct, setDisplayProduct] = useState<IProduct[] | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const [current, setCurrent] = useState(1);
-    const [pageSize, setPageSize] = useState(4);
+    const [pageSize, setPageSize] = useState(100);
     const [total, setTotal] = useState(0);
     const [filter, setFilter] = useState("");
-    const [sortQuery, setSortQuery] = useState("sort=updatedAt,desc");
+    const [sortQuery, setSortQuery] = useState("sort=createdAt,desc");
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetchCompany();
+        if (query)
+            fetchProduct(query, "search");
+    }, [query])
+
+    useEffect(() => {
+        fetchProduct("", "normal");
     }, [current, pageSize, filter, sortQuery]);
 
-    const fetchCompany = async () => {
+    const fetchProduct = async (value: string, type: string) => {
         setIsLoading(true)
-        let query = `page=${current}&size=${pageSize}`;
-        if (filter) {
-            query += `&${filter}`;
-        }
-        if (sortQuery) {
-            query += `&${sortQuery}`;
-        }
-
-        const res = await callFetchProduct(query);
-        if (res && res.data) {
-            setDisplayCompany(res.data.result);
-            setTotal(res.data.meta.total)
+        let queryLocal = query ? `query=${query}page=${current}&size=${pageSize}` : `page=${current}&size=${pageSize}`;
+        if (type == "normal") {
+            const res = await callFetchProduct(queryLocal);
+            if (res && res.data) {
+                setDisplayProduct(res.data.result);
+                setTotal(res.data.meta.total)
+            }
+        } else if (type == "search") {
+            const res = await callSearchProduct(queryLocal);
+            if (res && res.data) {
+                setDisplayProduct(res.data.result);
+                setTotal(res.data.meta.total)
+            }
         }
         setIsLoading(false)
     }
@@ -58,10 +66,10 @@ const CompanyCard = (props: IProps) => {
         }
     }
 
-    const handleViewDetailJob = (item: ICompany) => {
+    const handleViewDetailJob = (item: IProduct) => {
         if (item.name) {
             const slug = convertSlug(item.name);
-            navigate(`/company/${slug}?id=${item.id}`)
+            navigate(`/product/${slug}?id=${item._id}`)
         }
     }
 
@@ -72,38 +80,65 @@ const CompanyCard = (props: IProps) => {
                     <Row gutter={[20, 20]}>
                         <Col span={24}>
                             <div className={isMobile ? styles["dflex-mobile"] : styles["dflex-pc"]}>
-                                <span className={styles["title"]}>Nhà Tuyển Dụng Hàng Đầu</span>
+                                <span className={styles["title"]} style={{ fontSize: "27px" }}>Các sản phẩm mới nhất</span>
                                 {!showPagination &&
-                                    <Link to="company">Xem tất cả</Link>
+                                    <Link to="product">Xem tất cả</Link>
                                 }
                             </div>
                         </Col>
 
-                        {displayCompany?.map(item => {
+                        {displayProduct?.map(item => {
                             return (
-                                <Col span={24} md={6} key={item.id}>
+                                <Col span={24} md={6} key={item._id}>
                                     <Card
                                         onClick={() => handleViewDetailJob(item)}
-                                        style={{ height: 350 }}
+                                        style={{ height: 370 }}
                                         hoverable
                                         cover={
                                             <div className={styles["card-customize"]} >
                                                 <img
                                                     style={{ maxWidth: "200px" }}
                                                     alt="example"
-                                                    src={`${import.meta.env.VITE_BACKEND_URL}/storage/company/${item?.logo}`}
+                                                    src={item.thumbnail}
                                                 />
                                             </div>
                                         }
                                     >
                                         <Divider />
                                         <h3 style={{ textAlign: "center" }}>{item.name}</h3>
+                                        {
+                                            item.discount > 0
+                                                ?
+                                                <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                                                    <span style={{
+                                                        color: "#d70018",
+                                                        fontWeight: 600,
+                                                        fontSize: "16px"
+                                                    }}>{item.price - item.discount} đ</span>
+                                                    <span style={{
+                                                        marginLeft: "10px",
+                                                        textDecoration: "line-through",
+                                                        fontWeight: 600,
+                                                        fontSize: "16px",
+                                                        color: "#707070"
+                                                    }}>{item.price} đ</span>
+                                                </div>
+                                                :
+                                                <div
+                                                    style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                                                    <span style={{
+                                                        marginLeft: "10px",
+                                                        fontWeight: 600,
+                                                        fontSize: "16px",
+                                                    }}>{item.price} đ</span>
+                                                </div>
+                                        }
                                     </Card>
                                 </Col>
                             )
                         })}
 
-                        {(!displayCompany || displayCompany && displayCompany.length === 0)
+                        {(!displayProduct || displayProduct && displayProduct.length === 0)
                             && !isLoading &&
                             <div className={styles["empty"]}>
                                 <Empty description="Không có dữ liệu" />

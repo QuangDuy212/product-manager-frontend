@@ -1,4 +1,4 @@
-import { IOrderCreatationRequest } from './../types/backend.d';
+import { ICart, IOrderCreatationRequest } from './../types/backend.d';
 import { IBackendRes, ICompany, IAccount, IUser, IModelPaginate, IGetAccount, IJob, IResume, IPermission, IRole, ISkill, ISubscribers, IString, IProduct, ICreatationProduct, IUpdateProduct, ICategory, ITag, IOrder } from '@/types/backend';
 import axios from 'config/axios-customize';
 
@@ -24,6 +24,23 @@ export const callRefreshToken = () => {
 
 export const callLogout = () => {
     return axios.post<IBackendRes<string>>('/api/v1/auth/logout')
+}
+
+/**
+ * 
+Module Cart
+ */
+
+export const callFetchCart = () => {
+    return axios.get<IBackendRes<ICart>>(`/api/v1/carts`);
+}
+
+export const callAddAProductToCart = (data: { productId: string; quantity: number }) => {
+    return axios.post<IBackendRes<ICart>>(`/api/v1/carts/add`, data);
+}
+
+export const callDeleteACartDetail = (id: string) => {
+    return axios.post<IBackendRes<ICart>>(`/api/v1/carts/delete/${id}`)
 }
 
 /**
@@ -73,6 +90,10 @@ export const callFetchProductById = (id: string) => {
     return axios.get<IBackendRes<IProduct>>(`/api/v1/products/${id}`);
 }
 
+export const callFetchProductByCategory = (id: string) => {
+    return axios.get<IBackendRes<IModelPaginate<IProduct>>>(`/api/v1/products/category/${id}`);
+}
+
 export const callImportProduct = (file: any) => {
     const formData = new FormData();
     formData.append("file", file);
@@ -90,6 +111,10 @@ export const callExportProduct = () => {
     });
 }
 
+
+export const callSearchProduct = (query: string) => {
+    return axios.get(`/api/v1/products/search?${query}`)
+}
 
 
 /**

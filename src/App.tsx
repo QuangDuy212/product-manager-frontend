@@ -22,13 +22,14 @@ import UserPage from './pages/admin/user';
 import { fetchAccount } from './redux/slice/accountSlide';
 import LayoutApp from './components/share/layout.app';
 import ClientJobPage from './pages/job';
-import ClientJobDetailPage from './pages/job/detail';
 import ClientCompanyPage from './pages/company';
 import ClientCompanyDetailPage from './pages/company/detail';
 import ProductPage from './pages/admin/product';
 import CategoryPage from './pages/admin/category';
 import TagPage from './pages/admin/tag';
 import OrderPage from './pages/admin/order';
+import ClientCategoryPage from './pages/job/detail';
+import CategoryDetailPage from './pages/category/category.detail';
 
 const LayoutClient = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -74,10 +75,10 @@ export default function App() {
       errorElement: <NotFound />,
       children: [
         { index: true, element: <HomePage /> },
-        { path: "job", element: <ClientJobPage /> },
-        { path: "job/:id", element: <ClientJobDetailPage /> },
-        { path: "company", element: <ClientCompanyPage /> },
-        { path: "company/:id", element: <ClientCompanyDetailPage /> }
+        { path: "category", element: <ClientJobPage /> },
+        { path: "category/:id", element: <CategoryDetailPage /> },
+        { path: "product", element: <ClientCompanyPage /> },
+        { path: "product/:id", element: <ClientCompanyDetailPage /> }
       ],
     },
 

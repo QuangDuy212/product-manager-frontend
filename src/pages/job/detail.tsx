@@ -1,7 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect } from 'react';
-import { IJob } from "@/types/backend";
-import { callFetchJobById } from "@/config/api";
+import { ICategory, IJob } from "@/types/backend";
+import { callFetchCategoryById, callFetchJobById } from "@/config/api";
 import styles from 'styles/client.module.scss';
 import parse from 'html-react-parser';
 import { Col, Divider, Row, Skeleton, Tag } from "antd";
@@ -13,8 +13,8 @@ import ApplyModal from "@/components/client/modal/apply.modal";
 dayjs.extend(relativeTime)
 
 
-const ClientJobDetailPage = (props: any) => {
-    const [jobDetail, setJobDetail] = useState<IJob | null>(null);
+const ClientCategoryPage = (props: any) => {
+    const [categoryDetail, setCategoryDetail] = useState<ICategory | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -27,9 +27,9 @@ const ClientJobDetailPage = (props: any) => {
         const init = async () => {
             if (id) {
                 setIsLoading(true)
-                const res = await callFetchJobById(id);
+                const res = await callFetchCategoryById(id);
                 if (res?.data) {
-                    setJobDetail(res.data)
+                    setCategoryDetail(res.data)
                 }
                 setIsLoading(false)
             }
@@ -43,11 +43,11 @@ const ClientJobDetailPage = (props: any) => {
                 <Skeleton />
                 :
                 <Row gutter={[20, 20]}>
-                    {jobDetail && jobDetail.id &&
+                    {categoryDetail && categoryDetail._id &&
                         <>
                             <Col span={24} md={16}>
                                 <div className={styles["header"]}>
-                                    {jobDetail.name}
+                                    {categoryDetail.name}
                                 </div>
                                 <div>
                                     <button
@@ -57,7 +57,7 @@ const ClientJobDetailPage = (props: any) => {
                                 </div>
                                 <Divider />
                                 <div className={styles["skills"]}>
-                                    {jobDetail?.skills?.map((item, index) => {
+                                    {categoryDetail?.products?.map((item, index) => {
                                         return (
                                             <Tag key={`${index}-key`} color="gold" >
                                                 {item.name}
@@ -67,29 +67,23 @@ const ClientJobDetailPage = (props: any) => {
                                 </div>
                                 <div className={styles["salary"]}>
                                     <DollarOutlined />
-                                    <span>&nbsp;{(jobDetail.salary + "")?.replace(/\B(?=(\d{3})+(?!\d))/g, ',')} đ</span>
+                                    {/* <span>&nbsp;{(categoryDetail.salary + "")?.replace(/\B(?=(\d{3})+(?!\d))/g, ',')} đ</span> */}
                                 </div>
                                 <div className={styles["location"]}>
-                                    <EnvironmentOutlined style={{ color: '#58aaab' }} />&nbsp;{getLocationName(jobDetail.location)}
+                                    {/* <EnvironmentOutlined style={{ color: '#58aaab' }} />&nbsp;{getLocationName(categoryDetail.location)} */}
                                 </div>
                                 <div>
-                                    <HistoryOutlined /> {jobDetail.updatedAt ? dayjs(jobDetail.updatedAt).locale("en").fromNow() : dayjs(jobDetail.createdAt).locale("en").fromNow()}
+                                    <HistoryOutlined /> {categoryDetail.updatedAt ? dayjs(categoryDetail.updatedAt).locale("en").fromNow() : dayjs(categoryDetail.createdAt).locale("en").fromNow()}
                                 </div>
                                 <Divider />
-                                {parse(jobDetail.description)}
+                                {/* {parse(categoryDetail.description)} */}
                             </Col>
 
                             <Col span={24} md={8}>
                                 <div className={styles["company"]}>
                                     <div>
-                                        <img
-                                            width={"200px"}
-                                            alt="example"
-                                            src={`${import.meta.env.VITE_BACKEND_URL}/storage/company/${jobDetail.company?.logo}`}
-                                        />
                                     </div>
                                     <div>
-                                        {jobDetail.company?.name}
                                     </div>
                                 </div>
                             </Col>
@@ -97,12 +91,7 @@ const ClientJobDetailPage = (props: any) => {
                     }
                 </Row>
             }
-            <ApplyModal
-                isModalOpen={isModalOpen}
-                setIsModalOpen={setIsModalOpen}
-                jobDetail={jobDetail}
-            />
         </div>
     )
 }
-export default ClientJobDetailPage;
+export default ClientCategoryPage;

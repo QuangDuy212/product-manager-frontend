@@ -14,10 +14,12 @@ import productReducer from './slice/productSlide';
 import categoryReducer from './slice/categorySlide';
 import tagReducer from './slice/tagSlide';
 import orderReducer from './slice/orderSlide';
+import cartReducer from './slice/cartSlide';
 
 export const store = configureStore({
   reducer: {
     account: accountReducer,
+    cart: cartReducer,
     user: userReducer,
     order: orderReducer,
     permission: permissionReducer,
