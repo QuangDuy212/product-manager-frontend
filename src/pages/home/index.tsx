@@ -19,6 +19,7 @@ import HomeSlick from './home.slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import ProductByCategory from './product.by.category';
+import Categories from './categories.list';
 const HomePage = () => {
     const navigate = useNavigate();
     const location = useLocation();
@@ -80,10 +81,6 @@ const HomePage = () => {
         }
     }
 
-    const fetchProductByCategory = async (value: string, type: string) => {
-
-    }
-
 
     return (
         <div className={`${styles["container"]} ${styles["home-section"]}`} style={{ marginTop: "80px" }}>
@@ -111,6 +108,8 @@ const HomePage = () => {
                 setQuery={setQuery}
             />
             <div style={{ margin: 50 }}></div>
+            <Divider />
+            <Categories data={categories ?? []} />
             <Divider />
             {/* <CategoryCard /> */}
             {categories && categories.map(i => <ProductByCategory id={i._id} name={i?.name ? i.name : ""} />)}

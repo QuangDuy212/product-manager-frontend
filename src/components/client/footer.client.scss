@@ -1,0 +1,32 @@
+.footer-container {
+    padding: 60px 0;
+
+    .footer-line {
+        display        : flex;
+        justify-content: space-between;
+
+        .footer-content {
+            text-align: left;
+
+            &__title {
+                color      : #fff;
+                font-size  : 16px;
+                font-weight: 600;
+            }
+
+            &__level2 {
+                color      : #fff;
+                font-size  : 15px;
+                font-weight: 300;
+                margin-top : 10px;
+            }
+
+            &__normal {
+                color      : #fff;
+                font-size  : 14px;
+                font-weight: 200;
+                margin-top : 10px;
+            }
+        }
+    }
+}
