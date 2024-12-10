@@ -14,7 +14,10 @@ import { isMobile } from 'react-device-detect';
 import { Link } from 'react-router-dom';
 import CategoryCard from '@/components/client/card/category.card';
 import CompanyCard from '@/components/client/card/company.card';
-
+import Slider from 'react-slick';
+import HomeSlick from './home.slick';
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 const HomePage = () => {
     const navigate = useNavigate();
     const location = useLocation();
@@ -81,13 +84,35 @@ const HomePage = () => {
         }
     }
 
+    const settings = {
+        dots: true,
+        infinite: true,
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        autoplay: true,
+        speed: 2000,
+        autoplaySpeed: 2000,
+        cssEase: "linear"
+    };
     return (
         <div className={`${styles["container"]} ${styles["home-section"]}`}>
-            <div className="search-content" style={{ marginTop: 20 }}>
-                <SearchClient
-                    query={query}
-                    setQuery={setQuery}
-                />
+            <div style={{ marginTop: "20px" }}>
+                <Row gutter={[20, 20]}>
+                    <Col xl={18} md={0} xs={0}>
+                        <HomeSlick />
+                    </Col>
+
+                    <Col xl={6} md={0} xs={0}>
+                        <div style={{ width: "100%", height: "190px", backgroundColor: "#000" }}>
+                            <img src='./../../../public/img/advest7.avif' style={{ width: "100%", height: "100%", objectFit: "contain" }} />
+                        </div>
+
+                        <div style={{ width: "100%", height: "190px", backgroundColor: "#000", marginTop: "20px" }}>
+                            <img src='./../../../public/img/advest8.jpg' style={{ width: "100%", height: "100%", objectFit: "contain" }} />
+                        </div>
+                    </Col>
+
+                </Row>
             </div>
             <Divider />
             <CompanyCard
@@ -97,6 +122,7 @@ const HomePage = () => {
             <div style={{ margin: 50 }}></div>
             <Divider />
             <CategoryCard />
+
         </div>
     )
 }

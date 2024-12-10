@@ -30,6 +30,11 @@ import TagPage from './pages/admin/tag';
 import OrderPage from './pages/admin/order';
 import ClientCategoryPage from './pages/job/detail';
 import CategoryDetailPage from './pages/category/category.detail';
+import ClientDetailProduct from './pages/product/detail';
+import ConfirmOrder from './pages/order/confirm.order';
+import "./assets/styles/index.scss"
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const LayoutClient = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -78,7 +83,8 @@ export default function App() {
         { path: "category", element: <ClientJobPage /> },
         { path: "category/:id", element: <CategoryDetailPage /> },
         { path: "product", element: <ClientCompanyPage /> },
-        { path: "product/:id", element: <ClientCompanyDetailPage /> }
+        { path: "product/:id", element: <ClientDetailProduct /> },
+        { path: "cart", element: <ConfirmOrder /> }
       ],
     },
 

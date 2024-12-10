@@ -1,0 +1,131 @@
+@import "react-image-gallery/styles/scss/image-gallery.scss";
+
+.container {
+
+    .content {
+        background-color: #fff;
+        margin          : 0 auto;
+        padding         : 40px;
+        border-radius   : 5px;
+        margin-top      : 60px;
+
+        .viewdetail__info {
+            &--name {
+                height            : 50px;
+                display           : -webkit-box;
+                text-overflow     : ellipsis;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 2;
+                font-size         : 20px;
+                font-weight       : 500;
+                line-height       : 24px;
+                margin            : 0;
+                max-height        : 48px;
+                max-width         : 665px;
+                overflow          : hidden;
+                overflow-wrap     : break-word;
+                vertical-align    : sub;
+                margin-bottom     : 10px;
+            }
+
+            &--author {
+                margin-bottom: 10px;
+            }
+
+            &--rate {
+                margin-bottom: 10px;
+            }
+
+
+            &--price {
+                margin-bottom: 10px;
+
+                color      : #6da4e8;
+                font-size  : 1.875rem;
+                font-weight: 500;
+            }
+
+            &--transport {
+                margin-bottom: 10px;
+                display      : flex;
+                align-items  : center;
+
+                .text1 {
+                    color         : #757575;
+                    flex-shrink   : 0;
+                    font-size     : inherit;
+                    font-weight   : 400;
+                    margin        : 0;
+                    text-transform: capitalize;
+                    width         : 110px;
+                    margin-right  : 20px;
+                }
+
+                .text2 {
+                    display        : flex;
+                    justify-content: center;
+                    align-items    : center;
+                }
+            }
+
+            &--quantity {
+                margin-bottom: 10px;
+
+                .text1 {
+                    color         : #757575;
+                    flex-shrink   : 0;
+                    font-size     : inherit;
+                    font-weight   : 400;
+                    margin        : 0;
+                    text-transform: capitalize;
+                    width         : 110px;
+                    margin-right  : 75px;
+                }
+            }
+
+            &--btn {
+                display        : flex;
+                justify-content: center;
+                align-items    : center;
+                margin-top     : 60px;
+                gap            : 20px;
+
+                .add {
+                    display        : flex;
+                    justify-content: center;
+                    align-items    : center;
+                    min-width      : 200px;
+                    height         : 48px;
+                    background     : rgba(255, 87, 34, .1);
+                    background     : #d5e2f3;
+                    border         : 1px solid #6da4e8;
+                    box-shadow     : 0 1px 1px 0 rgba(0, 0, 0, .03);
+                    color          : #6da4e8;
+                    outline        : 0;
+                    overflow       : visible;
+                    position       : relative;
+                }
+
+                .buy {
+                    min-width : 200px;
+                    height    : 48px;
+                    background: #6da4e8;
+                    color     : #fff;
+                    outline   : 0;
+                    overflow  : visible;
+                    position  : relative;
+                }
+            }
+        }
+    }
+}
+
+.origintal-image {
+    cursor: pointer;
+}
+
+
+
+.thumbnail-image {
+    cursor: pointer;
+}

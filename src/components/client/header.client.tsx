@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { CodeOutlined, ContactsOutlined, DownOutlined, FireOutlined, LogoutOutlined, MenuFoldOutlined, RiseOutlined, ShoppingCartOutlined, TwitterOutlined } from '@ant-design/icons';
-import { Avatar, Badge, Button, Divider, Drawer, Dropdown, Image, MenuProps, Space, message, theme } from 'antd';
+import { Avatar, Badge, Button, Divider, Drawer, Dropdown, Empty, Image, MenuProps, Space, message, theme } from 'antd';
 import { Menu, ConfigProvider } from 'antd';
 import styles from '@/styles/client.module.scss';
 import { isMobile } from 'react-device-detect';
@@ -8,10 +8,11 @@ import { FaReact } from 'react-icons/fa';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
-import { callLogout } from '@/config/api';
+import { callFetchCart, callLogout } from '@/config/api';
 import { setLogoutAction } from '@/redux/slice/accountSlide';
 import ManageAccount from './modal/manage.account';
 import { fetchCart } from '@/redux/slice/cartSlide';
+import { ICart } from '@/types/backend';
 
 const Header = (props: any) => {
     const navigate = useNavigate();
@@ -20,6 +21,7 @@ const Header = (props: any) => {
     const isAuthenticated = useAppSelector(state => state.account.isAuthenticated);
     const user = useAppSelector(state => state.account.user);
     const dataCart = useAppSelector(state => state.cart.cart);
+    const [cartState, setCartState] = useState<ICart>();
     const [openMobileMenu, setOpenMobileMenu] = useState<boolean>(false);
 
     const [current, setCurrent] = useState('home');
@@ -34,6 +36,13 @@ const Header = (props: any) => {
     useEffect(() => {
         setCurrent(location.pathname);
     }, [location])
+
+    const fetchCartState = async () => {
+        const res = await callFetchCart();
+        if (res.statusCode == 200) {
+            setCartState(res.data);
+        }
+    }
 
     const items: MenuProps['items'] = [
         {
@@ -57,19 +66,25 @@ const Header = (props: any) => {
 
     const cart: MenuProps['items'] =
         dataCart?.cartDetails?.map((i, index) => {
-            return {
-                key: index + 1,
-                label: (
-                    <div onClick={() => navigate('/cart')}
-                        style={{ display: "flex", justifyContent: "space-between" }}
-                    >
-                        <Image src={i?.product?.thumbnail} width={50} height={50} />
-                        <div style={{ minWidth: "200px", display: "flex", justifyContent: "center", alignItems: "center" }}>{i?.product?.name}</div>
-                        <div style={{ minWidth: "50px", display: "flex", justifyContent: "center", alignItems: "center" }}>{i?.quantity}</div>
-                    </div>
-                ),
-            }
-        });
+            if (index < 5)
+                return {
+                    key: index + 1,
+                    label: (
+                        <div onClick={() => navigate('/cart')}
+                            style={{ display: "flex", justifyContent: "space-between" }}
+                        >
+                            <Image src={i?.product?.thumbnail} width={50} height={50} />
+                            <div style={{ minWidth: "200px", display: "flex", justifyContent: "center", alignItems: "center" }}>{i?.product?.name}</div>
+                            <div style={{ minWidth: "50px", display: "flex", justifyContent: "center", alignItems: "center" }}>{i.quantity}</div>
+                        </div>
+                    ),
+                }
+            else
+                return <></>
+        })
+
+
+        ;
     const { token } = useToken();
 
     const contentStyle: React.CSSProperties = {
@@ -128,7 +143,7 @@ const Header = (props: any) => {
 
     return (
         <>
-            <div className={styles["header-section"]}>
+            <div className={styles["header-section"]} style={{ padding: "10px 0" }}>
                 <div className={styles["container"]}>
                     {!isMobile ?
                         <div style={{ display: "flex", gap: 30 }}>
@@ -158,32 +173,35 @@ const Header = (props: any) => {
                                         <Link to={'/login'}>Đăng Nhập</Link>
                                         :
                                         <div style={{ display: "flex", alignItems: "center" }}>
-                                            <Dropdown
-                                                menu={{ items: cart }}
-                                                placement="bottomRight"
-                                                dropdownRender={(menu) => (
-                                                    <div style={contentStyle}>
-                                                        {React.cloneElement(menu as React.ReactElement, { style: menuStyle })}
-                                                        <Divider style={{ margin: 0 }} />
-                                                        <Space style={{ padding: 8, display: "flex", justifyContent: "end" }}
-                                                        >
-                                                            <Button type="primary"
-                                                                onClick={() => navigate('/cart')}
-                                                            >Xem giỏ hàng</Button>
-                                                        </Space>
-                                                    </div>
-                                                )}
-                                            >
-                                                <span onClick={(e) => e.preventDefault()}
-                                                    style={{ marginRight: "20px", display: "flex", alignItems: "center", justifyContent: "center" }}
+                                            {dataCart && dataCart?.cartDetails && dataCart?.cartDetails?.length > 0 &&
+                                                <Dropdown
+                                                    menu={{
+                                                        items: cart
+                                                    }}
+                                                    placement="bottomRight"
+                                                    dropdownRender={(menu) => (
+                                                        <div style={contentStyle}>
+                                                            {React.cloneElement(menu as React.ReactElement, { style: menuStyle })}
+                                                            <Divider style={{ margin: 0 }} />
+                                                            <Space style={{ padding: 8, display: "flex", justifyContent: "end" }}
+                                                            >
+                                                                <Button type="primary"
+                                                                    onClick={() => navigate('/cart')}
+                                                                >Xem giỏ hàng</Button>
+                                                            </Space>
+                                                        </div>
+                                                    )}
                                                 >
-                                                    <Space>
-                                                        <Badge count={dataCart?.sum ? dataCart.sum : 0}>
-                                                            <ShoppingCartOutlined style={{ fontSize: "30px" }} />
-                                                        </Badge>
-                                                    </Space>
-                                                </span>
-                                            </Dropdown>
+                                                    <span onClick={(e) => e.preventDefault()}
+                                                        style={{ marginRight: "20px", display: "flex", alignItems: "center", justifyContent: "center" }}
+                                                    >
+                                                        <Space>
+                                                            <Badge count={dataCart?.sum ? dataCart.sum : 0}>
+                                                                <ShoppingCartOutlined style={{ fontSize: "30px" }} />
+                                                            </Badge>
+                                                        </Space>
+                                                    </span>
+                                                </Dropdown>}
                                             <Dropdown menu={{ items: itemsDropdown }} trigger={['click']}>
                                                 <Space style={{ cursor: "pointer" }}>
                                                     <span>Welcome {user?.name}</span>

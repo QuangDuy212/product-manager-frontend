@@ -1,8 +1,8 @@
 .container {
     padding-right: 15px;
-    padding-left: 15px;
-    margin-right: auto;
-    margin-left: auto;
+    padding-left : 15px;
+    margin-right : auto;
+    margin-left  : auto;
 }
 
 @media (min-width: 768px) {
@@ -30,20 +30,20 @@
     }
 
     ::-webkit-scrollbar-button {
-        width: 8px;
+        width : 8px;
         height: 5px;
     }
 
     ::-webkit-scrollbar-track {
-        background: rgb(255, 255, 255);
-        border: thin solid rgb(238, 238, 238);
-        box-shadow: 0px 0px 3px #dfdfdf inset;
+        background   : rgb(255, 255, 255);
+        border       : thin solid rgb(238, 238, 238);
+        box-shadow   : 0px 0px 3px #dfdfdf inset;
         border-radius: 10px;
     }
 
     ::-webkit-scrollbar-thumb {
-        background: #ccc;
-        border: thin solid #ccc;
+        background   : #ccc;
+        border       : thin solid #ccc;
         border-radius: 10px;
     }
 
@@ -68,43 +68,43 @@
 @keyframes spin {
     100% {
         -webkit-transform: rotate(360deg);
-        transform: rotate(360deg);
+        transform        : rotate(360deg);
     }
 }
 
 .header-section {
-    display: block;
-    width: 100%;
-    height: 55px;
+    display         : block;
+    width           : 100%;
+    height          : 55px;
     background-color: #222831;
 
     .brand {
-        display: flex;
-        align-items: center;
+        display        : flex;
+        align-items    : center;
         justify-content: center;
 
         svg {
-            cursor: pointer;
-            color: #1677ff;
-            font-size: 30px;
+            cursor    : pointer;
+            color     : #1677ff;
+            font-size : 30px;
             margin-top: 7px;
-            animation: spin 20s linear infinite;
+            animation : spin 20s linear infinite;
         }
     }
 
     .top-menu {
-        display: flex;
+        display        : flex;
         justify-content: space-between;
-        align-items: center;
-        width: 100%;
+        align-items    : center;
+        width          : 100%;
 
         .extra {
 
             a,
             span {
-                cursor: pointer;
-                display: block;
-                color: #a7a7a7;
+                cursor         : pointer;
+                display        : block;
+                color          : #a7a7a7;
                 text-decoration: none;
 
                 &:hover {
@@ -115,46 +115,46 @@
     }
 
     .header-mobile {
-        display: flex;
+        display        : flex;
         justify-content: space-between;
-        align-items: center;
-        height: 55px;
-        color: white;
+        align-items    : center;
+        height         : 55px;
+        color          : white;
     }
 }
 
 .card-job-section {
     .empty {
-        display: flex;
+        display        : flex;
         justify-content: center;
-        width: 100%;
-        padding: 50px;
+        width          : 100%;
+        padding        : 50px;
     }
 
     .dflex-mobile {
-        display: flex;
+        display       : flex;
         flex-direction: column;
     }
 
     .dflex-pc {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
+        display        : flex;
+        flex-direction : row;
+        align-items    : center;
         justify-content: space-between;
     }
 
     .job-content {
         .card-job-content {
             display: flex;
-            width: 100%;
-            gap: 10px;
+            width  : 100%;
+            gap    : 10px;
 
             .card-job-left {
-                width: 70px;
+                width : 70px;
                 margin: 0 auto;
 
                 img {
-                    width: 50px;
+                    width : 50px;
                     height: 50px;
                 }
             }
@@ -163,16 +163,16 @@
                 width: 100%;
 
                 .job-title {
-                    overflow: hidden;
-                    color: #353535;
-                    font-weight: 600;
-                    text-overflow: ellipsis;
-                    text-align: left;
-                    margin-bottom: 10px;
-                    line-height: 1.3;
-                    transition: .2s all;
-                    font-size: 17px;
-                    display: -webkit-box;
+                    overflow          : hidden;
+                    color             : #353535;
+                    font-weight       : 600;
+                    text-overflow     : ellipsis;
+                    text-align        : left;
+                    margin-bottom     : 10px;
+                    line-height       : 1.3;
+                    transition        : .2s all;
+                    font-size         : 17px;
+                    display           : -webkit-box;
                     -webkit-line-clamp: 2;
                     -webkit-box-orient: vertical;
                 }
@@ -183,8 +183,8 @@
 
                 .job-updatedAt {
                     display: block;
-                    float: right;
-                    color: #919191;
+                    float  : right;
+                    color  : #919191;
                 }
             }
         }
@@ -197,7 +197,7 @@
 
         .card-customize {
             height: 200px;
-            width: 200px;
+            width : 200px;
             margin: 20px auto;
         }
     }
@@ -208,55 +208,55 @@
 .home-section {
 
     .empty {
-        display: flex;
+        display        : flex;
         justify-content: center;
-        width: 100%;
-        padding: 50px;
+        width          : 100%;
+        padding        : 50px;
     }
 
     .dflex-mobile {
-        display: flex;
+        display       : flex;
         flex-direction: column;
     }
 
     .dflex-pc {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
+        display        : flex;
+        flex-direction : row;
+        align-items    : center;
         justify-content: space-between;
     }
 
     .title {
-        font-size: 27px;
-        font-family: "Roboto", sans-serif;
-        color: #353535;
-        line-height: 35px;
-        margin-top: 20px;
-        margin-bottom: 20px;
+        font-size     : 27px;
+        // font-family: "Roboto", sans-serif;
+        color         : #353535;
+        line-height   : 35px;
+        margin-top    : 20px;
+        margin-bottom : 20px;
     }
 }
 
 .detail-job-section {
     .header {
-        margin: 20px 0;
-        color: #353535;
+        margin   : 20px 0;
+        color    : #353535;
         font-size: 27px;
     }
 
     .btn-apply {
-        width: 100%;
-        cursor: pointer;
-        text-align: center;
-        color: #fff;
-        text-decoration: none;
+        width                 : 100%;
+        cursor                : pointer;
+        text-align            : center;
+        color                 : #fff;
+        text-decoration       : none;
         -webkit-font-smoothing: antialiased;
-        font-size: 20px;
-        padding: 10px 15px;
-        border: 0;
-        border-radius: 5px;
-        background-color: #ea1e30;
+        font-size             : 20px;
+        padding               : 10px 15px;
+        border                : 0;
+        border-radius         : 5px;
+        background-color      : #ea1e30;
         -webkit-font-smoothing: antialiased;
-        outline: 0;
+        outline               : 0;
 
         &:hover {
             background-color: #d82727;
@@ -272,10 +272,10 @@
     }
 
     h2 {
-        font-size: 23px;
-        color: #353535;
+        font-size  : 23px;
+        color      : #353535;
         font-weight: 400;
-        margin: 25px 0 0;
+        margin     : 25px 0 0;
     }
 
     ul {
@@ -287,21 +287,21 @@
     }
 
     p {
-        color: #3a3a3a;
-        font-size: 16px;
+        color      : #3a3a3a;
+        font-size  : 16px;
         line-height: 1.7em;
-        width: 100%;
+        width      : 100%;
         line-height: 2em;
     }
 
     .company {
-        margin: 20px 0;
-        color: #353535;
-        font-size: 27px;
-        display: flex;
-        flex-direction: column;
+        margin         : 20px 0;
+        color          : #353535;
+        font-size      : 27px;
+        display        : flex;
+        flex-direction : column;
         justify-content: center;
-        width: 100%;
-        align-items: center;
+        width          : 100%;
+        align-items    : center;
     }
 }

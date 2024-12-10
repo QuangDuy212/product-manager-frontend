@@ -7,6 +7,7 @@ import { useState, useEffect } from 'react';
 import { isMobile } from 'react-device-detect';
 import { Link, useNavigate } from 'react-router-dom';
 import styles from 'styles/client.module.scss';
+import './company.card.scss'
 
 interface IProps {
     showPagination?: boolean;
@@ -89,51 +90,27 @@ const CompanyCard = (props: IProps) => {
 
                         {displayProduct?.map(item => {
                             return (
-                                <Col span={24} md={6} key={item._id}>
-                                    <Card
+                                <Col span={12} md={4} key={item._id}>
+                                    <div className='product-card'
+                                        style={{ overflow: "hidden", border: "1px solid #f2f2f2", borderRadius: "4px" }}
                                         onClick={() => handleViewDetailJob(item)}
-                                        style={{ height: 370 }}
-                                        hoverable
-                                        cover={
-                                            <div className={styles["card-customize"]} >
-                                                <img
-                                                    style={{ maxWidth: "200px" }}
-                                                    alt="example"
-                                                    src={item.thumbnail}
-                                                />
-                                            </div>
-                                        }
                                     >
-                                        <Divider />
-                                        <h3 style={{ textAlign: "center" }}>{item.name}</h3>
-                                        {
-                                            item.discount > 0
-                                                ?
-                                                <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-                                                    <span style={{
-                                                        color: "#d70018",
-                                                        fontWeight: 600,
-                                                        fontSize: "16px"
-                                                    }}>{item.price - item.discount} đ</span>
-                                                    <span style={{
-                                                        marginLeft: "10px",
-                                                        textDecoration: "line-through",
-                                                        fontWeight: 600,
-                                                        fontSize: "16px",
-                                                        color: "#707070"
-                                                    }}>{item.price} đ</span>
-                                                </div>
-                                                :
-                                                <div
-                                                    style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-                                                    <span style={{
-                                                        marginLeft: "10px",
-                                                        fontWeight: 600,
-                                                        fontSize: "16px",
-                                                    }}>{item.price} đ</span>
-                                                </div>
-                                        }
-                                    </Card>
+                                        <div style={{ height: "150px", objectFit: "cover" }}>
+                                            <img
+                                                style={{ width: "100%", height: "100%" }}
+                                                alt="example"
+                                                src={item.thumbnail}
+                                            />
+                                        </div>
+                                        <div style={{ padding: "10px" }}>
+                                            <div style={{ fontSize: "15px" }}>
+                                                {item?.name}
+                                            </div>
+                                            <div style={{ fontSize: "12px", marginTop: "10px", color: "red" }}>
+                                                {item?.price} đ
+                                            </div>
+                                        </div>
+                                    </div>
                                 </Col>
                             )
                         })}
