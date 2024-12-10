@@ -26,26 +26,7 @@ const CategoryDetailPage = () => {
 
     let location = useLocation();
     let params = new URLSearchParams(location.search);
-    const id = params?.get("id"); // job id
-
-    // useEffect(() => {
-    //     const init = async () => {
-    //         if (id) {
-    //             const query = `page=${current}&size=${pageSize}`
-    //             setIsLoading(true)
-    //             const res = await callFetchCategoryById(id);
-    //             if (res?.data) {
-    //                 setCategoryDetail(res.data)
-    //             }
-    //             const response = await callFetchProductByCategory(id, query);
-    //             if (response?.data) {
-    //                 setDisplayProduct(response.data.result);
-    //             }
-    //             setIsLoading(false)
-    //         }
-    //     }
-    //     init();
-    // }, [id]);
+    const id = params?.get("id");
 
     useEffect(() => {
         fetchProductByCategory()
@@ -86,7 +67,7 @@ const CategoryDetailPage = () => {
     }
     return (
         <>
-            <div className={styles["container"]} style={{ marginTop: 100 }}>
+            <div className={styles["container"]} style={{ marginTop: 100, marginBottom: 100 }}>
                 <Row gutter={[20, 20]}>
                     <Col span={24}>
                         <div className={`${styles["company-section"]}`}>

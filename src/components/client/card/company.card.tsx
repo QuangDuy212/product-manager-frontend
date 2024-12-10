@@ -95,9 +95,9 @@ const CompanyCard = (props: IProps) => {
                                         style={{ overflow: "hidden", border: "1px solid #f2f2f2", borderRadius: "4px" }}
                                         onClick={() => handleViewDetailJob(item)}
                                     >
-                                        <div style={{ height: "150px", objectFit: "cover" }}>
+                                        <div style={{ height: "150px" }}>
                                             <img
-                                                style={{ width: "100%", height: "100%" }}
+                                                style={{ width: "100%", height: "100%", objectFit: "cover" }}
                                                 alt="example"
                                                 src={item.thumbnail}
                                             />

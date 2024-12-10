@@ -24,7 +24,7 @@ const Categories = (props: IProps) => {
                 <Row gutter={[2, 2]}>
                     <Col span={24}>
                         <div className={isMobile ? styles["dflex-mobile"] : styles["dflex-pc"]}>
-                            <span className={styles["title"]} style={{ fontSize: "27px" }}>Categoires</span>
+                            <span className={styles["title"]} style={{ fontSize: "27px" }}>Thể loại</span>
 
                             <Link to={`/category`}>Xem tất cả</Link>
 

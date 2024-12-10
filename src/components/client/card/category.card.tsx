@@ -25,7 +25,7 @@ const CategoryCard = (props: IProps) => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const [current, setCurrent] = useState(1);
-    const [pageSize, setPageSize] = useState(6);
+    const [pageSize, setPageSize] = useState(20);
     const [total, setTotal] = useState(0);
     const [filter, setFilter] = useState("");
     const [sortQuery, setSortQuery] = useState("sort=updatedAt,desc");
@@ -91,7 +91,7 @@ const CategoryCard = (props: IProps) => {
     }
 
     return (
-        <div className={`${styles["card-job-section"]}`}>
+        <div className={`${styles["card-job-section"]}`} style={{ marginTop: "20px", marginBottom: "100px", }}>
             <div className={`${styles["job-content"]}`}>
                 <Spin spinning={isLoading} tip="Loading...">
                     <Row gutter={[20, 20]}>
@@ -106,7 +106,7 @@ const CategoryCard = (props: IProps) => {
 
                         {displayJob?.map(item => {
                             return (
-                                <Col span={12} md={8} key={item._id}>
+                                <Col span={12} md={6} key={item._id}>
                                     <Card size="small" title={null} hoverable
                                         onClick={() => handleViewDetailJob(item)}
                                     >
