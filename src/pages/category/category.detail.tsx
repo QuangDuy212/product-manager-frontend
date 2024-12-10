@@ -17,42 +17,64 @@ const CategoryDetailPage = () => {
     const [displayProduct, setDisplayProduct] = useState<IProduct[] | null>(null);
 
     const [current, setCurrent] = useState(1);
-    const [pageSize, setPageSize] = useState(4);
+    const [pageSize, setPageSize] = useState(20);
     const [total, setTotal] = useState(0);
     const [filter, setFilter] = useState("");
     const [sortQuery, setSortQuery] = useState("sort=createdAt,desc");
+    const [query, setQuery] = useState<string>("");
     const navigate = useNavigate();
 
     let location = useLocation();
     let params = new URLSearchParams(location.search);
     const id = params?.get("id"); // job id
 
-    useEffect(() => {
-        const init = async () => {
-            if (id) {
-                setIsLoading(true)
-                const res = await callFetchCategoryById(id);
-                if (res?.data) {
-                    setCategoryDetail(res.data)
-                }
-                const response = await callFetchProductByCategory(id);
-                if (response?.data) {
-                    setDisplayProduct(response.data.result);
-                }
-                setIsLoading(false)
-            }
-        }
-        init();
-    }, [id]);
+    // useEffect(() => {
+    //     const init = async () => {
+    //         if (id) {
+    //             const query = `page=${current}&size=${pageSize}`
+    //             setIsLoading(true)
+    //             const res = await callFetchCategoryById(id);
+    //             if (res?.data) {
+    //                 setCategoryDetail(res.data)
+    //             }
+    //             const response = await callFetchProductByCategory(id, query);
+    //             if (response?.data) {
+    //                 setDisplayProduct(response.data.result);
+    //             }
+    //             setIsLoading(false)
+    //         }
+    //     }
+    //     init();
+    // }, [id]);
 
-    console.log(">>> check cate", displayProduct)
+    useEffect(() => {
+        fetchProductByCategory()
+    }, [query])
+
+    const fetchProductByCategory = async () => {
+        if (id) {
+            setIsLoading(true)
+            const resvip = await callFetchCategoryById(id);
+            if (resvip?.data) {
+                setCategoryDetail(resvip.data)
+            }
+            const res = await callFetchProductByCategory(id, query);
+            if (res?.statusCode == 200) {
+                setDisplayProduct(res.data?.result)
+            }
+            setIsLoading(false)
+        }
+    }
+
     const handleOnchangePage = (pagination: { current: number, pageSize: number }) => {
         if (pagination && pagination.current !== current) {
             setCurrent(pagination.current)
+            setQuery(`page=${pagination.current}&size=${pageSize}`)
         }
         if (pagination && pagination.pageSize !== pageSize) {
             setPageSize(pagination.pageSize)
             setCurrent(1);
+            setQuery(`page=${1}&size=${pagination.pageSize}`)
         }
     }
 
@@ -64,7 +86,7 @@ const CategoryDetailPage = () => {
     }
     return (
         <>
-            <div className={styles["container"]} style={{ marginTop: 20 }}>
+            <div className={styles["container"]} style={{ marginTop: 100 }}>
                 <Row gutter={[20, 20]}>
                     <Col span={24}>
                         <div className={`${styles["company-section"]}`}>
@@ -82,51 +104,27 @@ const CategoryDetailPage = () => {
 
                                         {displayProduct?.map(item => {
                                             return (
-                                                <Col span={24} md={6} key={item._id}>
-                                                    <Card
+                                                <Col span={12} md={4} key={item._id}>
+                                                    <div className='product-card'
+                                                        style={{ overflow: "hidden", border: "1px solid #f2f2f2", borderRadius: "4px" }}
                                                         onClick={() => handleViewDetailJob(item)}
-                                                        style={{ height: 370 }}
-                                                        hoverable
-                                                        cover={
-                                                            <div className={styles["card-customize"]} >
-                                                                <img
-                                                                    style={{ maxWidth: "200px" }}
-                                                                    alt="example"
-                                                                    src={item.thumbnail}
-                                                                />
-                                                            </div>
-                                                        }
                                                     >
-                                                        <Divider />
-                                                        <h3 style={{ textAlign: "center" }}>{item.name}</h3>
-                                                        {
-                                                            item.discount > 0
-                                                                ?
-                                                                <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-                                                                    <span style={{
-                                                                        color: "#d70018",
-                                                                        fontWeight: 600,
-                                                                        fontSize: "16px"
-                                                                    }}>{item.price - item.discount} đ</span>
-                                                                    <span style={{
-                                                                        marginLeft: "10px",
-                                                                        textDecoration: "line-through",
-                                                                        fontWeight: 600,
-                                                                        fontSize: "16px",
-                                                                        color: "#707070"
-                                                                    }}>{item.price} đ</span>
-                                                                </div>
-                                                                :
-                                                                <div
-                                                                    style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-                                                                    <span style={{
-                                                                        marginLeft: "10px",
-                                                                        fontWeight: 600,
-                                                                        fontSize: "16px",
-                                                                    }}>{item.price} đ</span>
-                                                                </div>
-                                                        }
-                                                    </Card>
+                                                        <div style={{ height: "150px", objectFit: "cover" }}>
+                                                            <img
+                                                                style={{ width: "100%", height: "100%" }}
+                                                                alt="example"
+                                                                src={item.thumbnail}
+                                                            />
+                                                        </div>
+                                                        <div style={{ padding: "10px" }}>
+                                                            <div style={{ fontSize: "14px", fontWeight: 400 }}>
+                                                                {item?.name}
+                                                            </div>
+                                                            <div style={{ fontSize: "18px", marginTop: "10px", color: "#f57224" }}>
+                                                                {item?.price} đ
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </Col>
                                             )
                                         })}

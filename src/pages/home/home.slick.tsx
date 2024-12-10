@@ -8,7 +8,7 @@ const HomeSlick = () => {
     function CustomSlide(props: any) {
         const { url, ...otherProps } = props;
         return (
-            <div {...otherProps} style={{ width: "100%", height: "400px", backgroundColor: "#000" }}>
+            <div {...otherProps} style={{ width: "100%", height: "400px", backgroundColor: "#000", borderRadius: "10px", overflow: "hidden" }}>
                 <img src={url} style={{ width: "100%", height: "100%", objectFit: "contain" }} />
             </div>
         );

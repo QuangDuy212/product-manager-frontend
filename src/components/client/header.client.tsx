@@ -143,7 +143,7 @@ const Header = (props: any) => {
 
     return (
         <>
-            <div className={styles["header-section"]} style={{ padding: "10px 0" }}>
+            <div className={styles["header-section"]} style={{ padding: "10px 0", position: "fixed", zIndex: "1000", top: 0, left: 0 }}>
                 <div className={styles["container"]}>
                     {!isMobile ?
                         <div style={{ display: "flex", gap: 30 }}>

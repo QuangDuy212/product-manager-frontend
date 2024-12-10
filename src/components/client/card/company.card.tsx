@@ -81,7 +81,7 @@ const CompanyCard = (props: IProps) => {
                     <Row gutter={[20, 20]}>
                         <Col span={24}>
                             <div className={isMobile ? styles["dflex-mobile"] : styles["dflex-pc"]}>
-                                <span className={styles["title"]} style={{ fontSize: "27px" }}>Các sản phẩm mới nhất</span>
+                                <span className={styles["title"]} style={{ fontSize: "27px" }}>Tất cả sản phẩm</span>
                                 {!showPagination &&
                                     <Link to="product">Xem tất cả</Link>
                                 }
@@ -103,10 +103,10 @@ const CompanyCard = (props: IProps) => {
                                             />
                                         </div>
                                         <div style={{ padding: "10px" }}>
-                                            <div style={{ fontSize: "15px" }}>
+                                            <div style={{ fontSize: "14px", fontWeight: 400 }}>
                                                 {item?.name}
                                             </div>
-                                            <div style={{ fontSize: "12px", marginTop: "10px", color: "red" }}>
+                                            <div style={{ fontSize: "18px", marginTop: "10px", color: "#f57224" }}>
                                                 {item?.price} đ
                                             </div>
                                         </div>

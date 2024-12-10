@@ -90,8 +90,8 @@ export const callFetchProductById = (id: string) => {
     return axios.get<IBackendRes<IProduct>>(`/api/v1/products/${id}`);
 }
 
-export const callFetchProductByCategory = (id: string) => {
-    return axios.get<IBackendRes<IModelPaginate<IProduct>>>(`/api/v1/products/category/${id}`);
+export const callFetchProductByCategory = (id: string, query: string) => {
+    return axios.get<IBackendRes<IModelPaginate<IProduct>>>(`/api/v1/products/category/${id}?${query}`);
 }
 
 export const callImportProduct = (file: any) => {

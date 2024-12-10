@@ -7,9 +7,9 @@ import { EnvironmentOutlined, MonitorOutlined } from '@ant-design/icons';
 import { convertSlug, LOCATION_LIST } from '@/config/utils';
 import { ProForm } from '@ant-design/pro-components';
 import { useEffect, useState } from 'react';
-import { callFetchAllSkill, callFetchProduct, callSearchProduct } from '@/config/api';
+import { callFetchAllSkill, callFetchCategory, callFetchProduct, callSearchProduct } from '@/config/api';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
-import { IProduct } from '@/types/backend';
+import { ICategory, IProduct } from '@/types/backend';
 import { isMobile } from 'react-device-detect';
 import { Link } from 'react-router-dom';
 import CategoryCard from '@/components/client/card/category.card';
@@ -18,6 +18,7 @@ import Slider from 'react-slick';
 import HomeSlick from './home.slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import ProductByCategory from './product.by.category';
 const HomePage = () => {
     const navigate = useNavigate();
     const location = useLocation();
@@ -36,7 +37,11 @@ const HomePage = () => {
     const [sortQuery, setSortQuery] = useState("sort=createdAt,desc");
     const [showPagination, setShowPagination] = useState<boolean>(false);
     const [query, setQuery] = useState<string>("");
+    const [categories, setCategories] = useState<ICategory[]>();
 
+    useEffect(() => {
+        fetchCategory()
+    }, [])
 
     useEffect(() => {
         fetchProduct(query, "search");
@@ -66,48 +71,34 @@ const HomePage = () => {
         setIsLoading(false)
     }
 
-
-    const handleOnchangePage = (pagination: { current: number, pageSize: number }) => {
-        if (pagination && pagination.current !== current) {
-            setCurrent(pagination.current)
-        }
-        if (pagination && pagination.pageSize !== pageSize) {
-            setPageSize(pagination.pageSize)
-            setCurrent(1);
+    const fetchCategory = async () => {
+        const page = 1;
+        const size = 4;
+        const res = await callFetchCategory(`page=${page}&size=${size}`);
+        if (res.statusCode == 200) {
+            setCategories(res.data?.result);
         }
     }
 
-    const handleViewDetailJob = (item: IProduct) => {
-        if (item.name) {
-            const slug = convertSlug(item.name);
-            navigate(`/product/${slug}?id=${item._id}`)
-        }
+    const fetchProductByCategory = async (value: string, type: string) => {
+
     }
 
-    const settings = {
-        dots: true,
-        infinite: true,
-        slidesToShow: 3,
-        slidesToScroll: 1,
-        autoplay: true,
-        speed: 2000,
-        autoplaySpeed: 2000,
-        cssEase: "linear"
-    };
+
     return (
-        <div className={`${styles["container"]} ${styles["home-section"]}`}>
-            <div style={{ marginTop: "20px" }}>
-                <Row gutter={[20, 20]}>
+        <div className={`${styles["container"]} ${styles["home-section"]}`} style={{ marginTop: "80px" }}>
+            <div >
+                <Row gutter={[12, 12]}>
                     <Col xl={18} md={0} xs={0}>
                         <HomeSlick />
                     </Col>
 
                     <Col xl={6} md={0} xs={0}>
-                        <div style={{ width: "100%", height: "190px", backgroundColor: "#000" }}>
+                        <div style={{ width: "100%", height: "195px", backgroundColor: "#000", borderRadius: "10px" }}>
                             <img src='./../../../public/img/advest7.avif' style={{ width: "100%", height: "100%", objectFit: "contain" }} />
                         </div>
 
-                        <div style={{ width: "100%", height: "190px", backgroundColor: "#000", marginTop: "20px" }}>
+                        <div style={{ width: "100%", height: "195px", backgroundColor: "#000", marginTop: "10px", borderRadius: "10px" }}>
                             <img src='./../../../public/img/advest8.jpg' style={{ width: "100%", height: "100%", objectFit: "contain" }} />
                         </div>
                     </Col>
@@ -121,8 +112,8 @@ const HomePage = () => {
             />
             <div style={{ margin: 50 }}></div>
             <Divider />
-            <CategoryCard />
-
+            {/* <CategoryCard /> */}
+            {categories && categories.map(i => <ProductByCategory id={i._id} name={i?.name ? i.name : ""} />)}
         </div>
     )
 }
