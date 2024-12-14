@@ -4,6 +4,7 @@ import {
   Outlet,
   RouterProvider,
   useLocation,
+  useNavigate,
 } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import NotFound from 'components/share/not.found';
@@ -35,6 +36,7 @@ import ConfirmOrder from './pages/order/confirm.order';
 import "./assets/styles/index.scss"
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import Cookies from "js-cookie";
 
 const LayoutClient = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -63,7 +65,6 @@ export default function App() {
   const dispatch = useAppDispatch();
   const isLoading = useAppSelector(state => state.account.isLoading);
 
-
   useEffect(() => {
     if (
       window.location.pathname === '/login'
@@ -72,6 +73,31 @@ export default function App() {
       return;
     dispatch(fetchAccount())
   }, [])
+
+  useEffect(() => {
+    let oldRefreshToken: any = null;
+    const getCookieValue = (name: string) => {
+      const cookies = document.cookie.split("; ");
+      for (let cookie of cookies) {
+        const [key, value] = cookie.split("=");
+        if (key === name) return value;
+      }
+      return null;
+    };
+
+    const interval = setInterval(() => {
+      if (window.location.pathname === "/cart") {
+        const refreshToken = getCookieValue("refresh_token");
+        if (oldRefreshToken !== null && refreshToken !== oldRefreshToken) {
+          console.log("Refresh token has changed. Redirecting to login...");
+          document.location.href = "/login";
+        }
+        oldRefreshToken = refreshToken;
+      }
+    }, 500);
+    return () => clearInterval(interval);
+  }, []);
+
 
   const router = createBrowserRouter([
     {
