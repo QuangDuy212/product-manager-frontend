@@ -1,3 +1,4 @@
+import { IProduct } from "@/types/backend";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface PayState {
@@ -18,9 +19,11 @@ export const paySlide = createSlice({
         setEmpty: (state) => {
             state.detail = [];
         },
-        setData: (state, action: PayloadAction<{ _id: string; quantity: number }[]>) => {
+        setData: (state, action: PayloadAction<{
+            _id: string; quantity: number
+        }[]>) => {
             state.detail = action.payload
-        },
+        }
     },
 })
 

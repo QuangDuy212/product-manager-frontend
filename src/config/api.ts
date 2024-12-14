@@ -39,6 +39,10 @@ export const callAddAProductToCart = (data: { productId: string; quantity: numbe
     return axios.post<IBackendRes<ICart>>(`/api/v1/carts/add`, data);
 }
 
+export const callChangeQuantityInCart = (data: { productId: string; quantity: number }) => {
+    return axios.post<IBackendRes<ICart>>(`/api/v1/carts/change`, data);
+}
+
 export const callDeleteACartDetail = (id: string) => {
     return axios.post<IBackendRes<ICart>>(`/api/v1/carts/delete/${id}`)
 }

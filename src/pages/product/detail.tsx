@@ -12,6 +12,7 @@ import styles from 'styles/client.module.scss';
 import { useDispatch } from "react-redux";
 import { fetchCart } from "@/redux/slice/cartSlide";
 import { useAppDispatch } from "@/redux/hooks";
+import { addProduct } from "@/redux/slice/paySlide";
 
 
 const ClientDetailProduct = () => {
@@ -61,14 +62,12 @@ const ClientDetailProduct = () => {
 
 
     const handleAddToCart = async (quantity: number, product: IProduct | undefined) => {
-        console.log(".>> check product", product)
         if (product?._id) {
             const data = {
                 quantity: quantity,
                 productId: product._id,
             }
             const res = await callAddAProductToCart(data);
-            console.log(">>> check res: ", res)
             if (res.statusCode == 200) {
                 message.success("Thêm sản phẩm vào giỏ hàng thành công");
                 dispatch(fetchCart());
