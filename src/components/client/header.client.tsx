@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { CodeOutlined, ContactsOutlined, DownOutlined, FireOutlined, LogoutOutlined, MenuFoldOutlined, RiseOutlined, ShoppingCartOutlined, TwitterOutlined } from '@ant-design/icons';
+import { CodeOutlined, ContactsOutlined, DownOutlined, FireOutlined, LogoutOutlined, MenuFoldOutlined, RiseOutlined, SearchOutlined, ShoppingCartOutlined, TwitterOutlined } from '@ant-design/icons';
 import { Avatar, Badge, Button, Divider, Drawer, Dropdown, Empty, Image, MenuProps, Space, message, theme } from 'antd';
 import { Menu, ConfigProvider } from 'antd';
 import styles from '@/styles/client.module.scss';
@@ -13,6 +13,9 @@ import { setLogoutAction } from '@/redux/slice/accountSlide';
 import ManageAccount from './modal/manage.account';
 import { fetchCart } from '@/redux/slice/cartSlide';
 import { ICart } from '@/types/backend';
+import './header.client.scss'
+import { removeSearch, setSearch } from '@/redux/slice/searchSlide';
+import { TextAbstract } from '@/config/utils';
 
 const Header = (props: any) => {
     const navigate = useNavigate();
@@ -28,6 +31,7 @@ const Header = (props: any) => {
     const location = useLocation();
 
     const [openMangeAccount, setOpenManageAccount] = useState<boolean>(false);
+    const [isOpen, setIsOpen] = useState(false);
 
     useEffect(() => {
         dispatch(fetchCart())
@@ -36,6 +40,10 @@ const Header = (props: any) => {
     useEffect(() => {
         setCurrent(location.pathname);
     }, [location])
+
+    const toggleSearch = () => {
+        setIsOpen(!isOpen);
+    };
 
     const fetchCartState = async () => {
         const res = await callFetchCart();
@@ -46,23 +54,25 @@ const Header = (props: any) => {
 
     const items: MenuProps['items'] = [
         {
-            label: <Link to={'/'}>Trang Chủ</Link>,
+            label: <Link to={'/'}>Home</Link>,
             key: '/',
-            icon: <TwitterOutlined />,
+            // icon: <TwitterOutlined />,
         },
         {
-            label: <Link to={'/category'}>Thể loại sản phẩm</Link>,
+            label: <Link to={'/category'}>Thể loại</Link>,
             key: '/category',
-            icon: <CodeOutlined />,
+            // icon: <CodeOutlined />,
         },
         {
             label: <Link to={'/product'}>Sản phẩm</Link>,
             key: '/product',
-            icon: <RiseOutlined />,
+            // icon: <RiseOutlined />,
         }
     ];
 
     const { useToken } = theme;
+
+
 
     const cart: MenuProps['items'] =
         dataCart?.cartDetails?.map((i, index) => {
@@ -73,9 +83,9 @@ const Header = (props: any) => {
                         <div onClick={() => navigate('/cart')}
                             style={{ display: "flex", justifyContent: "space-between" }}
                         >
-                            <Image src={i?.product?.thumbnail} width={50} height={50} />
-                            <div style={{ minWidth: "200px", display: "flex", justifyContent: "center", alignItems: "center" }}>{i?.product?.name}</div>
-                            <div style={{ minWidth: "50px", display: "flex", justifyContent: "center", alignItems: "center" }}>{i.quantity}</div>
+                            <img src={i?.product?.thumbnail} style={{ width: "50px", height: "50px", objectFit: "cover" }} />
+                            <div style={{ minWidth: "200px" }}>{TextAbstract(i?.product?.name ?? "", 30)}</div>
+                            <div style={{ minWidth: "50px", color: "rgb(245, 114, 36)" }}>{i.price} đ</div>
                         </div>
                     ),
                 }
@@ -141,9 +151,27 @@ const Header = (props: any) => {
 
     const itemsMobiles = [...items, ...itemsDropdown];
 
+    const handleKeyDown = (event: any) => {
+        if (event.key === "Enter") {
+            console.log("Search query:", event.target.value);
+            dispatch(setSearch(event.target.value));
+            navigate('/product')
+        }
+        // if (event.key === "Backspace") {
+        //     event.target.value = "";
+        //     dispatch(removeSearch())
+        // }
+    };
+
+    const handleOnChange = (value: any) => {
+    }
+
     return (
         <>
-            <div className={styles["header-section"]} style={{ padding: "10px 0", position: "fixed", zIndex: "1000", top: 0, left: 0 }}>
+            <div className={styles["header-section"]} style={{
+                padding: "10px 0", position: "fixed", zIndex: "1000", top: 0, left: 0,
+                // backgroundColor: "#e6e6e6"
+            }}>
                 <div className={styles["container"]}>
                     {!isMobile ?
                         <div style={{ display: "flex", gap: 30 }}>
@@ -173,11 +201,29 @@ const Header = (props: any) => {
                                         <Link to={'/login'}>Đăng Nhập</Link>
                                         :
                                         <div style={{ display: "flex", alignItems: "center" }}>
+                                            {!isMobile &&
+                                                <div className={`search-bar-container ${isOpen ? "open" : ""}`}>
+                                                    <button className="search-icon-button" onClick={toggleSearch}>
+                                                        <span role="img" aria-label="search-icon">
+                                                            <SearchOutlined style={{ fontSize: "25px" }} />
+                                                        </span>
+                                                    </button>
+                                                    {isOpen && (
+                                                        <input
+                                                            type="text"
+                                                            placeholder="What are you looking for?"
+                                                            className="search-input"
+                                                            onKeyDown={handleKeyDown}
+                                                            onChange={handleOnChange}
+                                                        />
+                                                    )}
+                                                </div>}
                                             {dataCart && dataCart?.cartDetails && dataCart?.cartDetails?.length > 0 &&
                                                 <Dropdown
                                                     menu={{
                                                         items: cart
                                                     }}
+
                                                     placement="bottomRight"
                                                     dropdownRender={(menu) => (
                                                         <div style={contentStyle}>
@@ -196,24 +242,22 @@ const Header = (props: any) => {
                                                         style={{ marginRight: "20px", display: "flex", alignItems: "center", justifyContent: "center" }}
                                                     >
                                                         <Space>
-                                                            <Badge count={dataCart?.sum ? dataCart.sum : 0}>
+                                                            <Badge count={dataCart?.sum ? dataCart.sum : 0} >
                                                                 <ShoppingCartOutlined style={{ fontSize: "30px" }} />
                                                             </Badge>
                                                         </Space>
                                                     </span>
                                                 </Dropdown>}
+
                                             <Dropdown menu={{ items: itemsDropdown }} trigger={['click']}>
                                                 <Space style={{ cursor: "pointer" }}>
-                                                    <span>Welcome {user?.name}</span>
-                                                    <Avatar> {user?.name?.substring(0, 2)?.toUpperCase()} </Avatar>
+                                                    <span >{user?.name}</span>
+                                                    {/* <Avatar style={{ color: "#fff" }}> {user?.name?.substring(0, 2)?.toUpperCase()} </Avatar> */}
                                                 </Space>
                                             </Dropdown>
-
                                         </div>
                                     }
-
                                 </div>
-
                             </div>
                         </div>
                         :

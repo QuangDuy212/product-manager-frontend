@@ -1,0 +1,62 @@
+.search-bar-container {
+    margin-right    : 2px;
+    display         : flex;
+    align-items     : center;
+    position        : relative;
+    width           : 50px;
+    /* Default width */
+    border          : none;
+    /* No border before clicking */
+    border-radius   : 5px;
+    background-color: transparent;
+    /* Transparent background */
+    transition      : width 0.4s ease;
+    /* Smooth transition for width */
+}
+
+.search-bar-container.open {
+    width           : 500px;
+    /* Expanded width when open */
+    background-color: #f9f9f9;
+    /* Background color when expanded */
+    border          : 1px solid #ddd;
+    /* Border when expanded */
+}
+
+.search-icon-button {
+    border      : none;
+    background  : none;
+    cursor      : pointer;
+    outline     : none;
+    font-size   : 18px;
+    margin-right: 5px;
+    color       : #000;
+    /* Icon color */
+}
+
+.search-input {
+    flex            : 1;
+    border          : none;
+    height          : 40px;
+    outline         : none;
+    font-size       : 14px;
+    color           : #666;
+    background-color: transparent;
+    opacity         : 0;
+    /* Hidden by default */
+    transition      : opacity 0.4s ease, width 0.4s ease;
+    /* Smooth fade-in effect */
+    width           : 0;
+    /* Start with no width */
+}
+
+.search-bar-container.open .search-input {
+    opacity: 1;
+    /* Show input */
+    width  : 100%;
+    /* Take the full space */
+}
+
+.search-input::placeholder {
+    color: #aaa;
+}

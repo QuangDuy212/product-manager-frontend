@@ -1,6 +1,6 @@
 
 import { callFetchProduct, callSearchProduct } from '@/config/api';
-import { convertSlug } from '@/config/utils';
+import { convertSlug, TextAbstract } from '@/config/utils';
 import { ICompany, IProduct } from '@/types/backend';
 import { Card, Col, Divider, Empty, Pagination, Row, Spin } from 'antd';
 import { useState, useEffect } from 'react';
@@ -90,12 +90,12 @@ const CompanyCard = (props: IProps) => {
 
                         {displayProduct?.map(item => {
                             return (
-                                <Col span={12} md={4} key={item._id}>
+                                <Col xl={4} md={12} xs={24} key={item._id}>
                                     <div className='product-card'
                                         style={{ overflow: "hidden", border: "1px solid #f2f2f2", borderRadius: "4px" }}
                                         onClick={() => handleViewDetailJob(item)}
                                     >
-                                        <div style={{ height: "150px" }}>
+                                        <div style={{ height: "188px" }}>
                                             <img
                                                 style={{ width: "100%", height: "100%", objectFit: "cover" }}
                                                 alt="example"
@@ -103,8 +103,8 @@ const CompanyCard = (props: IProps) => {
                                             />
                                         </div>
                                         <div style={{ padding: "10px" }}>
-                                            <div style={{ fontSize: "14px", fontWeight: 400 }}>
-                                                {item?.name}
+                                            <div style={{ fontSize: "14px", fontWeight: 400, height: "42px" }}>
+                                                {TextAbstract(item?.name ?? "", 50)}
                                             </div>
                                             <div style={{ fontSize: "18px", marginTop: "10px", color: "#f57224" }}>
                                                 {item?.price} đ

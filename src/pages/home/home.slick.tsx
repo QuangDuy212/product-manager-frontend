@@ -19,8 +19,8 @@ const HomeSlick = () => {
         slidesToShow: 1,
         slidesToScroll: 1,
         autoplay: true,
-        speed: 200,
-        autoplaySpeed: 2000,
+        speed: 500,
+        autoplaySpeed: 2500,
         cssEase: "linear"
     };
     return (

@@ -21,6 +21,7 @@
     "antd": "5.13.1",
     "async-mutex": "0.4.0",
     "axios": "1.6.5",
+    "bootstrap": "^5.3.3",
     "dayjs": "1.11.8",
     "dotenv": "16.0.3",
     "file-saver": "^2.0.5",

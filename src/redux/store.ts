@@ -15,6 +15,8 @@ import categoryReducer from './slice/categorySlide';
 import tagReducer from './slice/tagSlide';
 import orderReducer from './slice/orderSlide';
 import cartReducer from './slice/cartSlide';
+import searchReducer from './slice/searchSlide';
+import payReducer from './slice/paySlide';
 
 export const store = configureStore({
   reducer: {
@@ -27,6 +29,8 @@ export const store = configureStore({
     product: productReducer,
     category: categoryReducer,
     tag: tagReducer,
+    search: searchReducer,
+    pay: payReducer,
     job: jobReducer,
     resume: resumeReducer,
     skill: skillReducer,
