@@ -38,6 +38,8 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Cookies from "js-cookie";
 import { ALLOWED_ROLE } from './config/constant';
+import History from './pages/history/history';
+import DetailHistory from './pages/history/detail.history';
 
 const LayoutClient = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -112,7 +114,9 @@ export default function App() {
         { path: "category/:id", element: <CategoryDetailPage /> },
         { path: "product", element: <ClientCompanyPage /> },
         { path: "product/:id", element: <ClientDetailProduct /> },
-        { path: "cart", element: <ConfirmOrder /> }
+        { path: "cart", element: <ConfirmOrder /> },
+        { path: "history", element: <History /> },
+        { path: "history/:id", element: <DetailHistory /> },
       ],
     },
 

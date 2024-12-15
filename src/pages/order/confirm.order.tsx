@@ -12,8 +12,9 @@ import { DeleteOutlined } from "@ant-design/icons";
 import { callAddAProductToCart, callCeateOrder, callChangeQuantityInCart, callDeleteACartDetail, callFetchCart } from "@/config/api";
 import { fetchCart } from "@/redux/slice/cartSlide";
 import { useNavigate } from "react-router-dom";
-import { ICart, ICartDetail } from "@/types/backend";
+import { ICart, ICartDetail, IProduct } from "@/types/backend";
 import ModalPay from "./modal.pay";
+import { convertSlug } from "@/config/utils";
 
 interface IData {
     _id: string;
@@ -122,6 +123,11 @@ const ConfirmOrder = () => {
         } else message.error("Bạn chưa chọn sản phẩm nào")
     }
 
+    const handleClickName = (i: IProduct) => {
+        const name = convertSlug(i?.name ?? "");
+        navigate(`/product/${name}?id=${i?._id}`)
+    }
+
     return (
         <>
             <div className={styles["container"]} style={{ marginTop: 100, marginBottom: 200 }}>
@@ -163,7 +169,7 @@ const ConfirmOrder = () => {
                                         <div style={{ width: "70px", height: "70px", borderRadius: "10px", overflow: "hidden" }} >
                                             <Image src={i?.product?.thumbnail} style={{ objectFit: "cover", }} height={70} width={70} />
                                         </div>
-                                        <div style={{ width: "40%" }}>{i.product?.name}</div>
+                                        <div style={{ width: "40%", cursor: "pointer" }} onClick={() => handleClickName(i.product)}>{i.product?.name}</div>
                                         <div style={{ width: "20%", display: "flex", justifyContent: "center", alignItems: "center", color: "rgb(245, 114, 36)" }}>{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(i.product?.price - (i.product?.discount! ?? 0))}</div>
                                         <div style={{ width: "10%", display: "flex", justifyContent: "center", alignItems: "center" }}>
                                             <InputNumber min={1} max={i?.product?.quantity} defaultValue={i.quantity} onChange={(v) => onChangeInputNumber(v, i)} />

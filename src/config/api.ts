@@ -255,6 +255,10 @@ export const callFetchOrderById = (id: string) => {
     return axios.get<IBackendRes<IOrder>>(`/api/v1/orders/${id}`);
 }
 
+export const callFetchHistory = (query: string) => {
+    return axios.get<IBackendRes<IModelPaginate<IOrder>>>(`/api/v1/orders/history?${query}`);
+}
+
 export const callExportOrder = () => {
     return axios.get('/api/v1/orders/excel/export', {
         responseType: 'blob', // Nhận dữ liệu dưới dạng file

@@ -17,6 +17,7 @@ import orderReducer from './slice/orderSlide';
 import cartReducer from './slice/cartSlide';
 import searchReducer from './slice/searchSlide';
 import payReducer from './slice/paySlide';
+import historyReducer from './slice/historySlide';
 
 export const store = configureStore({
   reducer: {
@@ -31,10 +32,10 @@ export const store = configureStore({
     tag: tagReducer,
     search: searchReducer,
     pay: payReducer,
+    history: historyReducer,
     job: jobReducer,
     resume: resumeReducer,
     skill: skillReducer,
-
   },
 });
 

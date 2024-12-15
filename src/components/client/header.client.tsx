@@ -85,7 +85,7 @@ const Header = (props: any) => {
                         >
                             <img src={i?.product?.thumbnail} style={{ width: "50px", height: "50px", objectFit: "cover" }} />
                             <div style={{ minWidth: "200px" }}>{TextAbstract(i?.product?.name ?? "", 30)}</div>
-                            <div style={{ minWidth: "50px", color: "rgb(245, 114, 36)" }}>{i.price} đ</div>
+                            <div style={{ minWidth: "50px", color: "rgb(245, 114, 36)" }}>{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(i.price ?? 0)}</div>
                         </div>
                     ),
                 }
