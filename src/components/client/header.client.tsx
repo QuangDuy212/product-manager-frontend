@@ -218,7 +218,7 @@ const Header = (props: any) => {
                                                         />
                                                     )}
                                                 </div>}
-                                            {dataCart && dataCart?.cartDetails && dataCart?.cartDetails?.length > 0 &&
+                                            {dataCart && dataCart._id && dataCart?.cartDetails && dataCart?.cartDetails?.length > 0 &&
                                                 <Dropdown
                                                     menu={{
                                                         items: cart

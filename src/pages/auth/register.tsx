@@ -12,11 +12,12 @@ const RegisterPage = () => {
     const [isSubmit, setIsSubmit] = useState(false);
 
     const onFinish = async (values: IUser) => {
-        const { name, email, password, age, gender, address } = values;
+        const { username, name, password, address } = values;
+        const data = { username, name, password, address };
         setIsSubmit(true);
-        const res = await callRegister(name, email, password as string, +age, gender, address);
+        const res = await callRegister(data);
         setIsSubmit(false);
-        if (res?.data?.id) {
+        if (res?.data?._id) {
             message.success('Đăng ký tài khoản thành công!');
             navigate('/login')
         } else {
@@ -48,22 +49,11 @@ const RegisterPage = () => {
                         >
                             <Form.Item
                                 labelCol={{ span: 24 }} //whole column
-                                label="Họ tên"
-                                name="name"
-                                rules={[{ required: true, message: 'Họ tên không được để trống!' }]}
+                                label="Tên đăng nhập"
+                                name="username"
+                                rules={[{ required: true, message: 'Tên đăng nhập không được để trống!' }]}
                             >
                                 <Input />
-                            </Form.Item>
-
-
-                            <Form.Item
-                                labelCol={{ span: 24 }
-                                } //whole column
-                                label="Email"
-                                name="email"
-                                rules={[{ required: true, message: 'Email không được để trống!' }]}
-                            >
-                                <Input type='email' />
                             </Form.Item>
 
                             <Form.Item
@@ -75,33 +65,13 @@ const RegisterPage = () => {
                                 <Input.Password />
                             </Form.Item>
                             <Form.Item
-                                labelCol={{ span: 24 }} //whole column
-                                label="Tuổi"
-                                name="age"
-                                rules={[{ required: true, message: 'Tuổi không được để trống!' }]}
+                                labelCol={{ span: 24 }}
+                                label="Tên hiển thị"
+                                name="name"
+                                rules={[{ required: true, message: 'Tên hiển thị không được để trống!' }]}
                             >
-                                <Input type='number' />
+                                <Input />
                             </Form.Item>
-
-
-                            <Form.Item
-                                labelCol={{ span: 24 }} //whole column
-                                name="gender"
-                                label="Giới tính"
-                                rules={[{ required: true, message: 'Giới tính không được để trống!' }]}
-                            >
-                                <Select
-                                    // placeholder="Select a option and change input text above"
-                                    // onChange={onGenderChange}
-                                    allowClear
-                                >
-                                    <Option value="MALE">Nam</Option>
-                                    <Option value="FEMALE">Nữ</Option>
-                                    <Option value="OTHER">Khác</Option>
-                                </Select>
-                            </Form.Item>
-
-
                             <Form.Item
                                 labelCol={{ span: 24 }} //whole column
                                 label="Địa chỉ"
@@ -110,9 +80,7 @@ const RegisterPage = () => {
                             >
                                 <Input />
                             </Form.Item>
-
                             < Form.Item
-                            // wrapperCol={{ offset: 6, span: 16 }}
                             >
                                 <Button type="primary" htmlType="submit" loading={isSubmit} >
                                     Đăng ký

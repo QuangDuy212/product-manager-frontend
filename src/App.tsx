@@ -37,6 +37,7 @@ import "./assets/styles/index.scss"
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Cookies from "js-cookie";
+import { ALLOWED_ROLE } from './config/constant';
 
 const LayoutClient = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -64,6 +65,7 @@ const LayoutClient = () => {
 export default function App() {
   const dispatch = useAppDispatch();
   const isLoading = useAppSelector(state => state.account.isLoading);
+  const user = useAppSelector(state => state.account.user);
 
   useEffect(() => {
     if (

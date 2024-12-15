@@ -72,7 +72,7 @@ const ProductByCategory = (props: IProps) => {
                                     {TextAbstract(item?.name ?? "", 50)}
                                 </div>
                                 <div style={{ fontSize: "18px", marginTop: "10px", color: "#f57224" }}>
-                                    {item?.price} đ
+                                    {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(item.price ?? 0)}
                                 </div>
                             </div>
                         </div>

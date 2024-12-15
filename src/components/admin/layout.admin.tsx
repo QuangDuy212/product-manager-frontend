@@ -10,7 +10,7 @@ import {
     ClockCircleFilled,
     TagOutlined
 } from '@ant-design/icons';
-import { Layout, Menu, Dropdown, Space, message, Avatar, Button } from 'antd';
+import { Layout, Menu, Dropdown, Space, message, Avatar, Button, Result } from 'antd';
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { Link } from 'react-router-dom';
 import { callLogout } from 'config/api';
@@ -21,6 +21,7 @@ import { setLogoutAction } from '@/redux/slice/accountSlide';
 import { ALL_PERMISSIONS } from '@/config/permissions';
 import { MdCategory } from "react-icons/md";
 import { FaMoneyBillAlt } from "react-icons/fa";
+import { ALLOWED_ROLE } from '@/config/constant';
 
 const { Content, Sider } = Layout;
 
@@ -166,6 +167,7 @@ const LayoutAdmin = () => {
 
     return (
         <>
+
             <Layout
                 style={{ minHeight: '100vh' }}
                 className="layout-admin"
@@ -226,7 +228,6 @@ const LayoutAdmin = () => {
                     </Footer> */}
                 </Layout>
             </Layout>
-
         </>
     );
 };
