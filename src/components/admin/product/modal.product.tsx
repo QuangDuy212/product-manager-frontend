@@ -92,6 +92,8 @@ const ModalProduct = (props: IProps) => {
         }
     }, [dataInit])
 
+    console.log(".>> check sliders", sliders)
+
     useEffect(() => {
         fetchCategories("")
         fetchTags("");
@@ -469,7 +471,7 @@ const ModalProduct = (props: IProps) => {
                                 >
                                     <ConfigProvider locale={enUS}>
                                         <Upload
-                                            name="thumbnail"
+                                            name="sliders"
                                             listType="picture-card"
                                             className="avatar-uploader"
                                             multiple={true}
@@ -480,7 +482,14 @@ const ModalProduct = (props: IProps) => {
                                             onRemove={(file) => handleRemoveFileSliders(file)}
                                             onPreview={handlePreview}
                                             defaultFileList={
-                                                sliders
+                                                dataInit?._id && dataInit.sliders ? dataInit.sliders.map(i => {
+                                                    return {
+                                                        uid: uuidv4(),
+                                                        name: i ?? "",
+                                                        status: 'done',
+                                                        url: i,
+                                                    }
+                                                }) : []
                                             }
 
                                         >

@@ -189,11 +189,11 @@ export interface ICart {
 
 export interface IUser {
     _id?: string;
-    name: string;
-    username: string;
-    active: boolean;
+    name?: string;
+    username?: string;
+    active?: boolean;
     password?: string;
-    address: string;
+    address?: string;
     role?: {
         _id: string;
         name: string;

@@ -7,7 +7,7 @@ import { ActionType, ProColumns } from '@ant-design/pro-components';
 import { Button, Popconfirm, Space, Tag, message, notification } from "antd";
 import { useState, useRef } from 'react';
 import dayjs from 'dayjs';
-import { callDeleteOrder, callDeleteUser, callExportUser } from "@/config/api";
+import { callDeleteOrder, callDeleteUser, callExportOrder, callExportUser } from "@/config/api";
 import queryString from 'query-string';
 import Access from "@/components/share/access";
 import { ALL_PERMISSIONS } from "@/config/permissions";
@@ -45,7 +45,7 @@ const OrderPage = () => {
 
     const handleExportOrder = async () => {
         try {
-            const response = await callExportUser();
+            const response = await callExportOrder();
             const filename = 'orders_' + Date.now() + '.xlsx';
             saveAs(response, filename);
             message.success('Export thành công');

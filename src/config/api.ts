@@ -260,7 +260,7 @@ export const callFetchHistory = (query: string) => {
 }
 
 export const callExportOrder = () => {
-    return axios.get('/api/v1/orders/excel/export', {
+    return axios.get('/api/v1/orders/export/excel', {
         responseType: 'blob', // Nhận dữ liệu dưới dạng file
     });
 }

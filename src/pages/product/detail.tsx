@@ -13,6 +13,7 @@ import { useDispatch } from "react-redux";
 import { fetchCart } from "@/redux/slice/cartSlide";
 import { useAppDispatch } from "@/redux/hooks";
 import { addProduct } from "@/redux/slice/paySlide";
+import Slider from "react-slick";
 
 
 const ClientDetailProduct = () => {
@@ -90,21 +91,21 @@ const ClientDetailProduct = () => {
             navigate("/order");
         }
     }
-    const settings = {
-        customPaging: function (i: string) {
-            return (
-                <a>
-                    <img src={`${i}`} />
-                </a>
-            );
-        },
-        dots: true,
-        dotsClass: "slick-dots slick-thumb",
-        infinite: true,
-        speed: 500,
-        slidesToShow: 1,
-        slidesToScroll: 1
-    };
+    // const settings = {
+    //     customPaging: function (i: string) {
+    //         return (
+    //             <a>
+    //                 <img src={`${i}`} />
+    //             </a>
+    //         );
+    //     },
+    //     dots: true,
+    //     dotsClass: "slick-dots slick-thumb",
+    //     infinite: true,
+    //     speed: 500,
+    //     slidesToShow: 1,
+    //     slidesToScroll: 1
+    // };
 
     const image = imageProducts?.map(i => {
         return {
