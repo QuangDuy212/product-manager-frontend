@@ -60,7 +60,7 @@ const CategoryDetailPage = () => {
     }
 
     const handleViewDetailJob = (item: IProduct) => {
-        if (item.name) {
+        if (item.name && item.quantity !== 0) {
             const slug = convertSlug(item.name);
             navigate(`/product/${slug}?id=${item._id}`)
         }
@@ -87,9 +87,19 @@ const CategoryDetailPage = () => {
                                             return (
                                                 <Col span={12} md={4} key={item._id}>
                                                     <div className='product-card'
-                                                        style={{ overflow: "hidden", border: "1px solid #f2f2f2", borderRadius: "4px" }}
+                                                        style={{ overflow: "hidden", border: "1px solid #f2f2f2", borderRadius: "4px", position: "relative" }}
                                                         onClick={() => handleViewDetailJob(item)}
                                                     >
+                                                        {item.quantity == 0 &&
+                                                            <div style={{
+                                                                position: "absolute", width: "100%", height: "100%",
+                                                                backgroundColor: "rgba(204, 204, 204,0.4)",
+                                                                display: "flex", justifyContent: "center", alignItems: "center"
+                                                            }}>
+                                                                <div style={{
+                                                                    backgroundColor: "#fff", padding: "6px"
+                                                                }}>Hết hàng</div>
+                                                            </div>}
                                                         <div style={{ height: "150px" }}>
                                                             <img
                                                                 style={{ width: "100%", height: "100%", objectFit: "cover" }}

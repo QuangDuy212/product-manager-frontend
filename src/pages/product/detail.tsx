@@ -157,6 +157,7 @@ const ClientDetailProduct = () => {
                                                             position: "relative",
                                                         }}
                                                         onClick={() => handleAddToCart(currentQuantity, productDetail)}
+                                                        disabled={productDetail?.quantity == 0}
                                                     >
                                                         <FaCartPlus style={{ margin: "0 5px 0 0", fontSize: "20px" }} />
                                                         Thêm vào giỏ hàng
@@ -175,6 +176,7 @@ const ClientDetailProduct = () => {
                                                             position: "relative",
                                                         }}
                                                         onClick={() => handleBuyNow(currentQuantity, productDetail)}
+                                                        disabled={productDetail?.quantity == 0}
                                                     >Mua ngay</Button>
                                                 </div>
                                             </Col>
