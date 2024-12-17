@@ -96,7 +96,7 @@ const ClientCompanyPage = (props: any) => {
             <Breadcrumb
                 items={[
                     {
-                        title: <a href="/">Trang chủ</a>,
+                        title: <div onClick={() => navigate("/")} style={{ cursor: "pointer" }}>Trang chủ</div>,
                     },
                     {
                         title: 'Sản phẩm',
@@ -120,7 +120,7 @@ const ClientCompanyPage = (props: any) => {
                             return (
                                 <Col md={4} xl={6} xs={12} key={item._id}>
                                     <div className='product-card'
-                                        style={{ overflow: "hidden", border: "1px solid #f2f2f2", borderRadius: "4px" }}
+                                        style={{ cursor: "pointer", overflow: "hidden", border: "1px solid #f2f2f2", borderRadius: "4px" }}
                                         onClick={() => handleViewDetailJob(item)}
                                     >
                                         <div style={{ height: "188px" }}>

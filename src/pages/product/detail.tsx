@@ -6,7 +6,7 @@ import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import ImageGallery from "react-image-gallery";
 import { original } from "@reduxjs/toolkit";
 import './detail.scss'
-import { Button, Col, InputNumber, message, Rate, Row } from "antd";
+import { Breadcrumb, Button, Col, InputNumber, message, Rate, Row } from "antd";
 import { FaCartPlus } from "react-icons/fa";
 import styles from 'styles/client.module.scss';
 import { useDispatch } from "react-redux";
@@ -101,7 +101,17 @@ const ClientDetailProduct = () => {
 
     return (
         <>
-            <div className={styles["container"]} style={{ marginTop: 20 }}>
+            <div className={styles["container"]} style={{ marginTop: 100 }}>
+                <Breadcrumb
+                    items={[
+                        {
+                            title: <div onClick={() => navigate("/")} style={{ cursor: "pointer" }}>Trang chủ</div>,
+                        },
+                        {
+                            title: 'Chi tiết sản phẩm',
+                        },
+                    ]}
+                />
                 <div className='container'>
                     <div className='content'>
                         <Row gutter={[20, 20]}>

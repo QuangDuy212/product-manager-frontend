@@ -57,7 +57,7 @@ const ProductByCategory = (props: IProps) => {
                 {products && products.map(item => (
                     <Col xl={4} md={12} xs={24} key={item._id}>
                         <div className='product-card'
-                            style={{ overflow: "hidden", border: "1px solid #f2f2f2", borderRadius: "4px", position: "relative" }}
+                            style={{ cursor: "pointer", overflow: "hidden", border: "1px solid #f2f2f2", borderRadius: "4px", position: "relative" }}
                             onClick={() => handleViewDetailJob(item)}
                         >
                             {item.quantity == 0 &&

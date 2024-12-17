@@ -1,7 +1,7 @@
 import { callFetchCategory } from "@/config/api";
 import { ICategory } from "@/types/backend";
 import { ProFormText } from "@ant-design/pro-components";
-import { Button, Checkbox, Col, Form, Row } from "antd";
+import { Button, Checkbox, Col, Form, Radio, Row, Space } from "antd";
 import { GetProp } from "antd/lib";
 import { useEffect, useState } from "react";
 
@@ -30,11 +30,14 @@ const FilterProduct = (props: IProps) => {
         console.log('checked = ', checkedValues);
     };
 
-    const onFinish = (values: { min: string, max: string, category: string[] }) => {
-        let { min, max, category } = values;
+    const onFinish = (values: { min: string, max: string, category: string[], sort: string }) => {
+        let { min, max, category, sort } = values;
         if (!min) min = "0"
         if (!max) max = "1000000000"
         let filter = `&filter=price>=${min} and price<=${max}`;
+        if (sort != "" && sort != undefined) {
+            filter = `&sort=${sort}&filter=price>=${min} and price<=${max}`;
+        }
         let tmp = "";
         if (category && category.length > 0) {
             category.forEach((i, index) => {
@@ -46,7 +49,7 @@ const FilterProduct = (props: IProps) => {
         if (tmp != "") {
             filter += ` and (${tmp})`
         }
-        console.log(filter)
+        console.log(">>> check filter", filter)
         setFilter(filter)
 
     };
@@ -77,6 +80,18 @@ const FilterProduct = (props: IProps) => {
                             )}
                         </Row>
                     </Checkbox.Group>
+                </Form.Item>
+                <Form.Item
+                    name="sort"
+                    label="Sắp xếp theo giá"
+                >
+                    <Radio.Group >
+                        <Space direction="vertical">
+                            <Radio value={""}>Mặc định</Radio>
+                            <Radio value={"price,desc"}>Giảm dần</Radio>
+                            <Radio value={"price,asc"}>Tăng dần</Radio>
+                        </Space>
+                    </Radio.Group>
                 </Form.Item>
                 <Row gutter={16}>
                     <Col xl={24} md={24} xs={24}>

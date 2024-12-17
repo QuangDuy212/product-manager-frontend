@@ -66,7 +66,7 @@ const LoginPage = () => {
                         >
                             <Form.Item
                                 labelCol={{ span: 24 }} //whole column
-                                label="Email"
+                                label="Tên đăng nhập"
                                 name="username"
                                 rules={[{ required: true, message: 'Email không được để trống!' }]}
                             >

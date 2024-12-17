@@ -33,7 +33,7 @@ const Categories = (props: IProps) => {
                     {data && data.map(item => (
                         <Col span={12} md={4} key={item._id}>
                             <div className='product-card'
-                                style={{ overflow: "hidden", border: "1px solid #f2f2f2", borderRadius: "4px" }}
+                                style={{ cursor: "pointer", overflow: "hidden", border: "1px solid #f2f2f2", borderRadius: "4px" }}
                                 onClick={() => handleViewDetailJob(item)}
                             >
                                 <div style={{ padding: "10px" }}>

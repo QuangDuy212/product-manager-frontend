@@ -78,7 +78,7 @@ const ProductPage = () => {
         {
             title: 'Thumbnail',
             dataIndex: 'thumbnail',
-            sorter: true,
+            sorter: false,
             render: (text, record, index, action) => {
                 return (
                     <Image src={record.thumbnail} width={50} height={50} />
@@ -95,6 +95,20 @@ const ProductPage = () => {
             title: 'ShortDes',
             dataIndex: 'shortDes',
             sorter: true,
+        },
+
+
+
+        {
+            title: 'Price',
+            dataIndex: 'price',
+            sorter: false,
+            render: (text, record, index, action) => {
+                return (
+                    <> {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(record.price ?? 0)}</>
+                )
+            },
+            hideInSearch: true,
         },
 
         {

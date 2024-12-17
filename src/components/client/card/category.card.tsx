@@ -109,8 +109,10 @@ const CategoryCard = (props: IProps) => {
                                 <Col span={12} md={6} key={item._id}>
                                     <Card size="small" title={null} hoverable
                                         onClick={() => handleViewDetailJob(item)}
+
                                     >
-                                        <div className={styles["card-job-content"]}>
+                                        <div className={styles["card-job-content"]}
+                                        >
                                             <div className={styles["card-job-left"]}>
                                             </div>
                                             <div className={styles["card-job-right"]}>

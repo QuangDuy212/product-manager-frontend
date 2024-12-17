@@ -1,7 +1,7 @@
 import { callFetchCategoryById, callFetchProductByCategory } from "@/config/api";
 import { convertSlug, TextAbstract } from "@/config/utils";
 import { ICategory, IProduct } from "@/types/backend";
-import { Card, Col, Divider, Empty, Pagination, Row, Spin } from "antd";
+import { Breadcrumb, Card, Col, Divider, Empty, Pagination, Row, Spin } from "antd";
 import { useEffect, useState } from "react";
 import { isMobile } from "react-device-detect";
 import { Link } from "react-router-dom";
@@ -68,6 +68,16 @@ const CategoryDetailPage = () => {
     return (
         <>
             <div className={styles["container"]} style={{ marginTop: 100, marginBottom: 100 }}>
+                <Breadcrumb
+                    items={[
+                        {
+                            title: <div onClick={() => navigate("/")} style={{ cursor: "pointer" }}>Trang chủ</div>,
+                        },
+                        {
+                            title: 'Chi tiết thể loại',
+                        },
+                    ]}
+                />
                 <Row gutter={[20, 20]}>
                     <Col span={24}>
                         <div className={`${styles["company-section"]}`}>
@@ -87,7 +97,7 @@ const CategoryDetailPage = () => {
                                             return (
                                                 <Col span={12} md={4} key={item._id}>
                                                     <div className='product-card'
-                                                        style={{ overflow: "hidden", border: "1px solid #f2f2f2", borderRadius: "4px", position: "relative" }}
+                                                        style={{ cursor: "pointer", overflow: "hidden", border: "1px solid #f2f2f2", borderRadius: "4px", position: "relative" }}
                                                         onClick={() => handleViewDetailJob(item)}
                                                     >
                                                         {item.quantity == 0 &&
