@@ -9,10 +9,10 @@ const ClientJobPage = (props: any) => {
             <Breadcrumb
                 items={[
                     {
-                        title: <a href="/">Home</a>,
+                        title: <a href="/">Trang chủ</a>,
                     },
                     {
-                        title: 'Category',
+                        title: 'Thể loại',
                     },
                 ]}
             />

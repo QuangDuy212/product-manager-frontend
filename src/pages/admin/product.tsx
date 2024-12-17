@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { IProduct } from "@/types/backend";
 import { DeleteOutlined, EditOutlined, ExportOutlined, ImportOutlined, PlusOutlined } from "@ant-design/icons";
 import { ActionType, ProColumns } from '@ant-design/pro-components';
-import { Button, Popconfirm, Space, message, notification } from "antd";
+import { Button, Image, Popconfirm, Space, message, notification } from "antd";
 import { useState, useRef } from 'react';
 import dayjs from 'dayjs';
 import { callDeleteProduct, callExportProduct } from "@/config/api";
@@ -71,6 +71,18 @@ const ProductPage = () => {
                     <>
                         {(index + 1) + (meta.current - 1) * (meta.pageSize)}
                     </>)
+            },
+            hideInSearch: true,
+        },
+
+        {
+            title: 'Thumbnail',
+            dataIndex: 'thumbnail',
+            sorter: true,
+            render: (text, record, index, action) => {
+                return (
+                    <Image src={record.thumbnail} width={50} height={50} />
+                )
             },
             hideInSearch: true,
         },

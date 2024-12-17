@@ -4,10 +4,10 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { fetchHistory } from "@/redux/slice/historySlide";
 import { IOrder } from "@/types/backend";
 import { ActionType, ProColumns } from "@ant-design/pro-components";
-import { Tag } from "antd";
+import { Breadcrumb, Tag } from "antd";
 import dayjs from "dayjs";
 import queryString from "query-string";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { sfLike } from "spring-filter-query-builder";
 import styles from 'styles/client.module.scss';
@@ -27,6 +27,7 @@ const History = () => {
     const isFetching = useAppSelector(state => state.history.isFetching);
     const meta = useAppSelector(state => state.history.meta);
     const users = useAppSelector(state => state.history.result);
+    const isAuthen = useAppSelector(state => state.account.isAuthenticated)
     const dispatch = useAppDispatch();
 
     const columns: ProColumns<IOrder>[] = [
@@ -170,8 +171,22 @@ const History = () => {
 
         return temp;
     }
+
+    useEffect(() => {
+        if (!isAuthen) navigate("/login")
+    }, [])
     return (
-        <div className={`${styles["container"]} ${styles["home-section"]}`} style={{ marginTop: "80px", marginBottom: 100 }}>
+        <div className={`${styles["container"]} ${styles["home-section"]}`} style={{ marginTop: "100px", marginBottom: 100 }}>
+            <Breadcrumb
+                items={[
+                    {
+                        title: <a href="/">Trang chủ</a>,
+                    },
+                    {
+                        title: 'Lịch sử',
+                    },
+                ]}
+            />
             <DataTable<IOrder>
                 actionRef={tableRef}
                 headerTitle="Danh sách Orders"

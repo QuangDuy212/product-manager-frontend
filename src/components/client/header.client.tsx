@@ -54,7 +54,7 @@ const Header = (props: any) => {
 
     const items: MenuProps['items'] = [
         {
-            label: <Link to={'/'}>Home</Link>,
+            label: <Link to={'/'}>Trang chủ</Link>,
             key: '/',
         },
         {

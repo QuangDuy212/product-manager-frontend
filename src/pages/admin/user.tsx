@@ -282,14 +282,20 @@ const UserPage = () => {
                                         Import
                                     </Button>
                                 </Access>
-                                <Button
-                                    icon={<PlusOutlined />}
-                                    type="primary"
-                                    onClick={() => setOpenModal(true)}
-                                    style={{ backgroundColor: "green" }}
+                                <Access
+                                    permission={ALL_PERMISSIONS.USERS.CREATE}
+                                    hideChildren
                                 >
-                                    Thêm mới
-                                </Button>
+                                    <Button
+                                        icon={<PlusOutlined />}
+                                        type="primary"
+                                        onClick={() => setOpenModal(true)}
+                                        style={{ backgroundColor: "green" }}
+                                    >
+                                        Thêm mới
+                                    </Button>
+                                </Access>
+
                             </>
                         );
                     }}

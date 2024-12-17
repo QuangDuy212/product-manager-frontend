@@ -87,10 +87,11 @@ export default function App() {
     };
 
     const interval = setInterval(() => {
-      if (window.location.pathname === "/cart") {
+      if (window.location.pathname === "/cart" || window.location.pathname === "/history") {
         const refreshToken = getCookieValue("refresh_token");
         if (oldRefreshToken !== null && refreshToken !== oldRefreshToken) {
           console.log("Refresh token has changed. Redirecting to login...");
+          localStorage.removeItem('access_token');
           document.location.href = "/login";
         }
         oldRefreshToken = refreshToken;

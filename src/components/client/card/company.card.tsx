@@ -107,7 +107,7 @@ const CompanyCard = (props: IProps) => {
                                             </div>}
                                         <div style={{ height: "188px" }}>
                                             <img
-                                                style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                                                style={{ width: "100%", height: "100%", objectFit: "contain" }}
                                                 alt="example"
                                                 src={item.thumbnail}
                                             />

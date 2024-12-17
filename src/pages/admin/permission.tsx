@@ -239,13 +239,18 @@ const PermissionPage = () => {
                     rowSelection={false}
                     toolBarRender={(_action, _rows): any => {
                         return (
-                            <Button
-                                icon={<PlusOutlined />}
-                                type="primary"
-                                onClick={() => setOpenModal(true)}
+                            <Access
+                                permission={ALL_PERMISSIONS.PERMISSIONS.CREATE}
+                                hideChildren
                             >
-                                Thêm mới
-                            </Button>
+                                <Button
+                                    icon={<PlusOutlined />}
+                                    type="primary"
+                                    onClick={() => setOpenModal(true)}
+                                >
+                                    Thêm mới
+                                </Button>
+                            </Access>
                         );
                     }}
                 />

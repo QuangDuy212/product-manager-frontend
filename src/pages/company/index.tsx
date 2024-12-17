@@ -38,7 +38,14 @@ const ClientCompanyPage = (props: any) => {
     }, [filter])
 
     useEffect(() => {
-        fetchProduct("", "normal");
+
+        if (query)
+            fetchProduct(query, "search");
+        else if (filter || filter == "") {
+            fetchProduct(filter, "filter");
+        }
+        else if (!query && !filter)
+            fetchProduct("", "normal");
     }, [current, pageSize, sortQuery]);
 
     const fetchProduct = async (value: string, type: string) => {
@@ -89,10 +96,10 @@ const ClientCompanyPage = (props: any) => {
             <Breadcrumb
                 items={[
                     {
-                        title: <a href="/">Home</a>,
+                        title: <a href="/">Trang chủ</a>,
                     },
                     {
-                        title: 'Product',
+                        title: 'Sản phẩm',
                     },
                 ]}
             />
@@ -118,7 +125,7 @@ const ClientCompanyPage = (props: any) => {
                                     >
                                         <div style={{ height: "188px" }}>
                                             <img
-                                                style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                                                style={{ width: "100%", height: "100%", objectFit: "contain" }}
                                                 alt="example"
                                                 src={item.thumbnail}
                                             />
@@ -128,7 +135,7 @@ const ClientCompanyPage = (props: any) => {
                                                 {TextAbstract(item?.name ?? '', 45)}
                                             </div>
                                             <div style={{ fontSize: "18px", marginTop: "10px", color: "#f57224" }}>
-                                                {item?.price} đ
+                                                {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(item.price ?? 0)}
                                             </div>
                                         </div>
                                     </div>
