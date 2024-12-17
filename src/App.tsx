@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 import {
   createBrowserRouter,
+  Navigate,
   Outlet,
   RouterProvider,
   useLocation,
-  useNavigate,
 } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import NotFound from 'components/share/not.found';
@@ -24,20 +24,16 @@ import { fetchAccount } from './redux/slice/accountSlide';
 import LayoutApp from './components/share/layout.app';
 import ClientJobPage from './pages/job';
 import ClientCompanyPage from './pages/company';
-import ClientCompanyDetailPage from './pages/company/detail';
 import ProductPage from './pages/admin/product';
 import CategoryPage from './pages/admin/category';
 import TagPage from './pages/admin/tag';
 import OrderPage from './pages/admin/order';
-import ClientCategoryPage from './pages/job/detail';
 import CategoryDetailPage from './pages/category/category.detail';
 import ClientDetailProduct from './pages/product/detail';
 import ConfirmOrder from './pages/order/confirm.order';
 import "./assets/styles/index.scss"
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import Cookies from "js-cookie";
-import { ALLOWED_ROLE } from './config/constant';
 import History from './pages/history/history';
 import DetailHistory from './pages/history/detail.history';
 
@@ -68,6 +64,7 @@ export default function App() {
   const dispatch = useAppDispatch();
   const isLoading = useAppSelector(state => state.account.isLoading);
   const user = useAppSelector(state => state.account.user);
+  const isAuthen = useAppSelector(state => state.account.isAuthenticated)
 
   useEffect(() => {
     if (
@@ -97,6 +94,10 @@ export default function App() {
           document.location.href = "/login";
         }
         oldRefreshToken = refreshToken;
+      }
+      const refreshToken = getCookieValue("refresh_token");
+      if (refreshToken && window.location.pathname === "/login") {
+        document.location.href = "/";
       }
     }, 500);
     return () => clearInterval(interval);

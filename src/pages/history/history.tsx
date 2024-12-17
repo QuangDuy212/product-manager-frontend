@@ -195,19 +195,6 @@ const History = () => {
                 }
                 rowSelection={false}
             />
-            {/* <ViewOrder
-                onClose={setOpenViewDetail}
-                open={openViewDetail}
-                dataInit={dataInit}
-                setDataInit={setDataInit}
-            />
-            <ModalOrder
-                openModal={openModal}
-                setOpenModal={setOpenModal}
-                reloadTable={reloadTable}
-                dataInit={dataInit}
-                setDataInit={setDataInit}
-            /> */}
         </div >
     )
 }

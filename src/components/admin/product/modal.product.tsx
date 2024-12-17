@@ -297,7 +297,7 @@ const ModalProduct = (props: IProps) => {
             {openModal &&
                 <>
                     <ModalForm
-                        title={<>{dataInit?._id ? "Cập nhật Company" : "Tạo mới Company"}</>}
+                        title={<>{dataInit?._id ? "Cập nhật sản phẩm" : "Tạo mới sản phẩm"}</>}
                         open={openModal}
                         modalProps={{
                             onCancel: () => { handleReset() },
@@ -332,7 +332,7 @@ const ModalProduct = (props: IProps) => {
                                     label="Tên sản phẩm"
                                     name="name"
                                     rules={[{ required: true, message: 'Vui lòng không bỏ trống' }]}
-                                    placeholder="Nhập tên công ty"
+                                    placeholder="Nhập tên sản phẩm"
                                 />
                             </Col>
                             <Col lg={12} md={12} sm={24} xs={24}>
@@ -460,14 +460,6 @@ const ModalProduct = (props: IProps) => {
                                     labelCol={{ span: 24 }}
                                     label="Sliders"
                                     name="sliders"
-                                    rules={[{
-                                        required: true,
-                                        message: 'Vui lòng không bỏ trống',
-                                        validator: () => {
-                                            if (thumbnail.length > 0) return Promise.resolve();
-                                            else return Promise.reject(false);
-                                        }
-                                    }]}
                                 >
                                     <ConfigProvider locale={enUS}>
                                         <Upload

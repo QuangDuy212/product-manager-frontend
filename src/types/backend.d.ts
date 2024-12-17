@@ -191,7 +191,6 @@ export interface IUser {
     _id?: string;
     name?: string;
     username?: string;
-    active?: boolean;
     password?: string;
     address?: string;
     role?: {

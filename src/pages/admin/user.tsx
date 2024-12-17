@@ -108,18 +108,6 @@ const UserPage = () => {
             sorter: true,
             hideInSearch: true
         },
-        {
-            title: 'Trạng thái',
-            dataIndex: 'active',
-            render(dom, entity, index, action, schema) {
-                return <>
-                    <Tag color={entity.active ? "lime" : "red"} >
-                        {entity.active ? "ACTIVE" : "INACTIVE"}
-                    </Tag>
-                </>
-            },
-            hideInSearch: true,
-        },
 
         {
             title: 'CreatedAt',
@@ -272,6 +260,7 @@ const UserPage = () => {
                             <>
                                 <Access
                                     permission={ALL_PERMISSIONS.USERS.EXPORT}
+                                    hideChildren
                                 >
                                     <Button
                                         icon={<ExportOutlined />}
@@ -283,6 +272,7 @@ const UserPage = () => {
                                 </Access>
                                 <Access
                                     permission={ALL_PERMISSIONS.USERS.IMPORT}
+                                    hideChildren
                                 >
                                     <Button
                                         icon={<ImportOutlined />}

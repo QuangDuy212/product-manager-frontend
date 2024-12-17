@@ -56,17 +56,18 @@ const Header = (props: any) => {
         {
             label: <Link to={'/'}>Home</Link>,
             key: '/',
-            // icon: <TwitterOutlined />,
         },
         {
             label: <Link to={'/category'}>Thể loại</Link>,
             key: '/category',
-            // icon: <CodeOutlined />,
         },
         {
             label: <Link to={'/product'}>Sản phẩm</Link>,
             key: '/product',
-            // icon: <RiseOutlined />,
+        },
+        {
+            label: <Link to={'/history'}>Lịch sử</Link>,
+            key: '/history',
         }
     ];
 

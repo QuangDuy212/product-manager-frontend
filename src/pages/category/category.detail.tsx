@@ -1,5 +1,5 @@
 import { callFetchCategoryById, callFetchProductByCategory } from "@/config/api";
-import { convertSlug } from "@/config/utils";
+import { convertSlug, TextAbstract } from "@/config/utils";
 import { ICategory, IProduct } from "@/types/backend";
 import { Card, Col, Divider, Empty, Pagination, Row, Spin } from "antd";
 import { useEffect, useState } from "react";
@@ -90,16 +90,16 @@ const CategoryDetailPage = () => {
                                                         style={{ overflow: "hidden", border: "1px solid #f2f2f2", borderRadius: "4px" }}
                                                         onClick={() => handleViewDetailJob(item)}
                                                     >
-                                                        <div style={{ height: "150px", objectFit: "cover" }}>
+                                                        <div style={{ height: "150px" }}>
                                                             <img
-                                                                style={{ width: "100%", height: "100%" }}
+                                                                style={{ width: "100%", height: "100%", objectFit: "cover" }}
                                                                 alt="example"
                                                                 src={item.thumbnail}
                                                             />
                                                         </div>
                                                         <div style={{ padding: "10px" }}>
-                                                            <div style={{ fontSize: "14px", fontWeight: 400 }}>
-                                                                {item?.name}
+                                                            <div style={{ fontSize: "14px", fontWeight: 400, height: "50px" }}>
+                                                                {TextAbstract(item?.name ?? "", 45)}
                                                             </div>
                                                             <div style={{ fontSize: "18px", marginTop: "10px", color: "#f57224" }}>
                                                                 {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(item.price ?? 0)}

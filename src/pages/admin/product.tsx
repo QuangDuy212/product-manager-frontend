@@ -237,6 +237,7 @@ const ProductPage = () => {
                             <>
                                 <Access
                                     permission={ALL_PERMISSIONS.USERS.EXPORT}
+                                    hideChildren
                                 >
                                     <Button
                                         icon={<ExportOutlined />}
@@ -248,6 +249,7 @@ const ProductPage = () => {
                                 </Access>
                                 <Access
                                     permission={ALL_PERMISSIONS.USERS.IMPORT}
+                                    hideChildren
                                 >
                                     <Button
                                         icon={<ImportOutlined />}

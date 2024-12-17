@@ -20,6 +20,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import ProductByCategory from './product.by.category';
 import Categories from './categories.list';
+import AvestoneSlick from './avestone.slick';
 const HomePage = () => {
     const navigate = useNavigate();
     const location = useLocation();
@@ -91,8 +92,9 @@ const HomePage = () => {
                     </Col>
 
                     <Col xl={6} md={0} xs={0}>
+
                         <div style={{ width: "100%", height: "195px", backgroundColor: "#000", borderRadius: "10px" }}>
-                            <img src='./../../../public/img/advest7.avif' style={{ width: "100%", height: "100%", objectFit: "contain" }} />
+                            <AvestoneSlick />
                         </div>
 
                         <div style={{ width: "100%", height: "195px", backgroundColor: "#000", marginTop: "10px", borderRadius: "10px" }}>

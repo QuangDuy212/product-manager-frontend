@@ -55,7 +55,7 @@ const ModalUser = (props: IProps) => {
                 username,
                 password,
                 address,
-                role: role._id,
+                role: role?._id ? role._id : role,
                 active
             }
 
@@ -188,18 +188,6 @@ const ModalUser = (props: IProps) => {
                             />
                         </ProForm.Item>
 
-                    </Col>
-                    <Col lg={12} md={12} sm={24} xs={24}>
-                        <ProFormSwitch
-                            label="Trạng thái"
-                            name="active"
-                            checkedChildren="ACTIVE"
-                            unCheckedChildren="INACTIVE"
-                            initialValue={true}
-                            fieldProps={{
-                                defaultChecked: true,
-                            }}
-                        />
                     </Col>
                     <Col lg={12} md={12} sm={24} xs={24}>
                         <ProFormText

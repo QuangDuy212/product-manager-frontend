@@ -275,6 +275,7 @@ const OrderPage = () => {
                             <>
                                 <Access
                                     permission={ALL_PERMISSIONS.ORDERS.EXPORT}
+                                    hideChildren
                                 >
                                     <Button
                                         icon={<ExportOutlined />}

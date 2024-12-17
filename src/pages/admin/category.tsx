@@ -218,14 +218,19 @@ const CategoryPage = () => {
                     toolBarRender={(_action, _rows): any => {
                         return (
                             <>
-                                <Button
-                                    icon={<PlusOutlined />}
-                                    type="primary"
-                                    onClick={() => setOpenModal(true)}
-                                    style={{ backgroundColor: "green" }}
+                                <Access
+                                    permission={ALL_PERMISSIONS.CATEGORIES.CREATE}
+                                    hideChildren
                                 >
-                                    Thêm mới
-                                </Button>
+                                    <Button
+                                        icon={<PlusOutlined />}
+                                        type="primary"
+                                        onClick={() => setOpenModal(true)}
+                                    >
+                                        Thêm mới
+                                    </Button>
+
+                                </Access>
                             </>
                         );
                     }}

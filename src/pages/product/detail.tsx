@@ -88,24 +88,9 @@ const ClientDetailProduct = () => {
                 message.success("Thêm sản phẩm vào giỏ hàng thành công");
                 dispatch(fetchCart());
             }
-            navigate("/order");
+            navigate("/cart");
         }
     }
-    // const settings = {
-    //     customPaging: function (i: string) {
-    //         return (
-    //             <a>
-    //                 <img src={`${i}`} />
-    //             </a>
-    //         );
-    //     },
-    //     dots: true,
-    //     dotsClass: "slick-dots slick-thumb",
-    //     infinite: true,
-    //     speed: 500,
-    //     slidesToShow: 1,
-    //     slidesToScroll: 1
-    // };
 
     const image = imageProducts?.map(i => {
         return {

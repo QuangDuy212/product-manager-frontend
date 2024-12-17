@@ -63,7 +63,7 @@ const DetailHistory = () => {
                                             <Image src={i?.product?.thumbnail} style={{ objectFit: "cover", }} height={70} width={70} />
                                         </div>
                                         <div style={{ width: "40%", cursor: "pointer" }} onClick={() => handleClickName(i)}>{i.product?.name}</div>
-                                        <div style={{ width: "20%", display: "flex", justifyContent: "center", alignItems: "center", color: "rgb(245, 114, 36)" }}>{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(i.product?.price - (i.product?.discount! ?? 0))}</div>
+                                        <div style={{ width: "20%", display: "flex", justifyContent: "center", alignItems: "center", color: "rgb(245, 114, 36)" }}>{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(i.product?.price ?? 0)}</div>
                                         <div style={{ width: "10%", display: "flex", justifyContent: "center", alignItems: "center" }}>
                                             <InputNumber value={i.quantity} disabled />
                                         </div>

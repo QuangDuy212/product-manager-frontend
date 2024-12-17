@@ -125,7 +125,7 @@ const ClientCompanyPage = (props: any) => {
                                         </div>
                                         <div style={{ padding: "10px" }}>
                                             <div style={{ fontSize: "14px", fontWeight: 400, height: "42px" }}>
-                                                {TextAbstract(item?.name ?? '', 50)}
+                                                {TextAbstract(item?.name ?? '', 45)}
                                             </div>
                                             <div style={{ fontSize: "18px", marginTop: "10px", color: "#f57224" }}>
                                                 {item?.price} đ
